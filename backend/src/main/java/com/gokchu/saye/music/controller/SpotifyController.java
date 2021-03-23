@@ -1,4 +1,4 @@
-package com.gokchu.saye.spotify.controller;
+package com.gokchu.saye.music.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gokchu.saye.music.service.SpotifyService;
 import com.gokchu.saye.repository.dto.Music;
 import com.gokchu.saye.repository.dto.SpotifyAccesstoken;
-import com.gokchu.saye.spotify.service.SpotifyService;
 import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
@@ -106,10 +106,11 @@ public class SpotifyController {
 	public List<Music> getRecommendations_Sync(String genre) {
 		GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
 	          .limit(10)
-			.market(CountryCode.US)
+			.market(CountryCode.KR)
 //	          .max_popularity(50)
 	          .min_popularity(50)
 //	          .seed_artists("0LcJLqbBmaGUft1e9Mm8HV")
+//	          .seed_genres("k-pop")
 				.seed_genres(genre)
 //	          .seed_tracks("01iyCAUm8EvOFqVWYJ3dVX")
 //	          .target_popularity(20)
@@ -117,20 +118,19 @@ public class SpotifyController {
 
 		Track track=null;
 		Artist artist=null;
-		AudioFeatures audioFeatures=null;
+//		AudioFeatures audioFeatures=null;
 		List<Music>musics=new ArrayList<Music>();
 		try {
 			final Recommendations recommendations = getRecommendationsRequest.execute();
 
-			System.out.println("Length: " + recommendations.getTracks().length);
-			System.out.println(recommendations.toString());
+//			System.out.println("Length: " + recommendations.getTracks().length);
+//			System.out.println(recommendations.toString());
 			for (int i = 0; i < recommendations.getTracks().length; i++) {
-				GetAudioFeaturesForTrackRequest getAudioFeaturesForTrackRequest = spotifyApi
-					    .getAudioFeaturesForTrack(recommendations.getTracks()[i].getId())
-					    .build();
-				CompletableFuture<AudioFeatures> audioFeaturesFuture = getAudioFeaturesForTrackRequest.executeAsync();
-				audioFeatures=audioFeaturesFuture.join();
-				System.out.println(audioFeatures.getValence());
+//				GetAudioFeaturesForTrackRequest getAudioFeaturesForTrackRequest = spotifyApi
+//					    .getAudioFeaturesForTrack(recommendations.getTracks()[i].getId())
+//					    .build();
+//				CompletableFuture<AudioFeatures> audioFeaturesFuture = getAudioFeaturesForTrackRequest.executeAsync();
+//				audioFeatures=audioFeaturesFuture.join();
 				track=getTrack_Sync(recommendations.getTracks()[i].getId());
 				artist=getArtist_Sync(recommendations.getTracks()[i].getArtists()[0].getId());
 				//제목, 장르, 가수, 앨범, 미리듣기, 이미지, 인기도, 음악ID, 가수ID, 앨범ID, 추천횟수
@@ -139,8 +139,15 @@ public class SpotifyController {
 				music.setmTitle(recommendations.getTracks()[i].getName());
 				//장르
 				String genres="";
-				for (String s : artist.getGenres()) {
-					genres=genres.concat(s).concat(",");
+				if(artist.getGenres().length<6) {
+					for (String s : artist.getGenres()) {
+						genres=genres.concat(s).concat(",");
+					}
+					
+				}else {
+					for (int j = 0; j < 6; j++) {
+						genres=genres.concat(artist.getGenres()[j]).concat(",");
+					}
 				}
 				genres=genres.substring(0, genres.length()-1);
 				music.setmGenre(genres);
@@ -155,22 +162,26 @@ public class SpotifyController {
 				//음악ID
 				music.setmId(recommendations.getTracks()[i].getId());
 				//가수ID
-				music.setmAId(recommendations.getTracks()[i].getArtists()[0].getId());
+				music.setmArtistId(recommendations.getTracks()[i].getArtists()[0].getId());
 				//앨범ID
-				music.setmAlId(track.getAlbum().getId());
+				music.setmAlbumId(track.getAlbum().getId());
 				//인기도
 				music.setmPopularity(String.valueOf(track.getPopularity()));
-				
-				System.out.println("트랙정보"+track.toString());
-				
-				musics.add(music);
+				//감정
+				music.setmEmotion(genre);
+				//발매일
+				music.setmDate(track.getAlbum().getReleaseDate());
+//				System.out.println("트랙정보"+track.toString());
+				if(music.getmPreview()!=null) {
+					spotifyService.insertMusic(music);
+					musics.add(music);
+					
+				}
 				System.out.println("제목 : " + recommendations.getTracks()[i].getName() + " 가수 : "
 						+ recommendations.getTracks()[i].getArtists()[0].getName() + " 미리듣기 : "
 						+ recommendations.getTracks()[i].getPreviewUrl() + " 인기도: "
 						+ track.getPopularity());
-				System.out.println();
-				
-
+				System.out.println("발매일 : "+track.getAlbum().getReleaseDate());
 			}
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
 			System.out.println("Error: " + e.getMessage());
