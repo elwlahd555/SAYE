@@ -2,6 +2,7 @@
   <v-app>
     <v-main>
       <Header v-if="!introPage" />
+      <Aside v-if="!introPage" />
       <transition name="fade" mode="out-in">
         <router-view />
       </transition>
@@ -11,12 +12,14 @@
 
 <script>
 import Header from "@/components/comm/Header";
+import Aside from "@/components/home/Aside";
 
 export default {
   name: "App",
 
   components: {
-    Header
+    Header,
+    Aside
   },
 
   data: () => ({

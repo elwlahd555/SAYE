@@ -10,10 +10,27 @@ export const store = new Vuex.Store({
     createPersistedState()
   ],
   state: {
+    // social
     isLogin: false,
     uId: null,
     uName: null,
-    uImage: null
+    uImage: null,
+    // youtube playlist
+    playlist: [],
+    videoId: "",
+    playType: "",
+    playShow: false
+  },
+  getters: {
+    playlist(state) {
+      return state.playlist;
+    },
+    videoId(state) {
+      return state.videoId;
+    },
+    playType(state) {
+      return state.playType;
+    }
   },
   mutations: {
     SET_USER_AUTH_DATA(state, payload) {
@@ -39,6 +56,16 @@ export const store = new Vuex.Store({
     },
     SET_USER_IMAGE(state, uImage) {
       state.uImage = uImage;
+    },
+    /*=========================================================================================================== */
+    setPlaylist(state, payload) {
+      state.playlist = payload.playlist;
+    },
+    setVideoId(state, payload) {
+      state.videoId = payload.videoId;
+    },
+    setPlayType(state, payload) {
+      state.playType = payload.playType;
     }
   },
   actions: {
@@ -55,6 +82,16 @@ export const store = new Vuex.Store({
     DELETE_ACCOUNT(context) {
       context.commit("SET_USER_AUTH_DATA_LOGOUT");
       localStorage.removeItem("auth-token");
+    },
+    /*=========================================================================================================== */
+    setPlaylist({ commit }, playlist) {
+      commit("setPlaylist", { playlist });
+    },
+    setVideoId({ commit }, videoId) {
+      commit("setVideoId", { videoId });
+    },
+    setPlayType({ commit }, playType) {
+      commit("setPlayType", { playType });
     }
   }
 });

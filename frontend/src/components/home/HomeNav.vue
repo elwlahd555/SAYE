@@ -36,7 +36,7 @@ export default {
   methods: {
     handleScroll: function() {
       this.scY = window.scrollY;
-      console.log(this.scY);
+      //console.log(this.scY);
     }
   }
 };
