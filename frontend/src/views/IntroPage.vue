@@ -43,11 +43,15 @@
 import gsap from "gsap";
 
 import Home from "@/components/intro/Home";
+import AboutUs from "@/components/intro/AboutUs";
+import Services from "@/components/intro/Services";
 import Contact from "@/components/intro/Contact";
 
 export default {
   components: {
     Home,
+    AboutUs,
+    Services,
     Contact
   },
   data() {
@@ -56,8 +60,8 @@ export default {
       tab: 0,
       items: [
         { tab: "Home", content: "Home" },
-        { tab: "About Us", content: "" },
-        { tab: "Our Services", content: "" },
+        { tab: "About Us", content: "AboutUs" },
+        { tab: "Our Services", content: "Services" },
         { tab: "Contact", content: "Contact" }
       ]
     };

@@ -1,13 +1,14 @@
 <template>
-  <v-container>
+  <v-container fluid mr-5>
     <p id="latest_music_title">{{ title }}</p>
     <p id="latest_music_subtitle">
       {{ subTitle }}
     </p>
-
+    <!-- 
     <router-link to="/latest_music" id="latest_music_more_a">
       <span id="latest_music_more_span">더보기</span>
     </router-link>
+ -->
 
     <v-slide-group
       v-model="model"
@@ -59,7 +60,6 @@
 
 <script>
 import axios from "@/plugins/movie";
-import ytMusic from "youtube-music-api";
 
 export default {
   props: ["title", "subTitle", "musicList"],
@@ -71,7 +71,9 @@ export default {
     videoId: "",
     playerVars: {
       autoplay: 1
-    }
+    },
+
+    temp: null
   }),
   async mounted() {
     this.showLoading = true;
@@ -86,6 +88,7 @@ export default {
   },
   methods: {
     playLatestMusic: function(videoId) {
+      console.log("clicked play");
       const playlist = this.exposedLatestMusic.map(music => {
         return {
           video: music.video,
@@ -104,20 +107,15 @@ export default {
       if (this.videoId) {
         this.videoId = "";
       } else {
-        ytMusic.initalize().then(info => {
-          console.log(info);
-          ytMusic.search(music.mTitle).then(res => {
-            console.log(res);
-          });
-
-          // .search(music?.mTitle)
-          // .then(res => {
-          //   this.videoId = res.videoId;
-          //   console.log(res);
-          // })
-          // .catch(err => console.error(err));
-        });
+        this.videoId = "1mIwS4PDYwE";
+        // .search(music?.mTitle)
+        // .then(res => {
+        //   this.videoId = res.videoId;
+        //   console.log(res);
+        // })
+        // .catch(err => console.error(err));
       }
+      this.$store.dispatch("setVideoId", this.videoId);
     }
   }
 };

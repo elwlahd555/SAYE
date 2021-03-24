@@ -6,7 +6,5 @@ module.exports = {
       return args;
     });
   },
-  devServer: {
-    proxy: "https://localhost:8080"
-  }
+  productionSourceMap: false
 };

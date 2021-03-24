@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
+  <div class="services">
     <div style="height:300px">
-      <h1>SAYE</h1>
+      <h1>Service tab</h1>
 
-      <h3>Sing About Your Emotion</h3>
+      <h3>Working on it...</h3>
 
       <v-divider dark></v-divider>
       <p style="margin-top:20px">
@@ -19,8 +19,8 @@
 export default {};
 </script>
 
-<style scoped>
-.home {
+<style services>
+.services {
   background-color: #3f3f3f;
 }
 </style>

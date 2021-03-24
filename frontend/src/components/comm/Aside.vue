@@ -300,8 +300,6 @@ export default {
 
       if (this.player === null) {
         this.player = new this.YT.Player("player", {
-          width: this.$refs.playerContainer.clientWidth,
-          height: (this.$refs.playerContainer.clientWidth / 16) * 9,
           playerVars: {
             autoplay: 1,
             controls: 0,
