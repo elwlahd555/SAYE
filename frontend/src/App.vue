@@ -12,7 +12,7 @@
 
 <script>
 import Header from "@/components/comm/Header";
-import Aside from "@/components/home/Aside";
+import Aside from "@/components/comm/Aside";
 
 export default {
   name: "App",

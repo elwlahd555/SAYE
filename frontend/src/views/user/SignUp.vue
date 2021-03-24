@@ -208,7 +208,7 @@ export default {
               text: "회원가입을 축하드립니다",
               confirmButtonColor: "#a5dc86"
             });
-            this.$router.push({ name: "Login" });
+            this.$router.push({ name: "LoginPage" });
           })
           .catch(() => {
             Swal.fire({

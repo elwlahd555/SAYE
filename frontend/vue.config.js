@@ -5,5 +5,8 @@ module.exports = {
       args[0].title = "Saye";
       return args;
     });
+  },
+  devServer: {
+    proxy: "https://localhost:8080"
   }
 };
