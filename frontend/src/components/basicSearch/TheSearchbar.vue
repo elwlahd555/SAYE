@@ -1,23 +1,29 @@
 <template>
   <section class="section searchbar">
     <div class="container">
-      <b-field>
-        <b-autocomplete
+      <v-toolbar dark color="teal">
+        <v-toolbar-title>Keyword</v-toolbar-title>
+        <v-autocomplete
           size="is-medium"
           expanded
+          flat
+          hide-no-data
+          hide-details
+          solo-inverted
+          class="mx-4"
+          append-icon=""
           v-model="searchQuery"
           :data="filteredDataArray"
-          placeholder="e.g. 아이유"
+          label="e.g. 아이유"
           icon="magnify"
           @select="option => (selected = option)"
           @keyup.enter="onClickSearch"
-        ></b-autocomplete>
-        <p class="control" v-if="searchQuery">
-          <button @click="onClickClearSearch" class="button  is-medium ">
-            <i class="fas fa-times"></i>
-          </button>
-        </p>
-      </b-field>
+        ></v-autocomplete>
+
+        <v-btn x-large icon @click="onClickClearSearch">
+          <v-icon>mdi-close-box-outline</v-icon>
+        </v-btn>
+      </v-toolbar>
     </div>
   </section>
 </template>
