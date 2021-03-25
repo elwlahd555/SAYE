@@ -10,7 +10,7 @@ public interface PlaylistMapper {
 	int insertPlaylist(Playlist playlist) throws Exception;
 	
 	/* R :: 플레이리스트 조회 */
-	List<Playlist> selectPlaylist(int uNo) throws Exception;
+	List<Playlist> selectPlaylist(int pUNo) throws Exception;
 	
 	/* U :: 플레이리스트명 수정 */
 	boolean updatePlaylistName(Playlist playlist) throws Exception;

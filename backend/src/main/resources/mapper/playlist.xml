@@ -11,10 +11,10 @@
 			(#{pNo}, #{pUNo}, #{pName})
 	</insert>
 	
-	<select id="selectPlaylist" parameterType="int">
+	<select id="selectPlaylist" parameterType="int" resultType="playlist">
 		SELECT *
 		  FROM playlist
-		 WHERE p_u_no = #{uNo}
+		 WHERE p_u_no = #{pUNo}
 	</select>
 
 	<update id="updatePlaylistName">
