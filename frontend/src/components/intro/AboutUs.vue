@@ -1,11 +1,9 @@
 <template>
-  <div class="home">
+  <div class="about">
     <div style="height:300px">
-      <h1>SAYE</h1>
+      <h1>About Page</h1>
 
-      <h3>Sing About Your Emotion</h3>
-
-      <v-divider dark></v-divider>
+      <h3>Working on it</h3>
       <p style="margin-top:20px">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, quia
         neque. Voluptas id nulla qui inventore reiciendis iusto maiores
@@ -20,7 +18,7 @@ export default {};
 </script>
 
 <style scoped>
-.home {
+.about {
   background-color: #3f3f3f;
 }
 </style>

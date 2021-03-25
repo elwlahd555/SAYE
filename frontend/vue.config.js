@@ -5,5 +5,6 @@ module.exports = {
       args[0].title = "Saye";
       return args;
     });
-  }
+  },
+  productionSourceMap: false
 };
