@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid mr-5>
+  <v-container fluid>
     <p id="latest_music_title">{{ title }}</p>
     <p id="latest_music_subtitle">
       {{ subTitle }}
@@ -11,11 +11,11 @@
  -->
 
     <v-slide-group
+      style="width:95%"
       v-model="model"
       active-class="success"
       show-arrows
       dark
-      width="100%"
     >
       <v-slide-item
         v-for="(music, idx) in musicList"
@@ -99,7 +99,8 @@ export default {
       });
 
       this.$store.dispatch("setPlaylist", playlist);
-      this.$store.dispatch("setVideoId", videoId);
+      console.log(videoId);
+      //this.$store.dispatch("setVideoId", videoId);
     },
 
     handleClick(music) {

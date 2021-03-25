@@ -1,10 +1,10 @@
 <template>
   <div>
-    <aside id="frame_aside_mini" v-if="!playerShow">
+    <aside id="frame_aside_mini" v-show="!playerShow">
       <v-icon @click="playerShow = !playerShow">mdi-arrow-expand-left</v-icon>
     </aside>
 
-    <aside id="frame_aside" v-else>
+    <aside id="frame_aside" v-show="playerShow">
       <v-icon style="padding:10px" @click="playerShow = !playerShow"
         >mdi-arrow-expand-right</v-icon
       >
