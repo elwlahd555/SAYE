@@ -10,6 +10,7 @@ import ErrorPage from "@/views/ErrorPage.vue";
 import KakaoCallback from "@/views/user/KakaoCallback.vue";
 import TestJython from "@/views/TestJython.vue";
 import EmotionAnalysis from "@/views/EmotionAnalysis.vue";
+import RecordPage from "@/views/RecordPage.vue"
 
 Vue.use(VueRouter);
 Vue.use(store);
@@ -95,6 +96,14 @@ const routes = [
     path: "/emotionAnalysis",
     name: "EmotionAnalysis",
     component: EmotionAnalysis
+  },
+  /**
+   * Speech To Text
+   */
+  {
+    path: "/recordPage",
+    name: "RecordPage",
+    component: RecordPage
   },
   /**
    * page not found
