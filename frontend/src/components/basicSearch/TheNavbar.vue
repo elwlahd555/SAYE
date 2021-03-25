@@ -44,8 +44,8 @@
                 :active="!isMobile"
                 v-if="
                   pageType === 'bookmarks' ||
-                  isMobile ||
-                  bookmarkAlbums.length === 0
+                    isMobile ||
+                    bookmarkAlbums.length === 0
                 "
               >
                 <template v-slot:activator="{ on, attrs }">
@@ -54,29 +54,43 @@
                       @click="onClickShowBookmarks"
                       :class="[
                         { 'icon-active': pageType === 'bookmarks' },
-                        settings.bookmarkIcon,
+                        settings.bookmarkIcon
                       ]"
-                      >mdi-history</v-icon
+                      >mdi-heart</v-icon
                     >
-
-                    <span class="badge" v-if="bookmarkAlbums.length > 0">
-                      {{ bookmarkAlbums.length }}
-                    </span>
                   </v-btn>
                 </template>
                 <span> 북마크 {{ bookmarkAlbums.length }}</span>
               </v-tooltip>
 
               <v-menu v-else open-on-hover bottom>
-                <i
-                  slot="trigger"
-                  @click="onClickShowBookmarks"
-                  class="fas fa-2x"
-                  :class="[
-                    { 'icon-active': pageType === 'bookmarks' },
-                    settings.bookmarkIcon,
-                  ]"
-                ></i>
+                <template v-slot:activator="{ on: menu, attrs }">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on: tooltip }">
+                      <v-btn
+                        icon
+                        x-large
+                        dark
+                        v-bind="attrs"
+                        v-on="{ ...tooltip, ...menu }"
+                      >
+                        <v-icon
+                          @click="onClickShowBookmarks"
+                          :class="[
+                            { 'icon-active': pageType === 'bookmarks' },
+                            settings.bookmarkIcon
+                          ]"
+                          >mdi-bookmark</v-icon
+                        >
+
+                        <span class="badge" v-if="bookmarkAlbums.length > 0">
+                          {{ bookmarkAlbums.length }}
+                        </span>
+                      </v-btn>
+                    </template>
+                    <span>북마크 {{ bookmarkAlbums.length }}</span>
+                  </v-tooltip>
+                </template>
                 <v-list>
                   <v-list-item
                     v-for="(album, index) in latestBookmarkAlbums"
@@ -132,33 +146,33 @@ export default {
   props: {
     showRecentSearchBox: {
       type: Boolean,
-      required: true,
+      required: true
     },
     recentSearch: {
       type: Array,
-      required: true,
+      required: true
     },
     pageType: {
       type: String,
-      required: true,
+      required: true
     },
     bookmarkAlbums: {
       type: Array,
-      required: true,
+      required: true
     },
     settings: {
       type: Object,
-      required: true,
+      required: true
     },
     isMobile: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     latestBookmarkAlbums() {
       return this.bookmarkAlbums.slice(0, 5);
-    },
+    }
   },
   methods: {
     onClickToggleRecentSearchBox() {
@@ -175,8 +189,8 @@ export default {
     },
     onClickAlbumName(albumId) {
       this.$emit("clickAlbumName", albumId);
-    },
-  },
+    }
+  }
 };
 </script>
 

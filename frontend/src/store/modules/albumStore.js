@@ -5,10 +5,10 @@ const albumStore = {
   namespaced: true,
   state: {
     settings: {
-      initialSearchQuery: '',
+      initialSearchQuery: "아이유",
       searchQuery: "",
       panelType: "card",
-      bookmarkIcon: "fa-star",
+      bookmarkIcon: "bookmark",
       perPage: "20",
       youtubeLink: "false"
     },

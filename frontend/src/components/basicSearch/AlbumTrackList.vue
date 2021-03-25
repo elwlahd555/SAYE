@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="modal-card"
+  <v-card
     style="width: auto; max-width: 980px; height: auto; max-height: 700px"
   >
     <header class="modal-card-head">
@@ -154,7 +153,7 @@
         Close
       </button>
     </footer>
-  </div>
+  </v-card>
 </template>
 
 <script>

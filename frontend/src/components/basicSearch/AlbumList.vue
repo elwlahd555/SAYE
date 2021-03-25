@@ -1,50 +1,34 @@
 <template>
-  <section class="section">
-    <div class="container" style="margin-top:0px;">
-      <div
-        class="columns is-multiline is-mobile"
-        v-if="!isAlbumLoading && albums.length > 0"
-      >
-        <div class="column is-6">
-          <span
-            class="is-size-5-desktop is-size-6-mobile has-text-grey"
-            v-if="pageType !== 'bookmarks'"
-          >
+  <v-container>
+    <v-container mt-0>
+      <v-row v-if="!isAlbumLoading && albums.length > 0">
+        <v-col cols="6">
+          <span class="text--grey" v-if="pageType !== 'bookmarks'">
             Search Results
           </span>
-          <span class="is-size-5-desktop is-size-6-mobile has-text-grey" v-else>
-            Bookmarks</span
-          >
-        </div>
-        <div class="column is-5 has-text-right ">
-          <span class="has-text-grey-light is-size-6">
-            {{ albums.length }} album(s)
-          </span>
-        </div>
-        <div class="column is-1 has-text-left">
-          <v-tooltip
-            type="is-light"
-            label="switch panel view"
-            position="is-top"
-            :active="!isMobile"
-          >
-            <i
-              @click="onClickUpdateSettings"
-              class="fas  fa-lg"
-              :class="[settings.panelType === 'card' ? 'fa-th-list' : 'fa-th']"
-            ></i>
+          <span class="text--grey" v-else> Bookmarks</span>
+        </v-col>
+        <v-col cols="5" class="text-right">
+          <span class="text--grey"> {{ albums.length }} album(s) </span>
+        </v-col>
+        <v-col cols="1" class="text-left">
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon v-bind="attrs" v-on="on" @click="onClickUpdateSettings">
+                mdi-dots-grid
+              </v-icon>
+            </template>
+            <span>Switch panel view</span>
           </v-tooltip>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
       <!-- Album List -->
       <transition name="list" mode="out-in">
-        <div
-          class="columns is-multiline is-mobile"
+        <v-row
           v-if="!isAlbumLoading && displayedAlbums.length > 0"
           :key="pageType"
         >
-          <div
-            class="column"
+          <v-col
             :class="[
               settings.panelType === 'card'
                 ? 'is-3-widescreen is-3-desktop is-4-tablet'
@@ -54,15 +38,11 @@
             :key="album.collectionId"
           >
             <!-- Card Panel  -->
-            <div class="card" v-if="settings.panelType === 'card'">
-              <div class="card-image">
-                <figure class="image is-4by3">
-                  <img
-                    :src="replaceArtworkUrlSize(album.artworkUrl100, '300x250')"
-                    :alt="album.collectionCensoredName"
-                  />
-                </figure>
-              </div>
+            <v-card v-if="settings.panelType === 'card'">
+              <v-img
+                :src="replaceArtworkUrlSize(album.artworkUrl100, '300x250')"
+                :alt="album.collectionCensoredName"
+              />
               <div class="card-content">
                 <div class="media">
                   <div class="media-content overflow-content">
@@ -140,7 +120,7 @@
                   </v-tooltip>
                 </a>
               </footer>
-            </div>
+            </v-card>
             <!-- Media Panel-->
             <article
               class="media media-wrap"
@@ -234,8 +214,8 @@
                 </div>
               </div>
             </article>
-          </div>
-        </div>
+          </v-col>
+        </v-row>
       </transition>
       <!-- Loading animation -->
       <div class="columns is-mobile" v-if="isAlbumLoading">
@@ -286,8 +266,8 @@
           </div>
         </div>
       </template>
-    </div>
-  </section>
+    </v-container>
+  </v-container>
 </template>
 
 <script>

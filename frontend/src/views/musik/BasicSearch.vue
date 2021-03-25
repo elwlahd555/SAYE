@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1>hi {{ $store.state.albumStore.settings }}</h1>
     <div class="nav-search">
       <the-navbar
         v-show="showNavbar"
@@ -58,6 +59,7 @@
       >
         <the-settings
           :settings="settings"
+          @close="isSettingsModalActive = !isSettingsModalActive"
           @clickUpdateSettings="updateSettings"
         >
         </the-settings>
@@ -70,30 +72,26 @@
         :onCancel="resetAlbumTracks"
         scroll="clip"
       >
-        <div
-          class="columns is-mobile is-centered"
-          v-if="!albumTracksFailed && albumTracks.length === 0"
-        >
-          <div class="columns is-mobile">
+        <v-row v-if="!albumTracksFailed && albumTracks.length === 0">
+          <v-col>
             <div class="column loading">
-              <b-loading
-                :is-full-page="false"
+              <v-progress-circular
+                indeterminate
                 :active.sync="isAlbumTracksLoading"
-                :can-cancel="false"
-              ></b-loading>
+              ></v-progress-circular>
             </div>
-          </div>
-        </div>
-        <div class="container" v-else-if="albumTracksFailed">
-          <div class="columns is-mobile is-centered">
-            <div class="column is-4">
-              <b-message type="is-danger" has-icon>
+          </v-col>
+        </v-row>
+        <v-container v-else-if="albumTracksFailed">
+          <v-row>
+            <v-col cols="4">
+              <v-alert type="warning" border="top" colored-border>
                 Error loading album track list. <br />
                 Please check again later.
-              </b-message>
-            </div>
-          </div>
-        </div>
+              </v-alert>
+            </v-col>
+          </v-row>
+        </v-container>
         <album-track-list
           v-else
           :albumTracks="albumTracks"
@@ -124,11 +122,10 @@ export default {
   name: "app",
   data() {
     return {
-      initialSearchQuery: "",
       isSettingsModalActive: false,
       isAlbumTracksModalActive: false,
       windowWidth: window.innerWidth,
-      showNavbar: true,
+      showNavbar: true
     };
   },
   components: {
@@ -137,7 +134,7 @@ export default {
     RecentSearchBox,
     TheSettings,
     AlbumList,
-    AlbumTrackList,
+    AlbumTrackList
   },
   computed: {
     ...mapGetters(albumStore, {
@@ -145,7 +142,7 @@ export default {
       albums: "GET_ALBUMS",
       albumTracks: "GET_ALBUM_TRACKS",
       searchQuery: "SEARCH_QUERY",
-      //initialSearchQuery: "INITIAL_SEARCH_QUERY",
+      initialSearchQuery: "INITIAL_SEARCH_QUERY",
       bookmarkAlbums: "BOOKMARK_ALBUMS",
       pageType: "PAGE_TYPE",
       showRecentSearchBox: "SHOW_RECENT_SEARCH_BOX",
@@ -154,20 +151,19 @@ export default {
       searchFailed: "SEARCH_FAILED",
       albumTracksFailed: "ALBUM_TRACKS_FAILED",
       settings: "GET_SETTINGS",
-      isAppError: "IS_APP_ERROR",
+      isAppError: "IS_APP_ERROR"
     }),
     showRecentSearchBox() {
       return this.$store.state.albumStore.showRecentSearchBox;
     },
     isMobile() {
       return this.$mq === "mobile";
-    },
+    }
   },
   created() {
     this.$store.dispatch(albumStore + "/GET_SETTINGS");
     this.$store.dispatch(albumStore + "/GET_RECENT_SEARCH");
     this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS");
-    this.initialSearchQuery = this.$route.query.keyword;
     window.addEventListener("scroll", this.toggleNavbar);
     window.scrollTo(0, 0);
   },
@@ -176,11 +172,10 @@ export default {
   },
   methods: {
     searchAlbums(query) {
-      console.log(this.initialSearchQuery);
       if (query) {
         const payload = {
           url: `/api/search?term=${query}&entity=album&media=music`,
-          query: query,
+          query: query
         };
         this.$store.dispatch(albumStore + "/SEARCH_ALBUMS", payload);
       }
@@ -204,15 +199,15 @@ export default {
           onConfirm: () => {
             this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
               album: album,
-              status: "unbookmarked",
+              status: "unbookmarked"
             });
             this.$toast.open({
               duration: 3000,
               message: `"${album.collectionCensoredName} album" has been unbookmark!`,
               position: "is-bottom-right",
-              type: "is-danger",
+              type: "is-danger"
             });
-          },
+          }
         });
       } else {
         console.log("before");
@@ -225,7 +220,7 @@ export default {
         // });
         this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
           album: album,
-          status: "bookmark",
+          status: "bookmark"
         });
         console.log("after");
       }
@@ -233,7 +228,7 @@ export default {
     isInBookmark(albumName) {
       return (
         this.bookmarkAlbums.findIndex(
-          (album) => album.collectionCensoredName === albumName
+          album => album.collectionCensoredName === albumName
         ) > -1
       );
     },
@@ -279,8 +274,8 @@ export default {
       } else {
         this.showNavbar = true;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

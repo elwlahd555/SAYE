@@ -26,11 +26,13 @@
             depressed
             fab
             x-large
-            :to="{ name: 'BasicSearch', query: { keyword: keyword } }"
+            @click="setQuery"
+            :to="{ name: 'BasicSearch' }"
           >
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
         </div>
+        {{ $store.state.albumStore.settings }}
       </v-row>
     </v-container>
   </article>
@@ -53,10 +55,14 @@ export default {
       this.scY = window.scrollY;
     },
     enterSearch() {
+      this.$store.state.albumStore.settings.initialSearchQuery = this.keyword;
+      console.log(this.$store.state.albumStore.settings.initialSearchQuery);
       this.$router.push({
-        name: "BasicSearch",
-        query: { keyword: this.keyword }
+        name: "BasicSearch"
       });
+    },
+    setQuery() {
+      this.$store.state.albumStore.settings.initialSearchQuery = this.keyword;
     }
   }
 };

@@ -78,7 +78,7 @@
         </v-col>
       </v-row>
 
-      <v-btn color="warning" @click="$parent.close()"> close </v-btn>
+      <v-btn color="warning" @click="$emit('close')"> close </v-btn>
     </v-container>
   </v-card>
 </template>
@@ -89,8 +89,8 @@ export default {
   props: {
     settings: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   watch: {
     "settings.panelType"(settingValue) {
@@ -107,13 +107,13 @@ export default {
     },
     "settings.initialSearchQuery"(settingValue) {
       this.onClickUpdateSettings("initialSearchQuery", settingValue);
-    },
+    }
   },
   methods: {
     onClickUpdateSettings(settingName, settingValue) {
       this.$emit("clickUpdateSettings", settingName, settingValue);
-    },
-  },
+    }
+  }
 };
 </script>
 
