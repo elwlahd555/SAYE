@@ -17,8 +17,8 @@ public class PlaylistMusicServiceImpl implements PlaylistMusicService {
 	
 	/* C :: 플레이리스트 안에 노래 추가 */
 	@Override
-	public int insertPlaylistMusic(int music, int playlist) throws Exception {
-		return playlistMusicMapper.insertPlaylistMusic(music, playlist);
+	public int insertPlaylistMusic(int pNo, int mNo) throws Exception {
+		return playlistMusicMapper.insertPlaylistMusic(pNo, mNo);
 	}
 	
 	/* R :: 플레이리스트 내 곡 조회 (플레이리스트 상세 조회) */

@@ -34,8 +34,8 @@ public class PlaylistMusicController {
 	
 	/* C :: 플레이리스트 내 곡 추가 */
 	@PostMapping("/add")
-	private ResponseEntity<String> createPlaylistMusic(LikeMusic music, Playlist playlist) throws Exception {
-		if(playlistMusicService.insertPlaylistMusic(music.getLmMNo(), playlist.getpNo()) > 0) {
+	private ResponseEntity<String> createPlaylistMusic(int pNo, int mNo) throws Exception {
+		if(playlistMusicService.insertPlaylistMusic(pNo, mNo) > 0) {
 			return new ResponseEntity<String>("플레이리스트 내 곡 추가 성공", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("플레이리스트 내 곡 추가 실패", HttpStatus.NO_CONTENT);

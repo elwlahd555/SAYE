@@ -8,7 +8,7 @@
 		INSERT into playlist_music
 			(pm_p_no, pm_m_no)
 		VALUES
-			(#{mNo}, #{pNo})
+			(#{pNo}, #{mNo})
 	</insert>
 	
 	<select id="selectPlaylistMusic" parameterType="int" resultType="music">
