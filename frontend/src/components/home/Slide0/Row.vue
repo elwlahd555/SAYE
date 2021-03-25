@@ -59,15 +59,10 @@
 </template>
 
 <script>
-import axios from "@/plugins/movie";
-
 export default {
   props: ["title", "subTitle", "musicList"],
   data: () => ({
     model: null,
-    movies: [],
-    showLoading: true,
-    base_url: "https://image.tmdb.org/t/p/original/",
     videoId: "",
     playerVars: {
       autoplay: 1
@@ -75,17 +70,6 @@ export default {
 
     temp: null
   }),
-  async mounted() {
-    this.showLoading = true;
-    try {
-      const response = await axios.get(this.fetchUrl);
-      this.movies = response.data.results;
-    } catch (error) {
-      console.error(error);
-    } finally {
-      this.showLoading = false;
-    }
-  },
   methods: {
     playLatestMusic: function(videoId) {
       console.log("clicked play");

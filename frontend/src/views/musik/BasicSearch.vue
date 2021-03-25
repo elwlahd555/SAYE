@@ -52,9 +52,9 @@
       </album-list>
       <!-- settings modal -->
       <v-dialog
-        :active.sync="isSettingsModalActive"
-        :canCancel="true"
-        has-modal-card
+        transition="dialog-top-transition"
+        v-model="isSettingsModalActive"
+        max-width="500"
       >
         <the-settings
           :settings="settings"
@@ -124,10 +124,11 @@ export default {
   name: "app",
   data() {
     return {
+      initialSearchQuery: "",
       isSettingsModalActive: false,
       isAlbumTracksModalActive: false,
       windowWidth: window.innerWidth,
-      showNavbar: true
+      showNavbar: true,
     };
   },
   components: {
@@ -136,7 +137,7 @@ export default {
     RecentSearchBox,
     TheSettings,
     AlbumList,
-    AlbumTrackList
+    AlbumTrackList,
   },
   computed: {
     ...mapGetters(albumStore, {
@@ -144,7 +145,7 @@ export default {
       albums: "GET_ALBUMS",
       albumTracks: "GET_ALBUM_TRACKS",
       searchQuery: "SEARCH_QUERY",
-      initialSearchQuery: "INITIAL_SEARCH_QUERY",
+      //initialSearchQuery: "INITIAL_SEARCH_QUERY",
       bookmarkAlbums: "BOOKMARK_ALBUMS",
       pageType: "PAGE_TYPE",
       showRecentSearchBox: "SHOW_RECENT_SEARCH_BOX",
@@ -153,19 +154,20 @@ export default {
       searchFailed: "SEARCH_FAILED",
       albumTracksFailed: "ALBUM_TRACKS_FAILED",
       settings: "GET_SETTINGS",
-      isAppError: "IS_APP_ERROR"
+      isAppError: "IS_APP_ERROR",
     }),
     showRecentSearchBox() {
       return this.$store.state.albumStore.showRecentSearchBox;
     },
     isMobile() {
       return this.$mq === "mobile";
-    }
+    },
   },
   created() {
     this.$store.dispatch(albumStore + "/GET_SETTINGS");
     this.$store.dispatch(albumStore + "/GET_RECENT_SEARCH");
     this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS");
+    this.initialSearchQuery = this.$route.query.keyword;
     window.addEventListener("scroll", this.toggleNavbar);
     window.scrollTo(0, 0);
   },
@@ -174,10 +176,11 @@ export default {
   },
   methods: {
     searchAlbums(query) {
+      console.log(this.initialSearchQuery);
       if (query) {
         const payload = {
           url: `/api/search?term=${query}&entity=album&media=music`,
-          query: query
+          query: query,
         };
         this.$store.dispatch(albumStore + "/SEARCH_ALBUMS", payload);
       }
@@ -201,15 +204,15 @@ export default {
           onConfirm: () => {
             this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
               album: album,
-              status: "unbookmarked"
+              status: "unbookmarked",
             });
             this.$toast.open({
               duration: 3000,
               message: `"${album.collectionCensoredName} album" has been unbookmark!`,
               position: "is-bottom-right",
-              type: "is-danger"
+              type: "is-danger",
             });
-          }
+          },
         });
       } else {
         console.log("before");
@@ -222,7 +225,7 @@ export default {
         // });
         this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
           album: album,
-          status: "bookmark"
+          status: "bookmark",
         });
         console.log("after");
       }
@@ -230,7 +233,7 @@ export default {
     isInBookmark(albumName) {
       return (
         this.bookmarkAlbums.findIndex(
-          album => album.collectionCensoredName === albumName
+          (album) => album.collectionCensoredName === albumName
         ) > -1
       );
     },
@@ -276,8 +279,8 @@ export default {
       } else {
         this.showNavbar = true;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

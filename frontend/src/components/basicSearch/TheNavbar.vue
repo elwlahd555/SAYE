@@ -6,115 +6,119 @@
   >
     <v-container>
       <v-row>
-        <v-col>
-          <div @click="onClickTitle">
-            <h2>일반 검색</h2>
-          </div>
+        <v-col class="d-flex align-self-center" @click="onClickTitle">
+          <div class="title white--text font-weight-medium">일반 검색</div>
         </v-col>
         <v-spacer></v-spacer>
-        <v-col>
-          <div class="navbar-item">
-            <div class="buttons">
-              <div
-                class="icon is-large nav-icon"
-                v-if="recentSearch.length > 0"
-              >
-                <v-tooltip
-                  :label="`${recentSearch.length} recent search`"
-                  color="teal"
-                  bottom
-                  :active="!isMobile"
+        <v-col class="text-right">
+          <div>
+            <!-- ====================================== 최근 검색 기록 ====================================== -->
+            <v-tooltip bottom :active="!isMobile">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  x-large
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                  v-if="recentSearch.length > 0"
                 >
-                  <i
+                  <v-icon
                     @click="onClickToggleRecentSearchBox"
-                    class="fas fa-history fa-2x"
                     :class="{ 'icon-active': showRecentSearchBox }"
-                  ></i>
-                </v-tooltip>
-                <span class="badge" v-if="recentSearch.length > 0">{{
-                  recentSearch.length
-                }}</span>
-              </div>
-              <span class="icon is-large nav-icon">
-                <v-tooltip
-                  v-if="
-                    pageType === 'bookmarks' ||
-                      isMobile ||
-                      bookmarkAlbums.length === 0
-                  "
-                  color="teal"
-                  :label="`${bookmarkAlbums.length} album bookmarks`"
-                  bottom
-                  :active="!isMobile"
-                >
-                  <i
-                    @click="onClickShowBookmarks"
-                    class="fas fa-2x"
-                    :class="[
-                      { 'icon-active': pageType === 'bookmarks' },
-                      settings.bookmarkIcon
-                    ]"
-                  ></i>
-                </v-tooltip>
-                <!-- Dropdown -->
-                <v-menu v-else hoverable position="is-bottom-left">
-                  <i
-                    slot="trigger"
-                    @click="onClickShowBookmarks"
-                    class="fas fa-2x"
-                    :class="[
-                      { 'icon-active': pageType === 'bookmarks' },
-                      settings.bookmarkIcon
-                    ]"
-                  ></i>
-                  <v-list>
-                    <v-list-item
-                      v-for="(album, index) in latestBookmarkAlbums"
-                      :key="index"
-                      @click="onClickAlbumName(album.collectionId)"
-                    >
-                      <article class="media">
-                        <figure class="media-left">
-                          <p class="image is-64x64 ">
-                            <img :src="album.artworkUrl100" />
-                          </p>
-                        </figure>
-                        <div class="media-content  overflow-content">
-                          <div class="content ">
-                            <p>
-                              <strong>{{
-                                album.collectionCensoredName
-                              }}</strong>
-                              <br />
-                              {{ album.artistName }}
-                            </p>
-                          </div>
-                        </div>
-                      </article>
-                    </v-list-item>
-                    <v-list-item
-                      class="has-text-centered"
-                      v-if="bookmarkAlbums.length > 5"
+                    >mdi-history</v-icon
+                  >
+
+                  <span class="badge" v-if="recentSearch.length > 0">
+                    {{ recentSearch.length }}
+                  </span>
+                </v-btn>
+              </template>
+              <span> 최근 검색 {{ recentSearch.length }} </span>
+            </v-tooltip>
+
+            <!-- ====================================== 북마크 ====================================== -->
+            <span>
+              <v-tooltip
+                bottom
+                :active="!isMobile"
+                v-if="
+                  pageType === 'bookmarks' ||
+                  isMobile ||
+                  bookmarkAlbums.length === 0
+                "
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon x-large dark v-bind="attrs" v-on="on">
+                    <v-icon
                       @click="onClickShowBookmarks"
-                      >View All
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-                <span class="badge" v-if="bookmarkAlbums.length > 0">{{
-                  bookmarkAlbums.length
-                }}</span>
-              </span>
-              <span class="icon is-large nav-icon">
-                <v-tooltip
-                  color="teal"
-                  label="Settings"
-                  bottom
-                  :active="!isMobile"
-                >
-                  <i @click="onClickSettings" class="fas fa-cog fa-2x"></i>
-                </v-tooltip>
-              </span>
-            </div>
+                      :class="[
+                        { 'icon-active': pageType === 'bookmarks' },
+                        settings.bookmarkIcon,
+                      ]"
+                      >mdi-history</v-icon
+                    >
+
+                    <span class="badge" v-if="bookmarkAlbums.length > 0">
+                      {{ bookmarkAlbums.length }}
+                    </span>
+                  </v-btn>
+                </template>
+                <span> 북마크 {{ bookmarkAlbums.length }}</span>
+              </v-tooltip>
+
+              <v-menu v-else open-on-hover bottom>
+                <i
+                  slot="trigger"
+                  @click="onClickShowBookmarks"
+                  class="fas fa-2x"
+                  :class="[
+                    { 'icon-active': pageType === 'bookmarks' },
+                    settings.bookmarkIcon,
+                  ]"
+                ></i>
+                <v-list>
+                  <v-list-item
+                    v-for="(album, index) in latestBookmarkAlbums"
+                    :key="index"
+                    @click="onClickAlbumName(album.collectionId)"
+                  >
+                    <article class="media">
+                      <figure class="media-left">
+                        <p class="image is-64x64">
+                          <img :src="album.artworkUrl100" />
+                        </p>
+                      </figure>
+                      <div class="media-content overflow-content">
+                        <div class="content">
+                          <p>
+                            <strong>{{ album.collectionCensoredName }}</strong>
+                            <br />
+                            {{ album.artistName }}
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  </v-list-item>
+                  <v-list-item
+                    class="has-text-centered"
+                    v-if="bookmarkAlbums.length > 5"
+                    @click="onClickShowBookmarks"
+                    >View All
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </span>
+
+            <!-- ====================================== 검색 설정 ====================================== -->
+            <v-tooltip bottom :active="!isMobile">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon x-large dark v-bind="attrs" v-on="on">
+                  <v-icon @click="onClickSettings"> mdi-settings </v-icon>
+                </v-btn>
+              </template>
+              <span>검색 설정</span>
+            </v-tooltip>
           </div>
         </v-col>
       </v-row>
@@ -128,33 +132,33 @@ export default {
   props: {
     showRecentSearchBox: {
       type: Boolean,
-      required: true
+      required: true,
     },
     recentSearch: {
       type: Array,
-      required: true
+      required: true,
     },
     pageType: {
       type: String,
-      required: true
+      required: true,
     },
     bookmarkAlbums: {
       type: Array,
-      required: true
+      required: true,
     },
     settings: {
       type: Object,
-      required: true
+      required: true,
     },
     isMobile: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     latestBookmarkAlbums() {
       return this.bookmarkAlbums.slice(0, 5);
-    }
+    },
   },
   methods: {
     onClickToggleRecentSearchBox() {
@@ -171,8 +175,8 @@ export default {
     },
     onClickAlbumName(albumId) {
       this.$emit("clickAlbumName", albumId);
-    }
-  }
+    },
+  },
 };
 </script>
 

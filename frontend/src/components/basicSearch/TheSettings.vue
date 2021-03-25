@@ -1,121 +1,86 @@
 <template>
-  <div class="modal-card" style="width: auto; max-width: 480px;">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Settings</p>
-    </header>
-    <section class="modal-card-body">
-      <div class="columns is-multiline">
-        <div class="column is-6">
+  <v-card>
+    <v-toolbar>
+      <v-card-title>Settings</v-card-title>
+    </v-toolbar>
+    <v-container>
+      <v-row>
+        <v-col cols="6">
           <label>Initial Search Query</label>
-        </div>
-        <div class="column is-6">
-          <v-input v-model="settings.initialSearchQuery"></v-input>
-        </div>
-        <div class="column is-6">
+        </v-col>
+        <v-col cols="6">
+          <v-text-field
+            filled
+            dense
+            v-model="settings.initialSearchQuery"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="6">
           <label>Panel Type</label>
-        </div>
-        <div class="column is-6">
-          <v-radio-group>
-            <v-radio
-              v-model="settings.panelType"
-              native-value="card"
-              type="is-primary"
-            >
+        </v-col>
+        <v-col cols="6">
+          <v-radio-group v-model="settings.panelType" row mandatory>
+            <v-radio label="card" color="indigo">
               <v-icon>mdi-dots-grid</v-icon>
               <span>Card</span>
             </v-radio>
-            <v-radio
-              v-model="settings.panelType"
-              native-value="media"
-              type="is-primary"
-            >
+            <v-radio label="media" color="indigo">
               <v-icon>mdi-view-list</v-icon>
               <span>Media</span>
             </v-radio>
           </v-radio-group>
-        </div>
-        <div class="column is-6">
+        </v-col>
+        <v-col cols="6">
           <label>Bookmark Icon</label>
-        </div>
-        <div class="column is-6">
-          <v-radio-group>
-            <v-radio
-              v-model="settings.bookmarkIcon"
-              native-value="fa-heart"
-              type="is-primary"
-            >
+        </v-col>
+        <v-col cols="6">
+          <v-radio-group v-model="settings.bookmarkIcon" row mandatory>
+            <v-radio label="heart" append-icon="mdi-heart">
               <v-icon>mdi-heart</v-icon>
               <span>Heart</span>
             </v-radio>
-            <v-radio
-              v-model="settings.bookmarkIcon"
-              native-value="fa-star"
-              type="is-primary"
-            >
+            <v-radio label="star">
               <v-icon>mdi-star</v-icon>
               <span>Star</span>
             </v-radio>
           </v-radio-group>
-        </div>
-        <div class="column is-6">
+        </v-col>
+        <v-col cols="6">
           <label>Search on youtube icon</label>
-        </div>
-        <div class="column is-6">
-          <v-radio-group>
-            <v-radio
-              v-model="settings.youtubeLink"
-              native-value="true"
-              type="is-primary"
-            >
+        </v-col>
+        <v-col cols="6">
+          <v-radio-group v-model="settings.youtubeLink" row mandatory>
+            <v-radio label="Show" color="red darken-2">
               <v-icon>mdi-eye-outline</v-icon>
               <span>Show</span>
             </v-radio>
-            <v-radio
-              v-model="settings.youtubeLink"
-              native-value="false"
-              type="is-primary"
-            >
+            <v-radio label="Hide" color="red darken-2">
               <v-icon>mdi-eye-off-outline</v-icon>
               <span>Hide</span>
             </v-radio>
           </v-radio-group>
-        </div>
-        <div class="column is-6">
+        </v-col>
+        <v-col cols="6">
           <label>Search Results Per Page</label>
-        </div>
-        <div class="column is-6">
-          <v-radio-group>
-            <v-radio
-              v-model="settings.perPage"
-              native-value="20"
-              type="is-primary"
-            >
+        </v-col>
+        <v-col cols="6">
+          <v-radio-group v-model="settings.perPage" row mandatory>
+            <v-radio label="20" color="lime">
               <span>20</span>
             </v-radio>
-            <v-radio
-              v-model="settings.perPage"
-              native-value="40"
-              type="is-primary"
-            >
+            <v-radio label="40" color="lime">
               <span>40</span>
             </v-radio>
-            <v-radio
-              v-model="settings.perPage"
-              native-value="60"
-              type="is-primary"
-            >
+            <v-radio label="60" color="lime">
               <span>60</span>
             </v-radio>
           </v-radio-group>
-        </div>
-      </div>
-    </section>
-    <footer class="modal-card-foot">
-      <button class="button" type="button" @click="$parent.close()">
-        Close
-      </button>
-    </footer>
-  </div>
+        </v-col>
+      </v-row>
+
+      <v-btn color="warning" @click="$parent.close()"> close </v-btn>
+    </v-container>
+  </v-card>
 </template>
 
 <script>
@@ -124,8 +89,8 @@ export default {
   props: {
     settings: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   watch: {
     "settings.panelType"(settingValue) {
@@ -142,13 +107,13 @@ export default {
     },
     "settings.initialSearchQuery"(settingValue) {
       this.onClickUpdateSettings("initialSearchQuery", settingValue);
-    }
+    },
   },
   methods: {
     onClickUpdateSettings(settingName, settingValue) {
       this.$emit("clickUpdateSettings", settingName, settingValue);
-    }
-  }
+    },
+  },
 };
 </script>
 

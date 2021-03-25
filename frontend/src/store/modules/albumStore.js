@@ -5,7 +5,7 @@ const albumStore = {
   namespaced: true,
   state: {
     settings: {
-      initialSearchQuery: "",
+      initialSearchQuery: '',
       searchQuery: "",
       panelType: "card",
       bookmarkIcon: "fa-star",
