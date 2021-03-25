@@ -14,13 +14,13 @@
 	<select id="selectLikeMusic" parameterType="int" resultType="music">
 		SELECT *
 		  FROM music
-		 WHERE m_no = (select lm_m_no from like_music where lm_u_no = #{uNo});
+		 WHERE m_no in (select lm_m_no from like_music where lm_u_no = #{lmUNo});
 	</select>
 
 	<delete id="deleteLikeMusic">
 		DELETE
 		  FROM like_music
-		 WHERE p_no = #{pNo}
+		 WHERE lm_m_no = #{lmMNo} and lm_u_no = #{lmUNo}
 	</delete>
 	
 </mapper>
