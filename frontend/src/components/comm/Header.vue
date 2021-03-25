@@ -1,6 +1,6 @@
 <template>
   <v-app-bar class="mt-5 px-10" color="white" flat elevate-on-scroll>
-    <router-link to="/" style="margin-top: 10px">
+    <router-link to="/home" style="margin-top: 10px">
       <v-img height="50" width="150" src="@/assets/saye_logo.jpg"></v-img>
     </router-link>
 

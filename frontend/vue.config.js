@@ -6,5 +6,15 @@ module.exports = {
       return args;
     });
   },
+  outputDir: "dist",
+  devServer: {
+    proxy: {
+      "/api/": {
+        target: "https://itunes.apple.com",
+        changeOrigin: true,
+        pathRewrite: { "^/api/": "" }
+      }
+    }
+  },
   productionSourceMap: false
 };

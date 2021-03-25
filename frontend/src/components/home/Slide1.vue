@@ -11,14 +11,22 @@
           </p>
         </div>
         <div class="searchBox" v-show="scY > 80">
-          <input class="searchInput" type="text" name="" :placeholder="text" />
+          <input
+            class="searchInput"
+            type="text"
+            name=""
+            :placeholder="text"
+            v-model="keyword"
+            @keyup.enter="enterSearch"
+          />
+
           <v-btn
             class="searchButton"
             color="#d1ebd9"
             depressed
             fab
             x-large
-            :to="{ name: 'BasicSearch' }"
+            :to="{ name: 'BasicSearch', query: { keyword: keyword } }"
           >
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
@@ -33,15 +41,22 @@ export default {
   data() {
     return {
       scY: 0,
-      text: "음악을 검색 (버튼 클릭!) ==>"
+      text: "음악을 검색 (버튼 클릭!) ==>",
+      keyword: ""
     };
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
-    handleScroll: function() {
+    handleScroll() {
       this.scY = window.scrollY;
+    },
+    enterSearch() {
+      this.$router.push({
+        name: "BasicSearch",
+        query: { keyword: this.keyword }
+      });
     }
   }
 };

@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
+import albumStore from "./modules/albumStore";
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -9,6 +11,9 @@ export const store = new Vuex.Store({
     // storage 에 넣어준당
     createPersistedState()
   ],
+  modules: {
+    albumStore
+  },
   state: {
     // social
     isLogin: false,
