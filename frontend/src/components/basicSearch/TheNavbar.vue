@@ -4,113 +4,121 @@
     role="navigation"
     aria-label="main navigation"
   >
-    <div class="container">
-      <div class="navbar-brand is-inline-flex-mobile is-inline-flex-tablet">
-        <div class="navbar-item" @click="onClickTitle">
-          <h2 class="is-size-3-desktop is-size-4-mobile">일반 검색</h2>
-        </div>
-      </div>
-      <div class="navbar-end is-inline-flex-mobile is-inline-flex-tablet">
-        <div class="navbar-item">
-          <div class="buttons">
-            <div class="icon is-large nav-icon" v-if="recentSearch.length > 0">
-              <v-tooltip
-                type="is-light"
-                :label="`${recentSearch.length} recent search`"
-                position="is-bottom"
-                :active="!isMobile"
-              >
-                <i
-                  @click="onClickToggleRecentSearchBox"
-                  class="fas fa-history fa-2x"
-                  :class="{ 'icon-active': showRecentSearchBox }"
-                ></i>
-              </v-tooltip>
-              <span class="badge" v-if="recentSearch.length > 0">{{
-                recentSearch.length
-              }}</span>
-            </div>
-            <span class="icon is-large nav-icon">
-              <v-tooltip
-                v-if="
-                  pageType === 'bookmarks' ||
-                    isMobile ||
-                    bookmarkAlbums.length === 0
-                "
-                type="is-light"
-                :label="`${bookmarkAlbums.length} album bookmarks`"
-                position="is-bottom"
-                :active="!isMobile"
-              >
-                <i
-                  @click="onClickShowBookmarks"
-                  class="fas fa-2x"
-                  :class="[
-                    { 'icon-active': pageType === 'bookmarks' },
-                    settings.bookmarkIcon
-                  ]"
-                ></i>
-              </v-tooltip>
-              <!-- Dropdown -->
-              <v-menu v-else hoverable position="is-bottom-left">
-                <i
-                  slot="trigger"
-                  @click="onClickShowBookmarks"
-                  class="fas fa-2x"
-                  :class="[
-                    { 'icon-active': pageType === 'bookmarks' },
-                    settings.bookmarkIcon
-                  ]"
-                ></i>
-                <v-list>
-                  <v-list-item
-                    v-for="(album, index) in latestBookmarkAlbums"
-                    :key="index"
-                    @click="onClickAlbumName(album.collectionId)"
-                  >
-                    <article class="media">
-                      <figure class="media-left">
-                        <p class="image is-64x64 ">
-                          <img :src="album.artworkUrl100" />
-                        </p>
-                      </figure>
-                      <div class="media-content  overflow-content">
-                        <div class="content ">
-                          <p>
-                            <strong>{{ album.collectionCensoredName }}</strong>
-                            <br />
-                            {{ album.artistName }}
-                          </p>
-                        </div>
-                      </div>
-                    </article>
-                  </v-list-item>
-                  <v-list-item
-                    class="has-text-centered"
-                    v-if="bookmarkAlbums.length > 5"
-                    @click="onClickShowBookmarks"
-                    >View All
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-              <span class="badge" v-if="bookmarkAlbums.length > 0">{{
-                bookmarkAlbums.length
-              }}</span>
-            </span>
-            <span class="icon is-large nav-icon">
-              <v-tooltip
-                type="is-light"
-                label="Settings"
-                position="is-bottom"
-                :active="!isMobile"
-              >
-                <i @click="onClickSettings" class="fas fa-cog fa-2x"></i>
-              </v-tooltip>
-            </span>
+    <v-container>
+      <v-row>
+        <v-col>
+          <div @click="onClickTitle">
+            <h2>일반 검색</h2>
           </div>
-        </div>
-      </div>
-    </div>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col>
+          <div class="navbar-item">
+            <div class="buttons">
+              <div
+                class="icon is-large nav-icon"
+                v-if="recentSearch.length > 0"
+              >
+                <v-tooltip
+                  :label="`${recentSearch.length} recent search`"
+                  color="teal"
+                  bottom
+                  :active="!isMobile"
+                >
+                  <i
+                    @click="onClickToggleRecentSearchBox"
+                    class="fas fa-history fa-2x"
+                    :class="{ 'icon-active': showRecentSearchBox }"
+                  ></i>
+                </v-tooltip>
+                <span class="badge" v-if="recentSearch.length > 0">{{
+                  recentSearch.length
+                }}</span>
+              </div>
+              <span class="icon is-large nav-icon">
+                <v-tooltip
+                  v-if="
+                    pageType === 'bookmarks' ||
+                      isMobile ||
+                      bookmarkAlbums.length === 0
+                  "
+                  color="teal"
+                  :label="`${bookmarkAlbums.length} album bookmarks`"
+                  bottom
+                  :active="!isMobile"
+                >
+                  <i
+                    @click="onClickShowBookmarks"
+                    class="fas fa-2x"
+                    :class="[
+                      { 'icon-active': pageType === 'bookmarks' },
+                      settings.bookmarkIcon
+                    ]"
+                  ></i>
+                </v-tooltip>
+                <!-- Dropdown -->
+                <v-menu v-else hoverable position="is-bottom-left">
+                  <i
+                    slot="trigger"
+                    @click="onClickShowBookmarks"
+                    class="fas fa-2x"
+                    :class="[
+                      { 'icon-active': pageType === 'bookmarks' },
+                      settings.bookmarkIcon
+                    ]"
+                  ></i>
+                  <v-list>
+                    <v-list-item
+                      v-for="(album, index) in latestBookmarkAlbums"
+                      :key="index"
+                      @click="onClickAlbumName(album.collectionId)"
+                    >
+                      <article class="media">
+                        <figure class="media-left">
+                          <p class="image is-64x64 ">
+                            <img :src="album.artworkUrl100" />
+                          </p>
+                        </figure>
+                        <div class="media-content  overflow-content">
+                          <div class="content ">
+                            <p>
+                              <strong>{{
+                                album.collectionCensoredName
+                              }}</strong>
+                              <br />
+                              {{ album.artistName }}
+                            </p>
+                          </div>
+                        </div>
+                      </article>
+                    </v-list-item>
+                    <v-list-item
+                      class="has-text-centered"
+                      v-if="bookmarkAlbums.length > 5"
+                      @click="onClickShowBookmarks"
+                      >View All
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+                <span class="badge" v-if="bookmarkAlbums.length > 0">{{
+                  bookmarkAlbums.length
+                }}</span>
+              </span>
+              <span class="icon is-large nav-icon">
+                <v-tooltip
+                  color="teal"
+                  label="Settings"
+                  bottom
+                  :active="!isMobile"
+                >
+                  <i @click="onClickSettings" class="fas fa-cog fa-2x"></i>
+                </v-tooltip>
+              </span>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </nav>
 </template>
 

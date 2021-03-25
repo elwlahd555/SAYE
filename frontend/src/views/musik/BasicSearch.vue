@@ -51,7 +51,7 @@
       >
       </album-list>
       <!-- settings modal -->
-      <b-modal
+      <v-dialog
         :active.sync="isSettingsModalActive"
         :canCancel="true"
         has-modal-card
@@ -61,9 +61,9 @@
           @clickUpdateSettings="updateSettings"
         >
         </the-settings>
-      </b-modal>
+      </v-dialog>
       <!-- album tracklist modal -->
-      <b-modal
+      <v-dialog
         :active.sync="isAlbumTracksModalActive"
         :canCancel="true"
         has-modal-card
@@ -104,7 +104,7 @@
           :isMobile="isMobile"
         >
         </album-track-list>
-      </b-modal>
+      </v-dialog>
     </main>
   </div>
 </template>

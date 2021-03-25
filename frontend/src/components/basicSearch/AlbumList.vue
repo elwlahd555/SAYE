@@ -22,7 +22,7 @@
           </span>
         </div>
         <div class="column is-1 has-text-left">
-          <b-tooltip
+          <v-tooltip
             type="is-light"
             label="switch panel view"
             position="is-top"
@@ -33,7 +33,7 @@
               class="fas  fa-lg"
               :class="[settings.panelType === 'card' ? 'fa-th-list' : 'fa-th']"
             ></i>
-          </b-tooltip>
+          </v-tooltip>
         </div>
       </div>
       <!-- Album List -->
@@ -90,17 +90,17 @@
                   target="_blank"
                   class="card-footer-item"
                 >
-                  <b-tooltip
+                  <v-tooltip
                     type="is-light"
                     label="Download on iTunes"
                     position="is-top"
                     :active="!isMobile"
                   >
                     <i class="fab fa-itunes-note"></i>
-                  </b-tooltip>
+                  </v-tooltip>
                 </a>
                 <span class="heart card-footer-item">
-                  <b-tooltip
+                  <v-tooltip
                     type="is-light"
                     :label="
                       isInBookmark(album.collectionCensoredName)
@@ -120,7 +120,7 @@
                         settings.bookmarkIcon
                       ]"
                     ></i>
-                  </b-tooltip>
+                  </v-tooltip>
                 </span>
                 <a
                   v-if="settings.youtubeLink === 'true'"
@@ -130,14 +130,14 @@
                   target="_blank"
                   class="card-footer-item"
                 >
-                  <b-tooltip
+                  <v-tooltip
                     type="is-light"
                     label="search on youtube"
                     position="is-top"
                     :active="!isMobile"
                   >
                     <i class="fab fa-youtube"></i>
-                  </b-tooltip>
+                  </v-tooltip>
                 </a>
               </footer>
             </div>
@@ -179,17 +179,17 @@
                       :href="album.collectionViewUrl"
                       target="_blank"
                     >
-                      <b-tooltip
+                      <v-tooltip
                         type="is-light"
                         label="Download on iTunes"
                         position="is-top"
                         :active="!isMobile"
                       >
                         <i class="fab fa-itunes-note"></i>
-                      </b-tooltip>
+                      </v-tooltip>
                     </a>
                     <a class="level-item">
-                      <b-tooltip
+                      <v-tooltip
                         type="is-light"
                         :label="
                           isInBookmark(album.collectionCensoredName)
@@ -211,7 +211,7 @@
                             settings.bookmarkIcon
                           ]"
                         ></i>
-                      </b-tooltip>
+                      </v-tooltip>
                     </a>
                     <a
                       v-if="settings.youtubeLink === 'true'"
@@ -221,14 +221,14 @@
                       "
                       target="_blank"
                     >
-                      <b-tooltip
+                      <v-tooltip
                         type="is-light"
                         label="search on youtube"
                         position="is-top"
                         :active="!isMobile"
                       >
                         <i class="fab fa-youtube"></i>
-                      </b-tooltip>
+                      </v-tooltip>
                     </a>
                   </div>
                 </div>
@@ -240,11 +240,12 @@
       <!-- Loading animation -->
       <div class="columns is-mobile" v-if="isAlbumLoading">
         <div class="column loading">
-          <b-loading
+          <v-progress-circular
             :is-full-page="false"
             :active.sync="isAlbumLoading"
             :can-cancel="false"
-          ></b-loading>
+            indeterminate
+          ></v-progress-circular>
         </div>
       </div>
       <!-- Pagination -->
@@ -254,7 +255,7 @@
       >
         <div class="column is-12" v-if="albums.length > 0">
           <hr />
-          <b-pagination
+          <v-pagination
             :total="albums.length"
             :current.sync="current"
             :order="order"
@@ -263,7 +264,7 @@
             :rounded="isRounded"
             :per-page="settings.perPage"
           >
-          </b-pagination>
+          </v-pagination>
         </div>
       </div>
       <!-- No Bookmark message-->

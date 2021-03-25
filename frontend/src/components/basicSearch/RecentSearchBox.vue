@@ -7,9 +7,9 @@
             <div class="title block is-6 has-text-grey-light has-text-centered">
               Search History
             </div>
-            <b-field grouped group-multiline class="has-text-centered">
+            <v-chip-group>
               <div class="control" v-for="(item, i) in recentSearch" :key="i">
-                <b-tag
+                <v-chip
                   type="is-primary"
                   size="is-small"
                   closable
@@ -21,9 +21,9 @@
                   >
                     {{ item }}
                   </span>
-                </b-tag>
+                </v-chip>
               </div>
-            </b-field>
+            </v-chip-group>
           </div>
         </div>
       </div>
