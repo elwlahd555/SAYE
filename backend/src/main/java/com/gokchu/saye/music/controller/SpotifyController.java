@@ -105,7 +105,7 @@ public class SpotifyController {
 	@GetMapping("/genre")
 	public List<Music> getRecommendations_Sync(String genre) {
 		GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
-	          .limit(10)
+	          .limit(100)
 			.market(CountryCode.KR)
 //	          .max_popularity(50)
 	          .min_popularity(50)
@@ -149,7 +149,10 @@ public class SpotifyController {
 						genres=genres.concat(artist.getGenres()[j]).concat(",");
 					}
 				}
-				genres=genres.substring(0, genres.length()-1);
+				if(genres.length()>0) {
+					genres=genres.substring(0, genres.length()-1);
+					
+				}
 				music.setmGenre(genres);
 				//가수
 				music.setmArtist(track.getArtists()[0].getName());
@@ -171,17 +174,22 @@ public class SpotifyController {
 				music.setmEmotion(genre);
 				//발매일
 				music.setmDate(track.getAlbum().getReleaseDate());
+				String date=track.getAlbum().getReleaseDate().substring(0, 4);
+//				System.out.println(date);
 //				System.out.println("트랙정보"+track.toString());
-				if(music.getmPreview()!=null) {
-					spotifyService.insertMusic(music);
-					musics.add(music);
-					
+				if(music.getmPreview()!=null) {	//happy, pop, sad, rock
+					if(Integer.parseInt(date)>=2010) {
+						spotifyService.insertMusic(music);
+						musics.add(music);
+						
+						System.out.println("제목 : " + recommendations.getTracks()[i].getName() + " 가수 : "
+								+ recommendations.getTracks()[i].getArtists()[0].getName() + " 미리듣기 : "
+								+ recommendations.getTracks()[i].getPreviewUrl() + " 인기도: "
+								+ track.getPopularity());
+						
+					}
 				}
-				System.out.println("제목 : " + recommendations.getTracks()[i].getName() + " 가수 : "
-						+ recommendations.getTracks()[i].getArtists()[0].getName() + " 미리듣기 : "
-						+ recommendations.getTracks()[i].getPreviewUrl() + " 인기도: "
-						+ track.getPopularity());
-				System.out.println("발매일 : "+track.getAlbum().getReleaseDate());
+//				System.out.println("발매일 : "+track.getAlbum().getReleaseDate());
 			}
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
 			System.out.println("Error: " + e.getMessage());
