@@ -23,8 +23,31 @@ public class Music {
 	private int mCnt;
 	private String mEmotion;
 	private String mDate;
-	
-	
+	private String mUrl;
+	public Music() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Music(int mNo, String mTitle, String mGenre, String mArtist, String mAlbum, String mPreview, String mImg,
+			String mPopularity, String mId, String mArtistId, String mAlbumId, int mCnt, String mEmotion, String mDate,
+			String mUrl) {
+		super();
+		this.mNo = mNo;
+		this.mTitle = mTitle;
+		this.mGenre = mGenre;
+		this.mArtist = mArtist;
+		this.mAlbum = mAlbum;
+		this.mPreview = mPreview;
+		this.mImg = mImg;
+		this.mPopularity = mPopularity;
+		this.mId = mId;
+		this.mArtistId = mArtistId;
+		this.mAlbumId = mAlbumId;
+		this.mCnt = mCnt;
+		this.mEmotion = mEmotion;
+		this.mDate = mDate;
+		this.mUrl = mUrl;
+	}
 	public int getmNo() {
 		return mNo;
 	}
@@ -109,7 +132,11 @@ public class Music {
 	public void setmDate(String mDate) {
 		this.mDate = mDate;
 	}
-	
-	
+	public String getmUrl() {
+		return mUrl;
+	}
+	public void setmUrl(String mUrl) {
+		this.mUrl = mUrl;
+	}
 	
 }
