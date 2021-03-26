@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-container fluid>
-      <speech-to-text @speechend="speechEnd"></speech-to-text>
-    </v-container>
-    <div style="text-align: center">{{ sentences }}</div>
+    <speech-to-text />
   </div>
 </template>
 
@@ -14,17 +11,15 @@ export default {
   components: {
     SpeechToText
   },
-  updated() {
-    let item = this.sentences;
-    this.$store.commit("SET_CAMERA_ITEM", { item }); //아이템 넣어주고
-  },
   data() {
     return {
-      sentences: ""
+      text: "",
+      sentences: null
     };
   },
   methods: {
-    speechEnd({ sentences }) {
+    speechEnd({ sentences, text }) {
+      console.log("text", text);
       console.log("sentences", sentences);
       this.sentences = sentences;
     }
@@ -32,10 +27,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.btn {
-  font-weight: 50px;
-  width: 50%;
-  min-height: 250px;
-}
-</style>
+<style></style>
