@@ -1,8 +1,37 @@
 <template>
   <div>
-    <v-btn class="btn" style="font-size: 30px" @click="startSpeechRecognition"
-      >speech</v-btn
-    >
+    <v-card>
+      <v-card-text>
+        <v-layout row wrap justify-space-around>
+          <v-flex xs8 sm9 text-xs-center>
+            <p v-if="error" class="grey--text">{{ error }}</p>
+            <p v-else class="mb-0">
+              <ul v-if="sentences.length > 0">
+              <span
+                v-for="sentence in sentences"
+                :key="sentence"
+                >{{ sentence }}. </span
+              >
+              </ul>
+              <span>{{ runtimeTranscription }}</span>
+            </p>
+          </v-flex>
+          <v-flex xs2 sm1 text-xs-center>
+            <v-btn
+              dark
+              @click.stop="
+                toggle ? endSpeechRecognition() : startSpeechRecognition()
+              "
+              icon
+              :color="!toggle ? 'grey' : speaking ? 'red' : 'red darken-3'"
+              :class="{ 'animated infinite pulse': toggle }"
+            >
+              <v-icon>{{ toggle ? "mic_off" : "mic" }}</v-icon>
+            </v-btn>
+          </v-flex>
+        </v-layout>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
@@ -11,13 +40,14 @@ let SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = SpeechRecognition ? new SpeechRecognition() : false;
 export default {
-  updated() {
-    this.startSpeechRecognition();
-  },
   props: {
     lang: {
       type: String,
       default: "ko-KR"
+    },
+    text: {
+      type: [String, null],
+      required: false
     }
   },
   data() {
@@ -38,11 +68,13 @@ export default {
     },
     endSpeechRecognition() {
       recognition.stop();
-      this.sentences.pop();
       this.toggle = false;
       this.$emit("speechend", {
-        sentences: this.sentences
+        sentences: this.sentences,
+        text: this.sentences.join(". ")
       });
+      // console.log(this.text);
+      console.log(this.sentences);
     },
     startSpeechRecognition() {
       if (!recognition) {
@@ -52,7 +84,6 @@ export default {
       }
       this.toggle = true;
       recognition.lang = this.lang;
-      recognition.continuous = true;
       recognition.interimResults = true;
 
       recognition.addEventListener("speechstart", () => {
@@ -63,15 +94,12 @@ export default {
         this.speaking = false;
       });
 
-      recognition.addEventListener("result", () => {
+      recognition.addEventListener("result", event => {
         const text = Array.from(event.results)
           .map(result => result[0])
           .map(result => result.transcript)
           .join("");
-
         this.runtimeTranscription = text;
-
-        this.endSpeechRecognition();
       });
 
       recognition.addEventListener("end", () => {
@@ -80,7 +108,7 @@ export default {
             this.capitalizeFirstLetter(this.runtimeTranscription)
           );
           this.$emit(
-            'update:text',
+            "update:text",
             `${this.text}${this.sentences.slice(-1)[0]}. `
           );
         }
