@@ -32,7 +32,6 @@
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
         </div>
-        {{ $store.state.albumStore.settings }}
       </v-row>
     </v-container>
   </article>

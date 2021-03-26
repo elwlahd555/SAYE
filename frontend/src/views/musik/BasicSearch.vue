@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <h1>hi {{ $store.state.albumStore.settings }}</h1>
     <div class="nav-search">
       <the-navbar
         v-show="showNavbar"
