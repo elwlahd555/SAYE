@@ -1,16 +1,27 @@
 <template>
-  <div class="white--text">
-    <h2 class="mt-6 font-weight-medium mb-4 pa-2 ml-5">{{ title }}</h2>
+  <v-container fluid>
+    <p id="latest_music_title">{{ title }}</p>
+    <p id="latest_music_subtitle">
+      {{ subTitle }}
+    </p>
+    <!-- 
+    <router-link to="/latest_music" id="latest_music_more_a">
+      <span id="latest_music_more_span">더보기</span>
+    </router-link>
+ -->
+
     <v-slide-group
+      style="width:95%"
       v-model="model"
       active-class="success"
       show-arrows
       dark
-      width="100%"
     >
       <v-slide-item
-        v-for="movie in movies"
-        :key="movie.id"
+        v-for="(music, idx) in musicList"
+        :key="idx"
+        :music="music"
+        @click="playLatestMusic"
         v-slot:default="{ active, toggle }"
       >
         <v-hover v-slot:default="{ hover }">
@@ -24,8 +35,8 @@
             @click="toggle"
           >
             <v-img
-              :src="base_url + movie.poster_path"
-              @click="handleClick(movie)"
+              :src="music.mImg"
+              @click="handleClick(music)"
               aspect-ratio="1"
               class=""
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
@@ -44,30 +55,14 @@
         </v-hover>
       </v-slide-item>
     </v-slide-group>
-    <youtube
-      width="100%"
-      height="230"
-      v-if="videoId"
-      :video-id="videoId"
-      :player-vars="playerVars"
-      @playing="playing"
-    ></youtube>
-  </div>
+  </v-container>
 </template>
 
 <script>
 import axios from "@/plugins/movie";
-import movieTrailer from "movie-trailer";
-import getYouTubeID from "get-youtube-id";
 
 export default {
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    fetchUrl: String
-  },
+  props: ["title", "subTitle", "musicList"],
   data: () => ({
     model: null,
     movies: [],
@@ -76,7 +71,9 @@ export default {
     videoId: "",
     playerVars: {
       autoplay: 1
-    }
+    },
+
+    temp: null
   }),
   async mounted() {
     this.showLoading = true;
@@ -90,34 +87,74 @@ export default {
     }
   },
   methods: {
-    handleClick(movie) {
-      console.log("movie title", movie?.title);
+    playLatestMusic: function(videoId) {
+      console.log("clicked play");
+      const playlist = this.exposedLatestMusic.map(music => {
+        return {
+          video: music.video,
+          artist: music.artistId,
+          title: music.title,
+          singer: music.singer
+        };
+      });
+
+      this.$store.dispatch("setPlaylist", playlist);
+      console.log(videoId);
+      //this.$store.dispatch("setVideoId", videoId);
+    },
+
+    handleClick(music) {
+      console.log("music title", music?.mTitle);
       if (this.videoId) {
         this.videoId = "";
       } else {
-        movieTrailer(movie?.title || "")
-          .then(res => {
-            this.videoId = getYouTubeID(res);
-            console.log("video id", this.videoId);
-          })
-          .catch(err => console.error(err));
+        this.videoId = "1mIwS4PDYwE";
+        // .search(music?.mTitle)
+        // .then(res => {
+        //   this.videoId = res.videoId;
+        //   console.log(res);
+        // })
+        // .catch(err => console.error(err));
       }
-    },
-    playing() {
-      console.log("we are watching!!!");
+      this.$store.dispatch("setVideoId", this.videoId);
     }
   }
 };
 </script>
 
-<style scoped>
-.v-img {
-  object-fit: contain;
+<style lang="scss">
+#latest_music_title {
+  font-size: 26px;
+  margin: 0 0 8px 0;
+  display: block;
+  padding-left: 10px;
 }
-.v-card {
-  transition: opacity 0.4s ease-in-out;
+#latest_music_subtitle {
+  font-size: 18px;
+  margin: 0 0 12px 0;
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 10px;
 }
-.v-card:not(.on-hover) {
-  opacity: 0.8;
+#latest_music_more_a {
+  & {
+    display: inline-block;
+    color: white;
+    float: right;
+    margin-top: 6px;
+    padding-right: 10px;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1;
+  }
+  span {
+    font-size: 18px;
+    vertical-align: top;
+  }
+  /*#latest_music_more_span { font-size: 16pt; margin-top: 0; }*/
+  &:hover #latest_music_more_span {
+    text-decoration: underline;
+  }
 }
 </style>
