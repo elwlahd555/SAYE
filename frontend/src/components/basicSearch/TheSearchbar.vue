@@ -1,31 +1,27 @@
 <template>
-  <section class="section searchbar">
-    <div class="container">
-      <v-toolbar dark color="teal">
-        <v-toolbar-title>Keyword</v-toolbar-title>
-        <v-autocomplete
-          size="is-medium"
-          expanded
-          flat
-          hide-no-data
-          hide-details
-          solo-inverted
-          class="mx-4"
-          append-icon=""
-          v-model="searchQuery"
-          :data="filteredDataArray"
-          label="e.g. 아이유"
-          icon="magnify"
-          @select="option => (selected = option)"
-          @keyup.enter="onClickSearch"
-        ></v-autocomplete>
+  <v-container fluid pa-0>
+    <v-toolbar dark color="teal">
+      <v-toolbar-title style="margin-left: 20px">Keyword</v-toolbar-title>
+      <v-autocomplete
+        size="is-medium"
+        hide-no-data
+        hide-details
+        solo-inverted
+        class="mx-4"
+        append-icon=""
+        v-model="searchQuery"
+        :data="filteredDataArray"
+        label="e.g. 아이유"
+        icon="magnify"
+        @select="(option) => (selected = option)"
+        @keyup.enter="onClickSearch"
+      ></v-autocomplete>
 
-        <v-btn x-large icon @click="onClickClearSearch">
-          <v-icon>mdi-close-box-outline</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </div>
-  </section>
+      <v-btn x-large icon @click="onClickClearSearch">
+        <v-icon>mdi-close-box-outline</v-icon>
+      </v-btn>
+    </v-toolbar>
+  </v-container>
 </template>
 
 <script>
@@ -37,22 +33,22 @@ export default {
     return {
       data: [],
       searchQuery: "",
-      selected: null
+      selected: null,
     };
   },
   props: {
     recentSearch: {
       type: Array,
-      required: true
+      required: true,
     },
     newSearchQuery: {
       type: String,
-      required: true
+      required: true,
     },
     settings: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   mounted() {
     //this.searchQuery = this.settings.initialSearchQuery;
@@ -61,7 +57,7 @@ export default {
   },
   watch: {
     searchQuery: {
-      handler: _.debounce(function(val) {
+      handler: _.debounce(function (val) {
         if (val === "") {
           this.$store.commit("CLEAR_SEARCH");
         } else {
@@ -69,15 +65,15 @@ export default {
             this.onClickSearch();
           }
         }
-      }, 1000)
+      }, 1000),
     },
     newSearchQuery(val) {
       this.searchQuery = val;
-    }
+    },
   },
   computed: {
     filteredDataArray() {
-      return this.recentSearch.filter(option => {
+      return this.recentSearch.filter((option) => {
         return (
           option
             .toString()
@@ -85,7 +81,7 @@ export default {
             .indexOf(this.searchQuery.toLowerCase()) >= 0
         );
       });
-    }
+    },
   },
   methods: {
     onClickSearch() {
@@ -94,8 +90,8 @@ export default {
     onClickClearSearch() {
       this.searchQuery = "";
       this.$emit("clickClearSearch");
-    }
-  }
+    },
+  },
 };
 </script>
 

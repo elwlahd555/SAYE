@@ -8,7 +8,7 @@ const albumStore = {
       initialSearchQuery: '',
       searchQuery: "",
       panelType: "card",
-      bookmarkIcon: "fa-star",
+      bookmarkIcon: "mdi-heart",
       perPage: "20",
       youtubeLink: "false"
     },
@@ -132,6 +132,7 @@ const albumStore = {
         // show loading animation
         commit("IS_ALBUM_LOADING", true);
         const { data } = await axios.get(`${payload.url}`);
+        
         if (data.results.length === 0) {
           // if search response data results is empty commit search failed and clear the search input
           commit("CLEAR_SEARCH");

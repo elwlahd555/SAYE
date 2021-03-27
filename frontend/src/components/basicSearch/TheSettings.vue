@@ -20,11 +20,11 @@
         </v-col>
         <v-col cols="6">
           <v-radio-group v-model="settings.panelType" row mandatory>
-            <v-radio label="card" color="indigo">
+            <v-radio label="card" value="card" color="indigo">
               <v-icon>mdi-dots-grid</v-icon>
               <span>Card</span>
             </v-radio>
-            <v-radio label="media" color="indigo">
+            <v-radio label="media" value="media" color="indigo">
               <v-icon>mdi-view-list</v-icon>
               <span>Media</span>
             </v-radio>
@@ -35,11 +35,11 @@
         </v-col>
         <v-col cols="6">
           <v-radio-group v-model="settings.bookmarkIcon" row mandatory>
-            <v-radio label="heart" append-icon="mdi-heart">
+            <v-radio label="heart" value="mdi-heart" on-icon="mdi-heart">
               <v-icon>mdi-heart</v-icon>
               <span>Heart</span>
             </v-radio>
-            <v-radio label="star">
+            <v-radio label="star" value="mdi-star" on-icon="mdi-star">
               <v-icon>mdi-star</v-icon>
               <span>Star</span>
             </v-radio>
@@ -50,11 +50,11 @@
         </v-col>
         <v-col cols="6">
           <v-radio-group v-model="settings.youtubeLink" row mandatory>
-            <v-radio label="Show" color="red darken-2">
+            <v-radio label="Show" value="true" color="red darken-2">
               <v-icon>mdi-eye-outline</v-icon>
               <span>Show</span>
             </v-radio>
-            <v-radio label="Hide" color="red darken-2">
+            <v-radio label="Hide" value="false" color="red darken-2">
               <v-icon>mdi-eye-off-outline</v-icon>
               <span>Hide</span>
             </v-radio>
@@ -65,20 +65,22 @@
         </v-col>
         <v-col cols="6">
           <v-radio-group v-model="settings.perPage" row mandatory>
-            <v-radio label="20" color="lime">
+            <v-radio label="20" value="20" color="lime">
               <span>20</span>
             </v-radio>
-            <v-radio label="40" color="lime">
+            <v-radio label="40" value="40" color="lime">
               <span>40</span>
             </v-radio>
-            <v-radio label="60" color="lime">
+            <v-radio label="60" value="60" color="lime">
               <span>60</span>
             </v-radio>
           </v-radio-group>
         </v-col>
       </v-row>
-
-      <v-btn color="warning" @click="$parent.close()"> close </v-btn>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="warning" @click="closeDialog"> close </v-btn>
+      </v-card-actions>
     </v-container>
   </v-card>
 </template>
@@ -104,6 +106,7 @@ export default {
     },
     "settings.perPage"(settingValue) {
       this.onClickUpdateSettings("perPage", settingValue);
+      console.log(this.$store.state.albumStore.settings.perPage);
     },
     "settings.initialSearchQuery"(settingValue) {
       this.onClickUpdateSettings("initialSearchQuery", settingValue);
@@ -112,6 +115,10 @@ export default {
   methods: {
     onClickUpdateSettings(settingName, settingValue) {
       this.$emit("clickUpdateSettings", settingName, settingValue);
+    },
+    closeDialog() {
+      console.log("hi");
+      this.$emit("dialogClosed");
     },
   },
 };
