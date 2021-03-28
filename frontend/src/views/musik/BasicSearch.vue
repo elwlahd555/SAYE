@@ -136,7 +136,7 @@ export default {
   name: "app",
   data() {
     return {
-      initialSearchQuery: "",
+      //initialSearchQuery: "",
       isSettingsModalActive: false,
       isAlbumTracksModalActive: false,
       windowWidth: window.innerWidth,
@@ -160,7 +160,7 @@ export default {
       albums: "GET_ALBUMS",
       albumTracks: "GET_ALBUM_TRACKS",
       searchQuery: "SEARCH_QUERY",
-      //initialSearchQuery: "INITIAL_SEARCH_QUERY",
+      initialSearchQuery: "INITIAL_SEARCH_QUERY",
       bookmarkAlbums: "BOOKMARK_ALBUMS",
       pageType: "PAGE_TYPE",
       showRecentSearchBox: "SHOW_RECENT_SEARCH_BOX",
@@ -182,7 +182,6 @@ export default {
     this.$store.dispatch(albumStore + "/GET_SETTINGS");
     this.$store.dispatch(albumStore + "/GET_RECENT_SEARCH");
     this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS");
-    this.initialSearchQuery = this.$route.query.keyword;
     //window.addEventListener("scroll", this.toggleNavbar);
     window.scrollTo(0, 0);
   },

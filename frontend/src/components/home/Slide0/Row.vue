@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid ml-10>
     <p id="latest_music_title">{{ title }}</p>
     <p id="latest_music_subtitle">
       {{ subTitle }}
@@ -11,7 +11,7 @@
  -->
 
     <v-slide-group
-      style="width:95%"
+      style="width: 90%"
       v-model="model"
       active-class="success"
       show-arrows
@@ -22,15 +22,32 @@
         :key="idx"
         :music="music"
         @click="playLatestMusic"
-        v-slot:default="{ active, toggle }"
       >
-        <v-hover v-slot:default="{ hover }">
+        <v-hover v-slot="{ hover }">
+          <v-card class="mr-3 rounded-0" width="200">
+            <v-img aspect-ratio="1" :src="music.mImg" height="180px">
+              <v-expand-transition>
+                <div
+                  v-if="hover"
+                  class="d-flex flex-row justify-center transition-fast-in-fast-out red darken-2 v-card--reveal display-1"
+                  style="height: 100%"
+                >
+                  <v-icon x-large>mdi-youtube</v-icon>
+                </div>
+              </v-expand-transition>
+            </v-img>
+
+            <v-card-text class="text-center">
+              {{ music.mTitle }}
+            </v-card-text>
+          </v-card>
+        </v-hover>
+
+        <!-- <v-hover v-slot:default="{ hover }">
           <v-card
             :elevation="hover ? 12 : 0"
-            :color="active ? undefined : 'grey lighten-5'"
             class="mr-3 rounded-0"
             :class="{ 'on-hover': hover }"
-            height="150"
             width="200"
             @click="toggle"
           >
@@ -40,7 +57,7 @@
               aspect-ratio="1"
               class=""
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
+              height="180px"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -51,8 +68,11 @@
                 </v-row>
               </template>
             </v-img>
+            <v-card-title> Top western road trips </v-card-title>
+
+            <v-card-subtitle> 1,000 miles of wonder </v-card-subtitle>
           </v-card>
-        </v-hover>
+        </v-hover> -->
       </v-slide-item>
     </v-slide-group>
   </v-container>
@@ -65,20 +85,20 @@ export default {
     model: null,
     videoId: "",
     playerVars: {
-      autoplay: 1
+      autoplay: 1,
     },
 
-    temp: null
+    temp: null,
   }),
   methods: {
-    playLatestMusic: function(videoId) {
+    playLatestMusic: function (videoId) {
       console.log("clicked play");
-      const playlist = this.exposedLatestMusic.map(music => {
+      const playlist = this.exposedLatestMusic.map((music) => {
         return {
           video: music.video,
           artist: music.artistId,
           title: music.title,
-          singer: music.singer
+          singer: music.singer,
         };
       });
 
@@ -101,8 +121,8 @@ export default {
         // .catch(err => console.error(err));
       }
       this.$store.dispatch("setVideoId", this.videoId);
-    }
-  }
+    },
+  },
 };
 </script>
 

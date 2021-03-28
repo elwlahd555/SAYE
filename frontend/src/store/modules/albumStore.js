@@ -67,6 +67,9 @@ const albumStore = {
     }
   },
   mutations: {
+    SET_INITIALSEARCH: (state, query) => {
+      state.settings.initialSearchQuery = query;
+    },
     SET_SEARCH_QUERY: (state, query) => {
       state.pageType = "search";
       state.settings.searchQuery = query;

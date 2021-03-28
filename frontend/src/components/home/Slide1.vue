@@ -5,12 +5,7 @@
         <h2>일반 검색</h2>
       </v-row>
       <v-row justify="center">
-        <div class="description" v-show="scY <= 80">
-          <p>
-            듣고 싶은 음악을 검색하세요. [Spotify API를 사용한 결과 표시]
-          </p>
-        </div>
-        <div class="searchBox" v-show="scY > 80">
+        <div class="searchBox">
           <input
             class="searchInput"
             type="text"
@@ -26,7 +21,7 @@
             depressed
             fab
             x-large
-            :to="{ name: 'BasicSearch', query: { keyword: keyword } }"
+            :to="{ name: 'BasicSearch' }"
           >
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
@@ -40,25 +35,23 @@
 export default {
   data() {
     return {
-      scY: 0,
       text: "음악을 검색 (버튼 클릭!) ==>",
-      keyword: ""
+      keyword: "",
     };
   },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
-  },
   methods: {
-    handleScroll() {
-      this.scY = window.scrollY;
-    },
     enterSearch() {
+      //this.$store.state.albumStore.settings.initialSearchQuery = this.keyword;
+      this.$store.commit("albumStore" + "/SET_INITIALSEARCH", this.keyword);
+      console.log(this.$store.state.albumStore.settings.initialSearchQuery);
       this.$router.push({
         name: "BasicSearch",
-        query: { keyword: this.keyword }
       });
-    }
-  }
+    },
+    setQuery() {
+      this.$store.state.albumStore.settings.initialSearchQuery = this.keyword;
+    },
+  },
 };
 </script>
 
