@@ -1,24 +1,31 @@
 <template>
-  <v-container>
+  <section class="section">
     <v-container mt-0>
       <v-row v-if="!isAlbumLoading && albums.length > 0">
         <v-col cols="6">
-          <span class="text--grey" v-if="pageType !== 'bookmarks'">
+          <span
+            class="is-size-5-desktop is-size-6-mobile has-text-grey"
+            v-if="pageType !== 'bookmarks'"
+          >
             Search Results
           </span>
-          <span class="text--grey" v-else> Bookmarks</span>
+          <span class="is-size-5-desktop is-size-6-mobile has-text-grey" v-else>
+            Bookmarks</span
+          >
         </v-col>
         <v-col cols="5" class="text-right">
-          <span class="text--grey"> {{ albums.length }} album(s) </span>
+          <span class="has-text-grey-light is-size-6">
+            {{ albums.length }} album(s)
+          </span>
         </v-col>
         <v-col cols="1" class="text-left">
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
-              <v-icon v-bind="attrs" v-on="on" @click="onClickUpdateSettings">
-                mdi-dots-grid
-              </v-icon>
+              <v-icon @click="onClickUpdateSettings" v-bind="attrs" v-on="on">{{
+                panelIcon
+              }}</v-icon>
             </template>
-            <span>Switch panel view</span>
+            <span>switch panel view</span>
           </v-tooltip>
         </v-col>
       </v-row>
@@ -29,11 +36,7 @@
           :key="pageType"
         >
           <v-col
-            :class="[
-              settings.panelType === 'card'
-                ? 'is-3-widescreen is-3-desktop is-4-tablet'
-                : 'is-4-widescreen  is-4-desktop is-6-tablet is-12-mobile'
-            ]"
+            cols="3"
             v-for="album in displayedAlbums"
             :key="album.collectionId"
           >
@@ -41,93 +44,124 @@
             <v-card v-if="settings.panelType === 'card'">
               <v-img
                 :src="replaceArtworkUrlSize(album.artworkUrl100, '300x250')"
+                lazy-src="https://picsum.photos/id/11/100/60"
                 :alt="album.collectionCensoredName"
-              />
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-content overflow-content">
-                    <div
-                      class="title is-size-6-widescreen is-size-6-desktop album-name"
-                    >
-                      <a
-                        v-if="album.collectionId"
-                        @click="onClickAlbumName(album.collectionId)"
-                        >{{ album.collectionCensoredName }}</a
-                      >
-                    </div>
-                    <div class="subtitle is-6">
-                      {{ album.artistName }} <br />
-                      <span class="has-text-grey-light">{{
-                        album.primaryGenreName
-                      }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <footer class="card-footer">
+                max-height="200"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-card-title>
                 <a
-                  :href="album.collectionViewUrl"
-                  target="_blank"
-                  class="card-footer-item"
+                  v-if="album.collectionId"
+                  @click="onClickAlbumName(album.collectionId)"
                 >
-                  <v-tooltip
-                    type="is-light"
-                    label="Download on iTunes"
-                    position="is-top"
-                    :active="!isMobile"
+                  <span
+                    class="d-inline-block text-truncate"
+                    style="max-width: 200px"
+                    >{{ album.collectionCensoredName }}</span
                   >
-                    <i class="fab fa-itunes-note"></i>
-                  </v-tooltip>
                 </a>
-                <span class="heart card-footer-item">
-                  <v-tooltip
-                    type="is-light"
-                    :label="
-                      isInBookmark(album.collectionCensoredName)
-                        ? 'click to unbookmarked'
-                        : 'click to bookmark'
-                    "
-                    position="is-top"
-                    :active="!isMobile"
-                  >
-                    <i
+              </v-card-title>
+              <v-card-subtitle>
+                <span
+                  class="d-inline-block text-truncate"
+                  style="max-width: 200px"
+                >
+                  {{ album.artistName }}
+                </span>
+              </v-card-subtitle>
+              <v-card-text>
+                <span
+                  class="d-inline-block text-truncate"
+                  style="max-width: 200px"
+                >
+                  {{ album.primaryGenreName }}
+                </span>
+              </v-card-text>
+
+              <!-- 버튼 3개 (북마크, 플레이리스트, youtube)-->
+              <v-card-actions>
+                <!-- 북마크 -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      color="warning"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
                       @click="clickBookmarkAlbum(album)"
-                      class="fas fa-lg bookmarkIcon"
-                      :class="[
-                        {
-                          favorite: isInBookmark(album.collectionCensoredName)
-                        },
-                        settings.bookmarkIcon
-                      ]"
-                    ></i>
+                    >
+                      {{ settings.bookmarkIcon
+                      }}{{
+                        isInBookmark(album.collectionCensoredName)
+                          ? ""
+                          : "-outline"
+                      }}
+                    </v-icon>
+                  </template>
+                  <span>북마크 추가/제거</span>
+                </v-tooltip>
+
+                <v-spacer></v-spacer>
+
+                <!-- 플레이리스트 -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      color="primary"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="clickBookmarkAlbum(album)"
+                    >
+                      mdi-playlist-music
+                    </v-icon>
+                  </template>
+                  <span>플레이리스트 추가/제거</span>
+                </v-tooltip>
+
+                <v-spacer v-if="settings.youtubeLink === 'true'"></v-spacer>
+                <span v-if="settings.youtubeLink === 'true'">
+                  <!-- 유튜브 -->
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        color="error"
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        :href="
+                          `https://www.youtube.com/results?search_query=${album.artistName} - ${album.collectionCensoredName}`
+                        "
+                        target="_blank"
+                      >
+                        <v-icon> mdi-youtube </v-icon>
+                      </v-btn>
+                    </template>
+                    <span>유튜브 검색</span>
                   </v-tooltip>
                 </span>
-                <a
-                  v-if="settings.youtubeLink === 'true'"
-                  :href="
-                    `https://www.youtube.com/results?search_query=${album.artistName} - ${album.collectionCensoredName}`
-                  "
-                  target="_blank"
-                  class="card-footer-item"
-                >
-                  <v-tooltip
-                    type="is-light"
-                    label="search on youtube"
-                    position="is-top"
-                    :active="!isMobile"
-                  >
-                    <i class="fab fa-youtube"></i>
-                  </v-tooltip>
-                </a>
-              </footer>
+              </v-card-actions>
             </v-card>
+
             <!-- Media Panel-->
             <article
               class="media media-wrap"
               v-if="settings.panelType === 'media'"
             >
               <figure class="media-left">
-                <p class="image ">
+                <p class="image">
                   <img
                     :src="replaceArtworkUrlSize(album.artworkUrl100, '130x130')"
                     :alt="album.collectionCensoredName"
@@ -217,57 +251,50 @@
           </v-col>
         </v-row>
       </transition>
+
       <!-- Loading animation -->
-      <div class="columns is-mobile" v-if="isAlbumLoading">
-        <div class="column loading">
+      <v-row class="is-mobile" v-if="isAlbumLoading">
+        <v-col class="loading">
           <v-progress-circular
             :is-full-page="false"
             :active.sync="isAlbumLoading"
             :can-cancel="false"
             indeterminate
           ></v-progress-circular>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
       <!-- Pagination -->
-      <div
-        class="columns is-multiline is-mobile"
-        v-if="!isAlbumLoading && albums.length > 0"
-      >
-        <div class="column is-12" v-if="albums.length > 0">
+      <v-row v-if="!isAlbumLoading && albums.length > 0">
+        <v-col cols="12" v-if="albums.length > 0">
           <hr />
           <v-pagination
-            :total="albums.length"
-            :current.sync="current"
-            :order="order"
-            :size="size"
-            :simple="isSimple"
-            :rounded="isRounded"
-            :per-page="settings.perPage"
+            v-model="current"
+            :length="Math.floor(this.albums.length / this.settings.perPage)"
+            :total-visible="settings.perPage"
+            circle
           >
           </v-pagination>
-        </div>
-      </div>
+        </v-col>
+      </v-row>
       <!-- No Bookmark message-->
       <template v-if="pageType === 'bookmarks' && albums.length === 0">
-        <div class="columns is-multiline is-mobile">
-          <div class="column">
-            <h3 class="title is-4 has-text-centered">
-              You have no saved bookmarks.
-            </h3>
-          </div>
-        </div>
+        <v-row>
+          <v-col>
+            <h3 class="title text-center">You have no saved bookmarks.</h3>
+          </v-col>
+        </v-row>
       </template>
       <!-- Search results message -->
       <template v-if="searchFailed && !isAlbumLoading">
-        <div class="columns is-multiline is-mobile">
-          <div class="column">
-            <h3 class="title is-4 has-text-centered">Nothing found.</h3>
-            <h3 class="title is-4 has-text-centered">Please Search Again!</h3>
-          </div>
-        </div>
+        <v-row>
+          <v-col>
+            <h3 class="title text-center">Nothing found.</h3>
+            <h3 class="title text-center">Please Search Again!</h3>
+          </v-col>
+        </v-row>
       </template>
     </v-container>
-  </v-container>
+  </section>
 </template>
 
 <script>
@@ -276,10 +303,8 @@ export default {
   data() {
     return {
       current: 1,
-      order: "is-centered",
       size: "",
-      isSimple: false,
-      isRounded: false
+      panelIcon: "mdi-grid"
     };
   },
   props: {
@@ -347,12 +372,12 @@ export default {
     onClickUpdateSettings() {
       const settingValue =
         this.settings.panelType === "card" ? "media" : "card";
+      this.panelIcon =
+        this.panelIcon === "mdi-grid" ? "mdi-format-list-text" : "mdi-grid";
       this.$emit("clickUpdateSettings", "panelType", settingValue);
     },
     onClickAlbumName(albumId) {
-      console.log("clicked");
       this.$emit("clickAlbumName", albumId);
-      console.log(albumId);
     }
   }
 };

@@ -21,7 +21,7 @@
       mypage
     </v-btn>
 
-    <v-btn large :to="links.about">
+    <v-btn large to="/">
       <v-icon>mdi-information</v-icon>
       info
     </v-btn>

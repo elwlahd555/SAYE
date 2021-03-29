@@ -42,28 +42,19 @@
               <v-tooltip
                 bottom
                 :active="!isMobile"
-                v-if="
-                  pageType === 'bookmarks' ||
-                    isMobile ||
-                    bookmarkAlbums.length === 0
-                "
+                v-if="pageType === 'bookmarks' || bookmarkAlbums.length === 0"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn icon x-large dark v-bind="attrs" v-on="on">
-                    <v-icon
-                      @click="onClickShowBookmarks"
-                      :class="[
-                        { 'icon-active': pageType === 'bookmarks' },
-                        settings.bookmarkIcon
-                      ]"
-                      >mdi-heart</v-icon
-                    >
+                    <v-icon @click="onClickShowBookmarks">{{
+                      settings.bookmarkIcon
+                    }}</v-icon>
                   </v-btn>
                 </template>
                 <span> 북마크 {{ bookmarkAlbums.length }}</span>
               </v-tooltip>
 
-              <v-menu v-else open-on-hover bottom>
+              <v-menu v-else open-on-hover left :nudge-width="200">
                 <template v-slot:activator="{ on: menu, attrs }">
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on: tooltip }">
@@ -74,15 +65,9 @@
                         v-bind="attrs"
                         v-on="{ ...tooltip, ...menu }"
                       >
-                        <v-icon
-                          @click="onClickShowBookmarks"
-                          :class="[
-                            { 'icon-active': pageType === 'bookmarks' },
-                            settings.bookmarkIcon
-                          ]"
-                          >mdi-bookmark</v-icon
-                        >
-
+                        <v-icon @click="onClickShowBookmarks">
+                          {{ settings.bookmarkIcon }}
+                        </v-icon>
                         <span class="badge" v-if="bookmarkAlbums.length > 0">
                           {{ bookmarkAlbums.length }}
                         </span>
@@ -97,22 +82,22 @@
                     :key="index"
                     @click="onClickAlbumName(album.collectionId)"
                   >
-                    <article class="media">
-                      <figure class="media-left">
-                        <p class="image is-64x64">
-                          <img :src="album.artworkUrl100" />
-                        </p>
-                      </figure>
-                      <div class="media-content overflow-content">
-                        <div class="content">
-                          <p>
-                            <strong>{{ album.collectionCensoredName }}</strong>
-                            <br />
-                            {{ album.artistName }}
-                          </p>
-                        </div>
+                    <v-list-item-avatar tile size="80">
+                      <img :src="album.artworkUrl100" />
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <div class="overline mb-4">
+                        {{ album.artistName }}
                       </div>
-                    </article>
+
+                      <v-list-item-title>
+                        <span
+                          class="d-inline-block text-truncate"
+                          style="max-width: 80px"
+                          >{{ album.collectionCensoredName }}</span
+                        >
+                      </v-list-item-title>
+                    </v-list-item-content>
                   </v-list-item>
                   <v-list-item
                     class="has-text-centered"

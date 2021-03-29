@@ -162,5 +162,6 @@ export default {
   width: 100%;
   bottom: 2rem;
   right: 2rem;
+  background-color: black;
 }
 </style>

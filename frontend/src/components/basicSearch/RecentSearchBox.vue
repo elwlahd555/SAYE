@@ -7,13 +7,14 @@
             <div class="title block is-6 has-text-grey-light has-text-centered">
               Search History
             </div>
-            <v-chip-group>
+            <v-chip-group column>
               <div class="control" v-for="(item, i) in recentSearch" :key="i">
                 <v-chip
-                  type="is-primary"
-                  size="is-small"
-                  closable
-                  @close="onClickRemoveRecentSearchItem(item)"
+                  close
+                  color="teal"
+                  text-color="white"
+                  close-icon="mdi-delete"
+                  @click:close="onClickRemoveRecentSearchItem(item)"
                 >
                   <span
                     @click="onClickSearchItem(item)"
@@ -28,6 +29,14 @@
         </div>
       </div>
     </div>
+    <v-snackbar v-model="flag" :timeout="2000" color="success">
+      {{ itemText }}
+      <template v-slot:action="{ attrs }">
+        <v-btn dark text v-bind="attrs" @click="flag = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </section>
 </template>
 
@@ -39,6 +48,12 @@ export default {
       type: Array,
       required: true
     }
+  },
+  data() {
+    return {
+      flag: false,
+      itemText: ""
+    };
   },
   computed: {
     searchBoxResize() {
@@ -52,6 +67,8 @@ export default {
   methods: {
     onClickRemoveRecentSearchItem(item) {
       this.$emit("clickRemoveRecentSearchItem", item);
+      this.flag = true;
+      this.itemText = `${item} 제거`;
     },
     onClickSearchItem(item) {
       if (item !== this.$store.state.albumStore.settings.searchQuery) {

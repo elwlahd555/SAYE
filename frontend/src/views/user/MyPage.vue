@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container color="black">
     <v-row>
       <h1>나만의 플레이리스트</h1>
     </v-row>

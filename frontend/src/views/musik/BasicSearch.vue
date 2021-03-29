@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
+  <v-container fluid pa-0>
     <div class="nav-search">
       <the-navbar
         v-show="showNavbar"
         @clickToggleRecentSearchBox="toggleRecentSearchBox"
         @clickShowBookmarks="showBookmarks"
-        @clickSettings="showSettingsModal"
+        @clickSettings="switchDialog"
         @clickTitle="setPageType('search')"
         @clickAlbumName="getAlbumTracks"
         :pageType="pageType"
@@ -16,6 +16,15 @@
         :showRecentSearchBox="showRecentSearchBox"
       >
       </the-navbar>
+      <transition name="fade">
+        <recent-search-box
+          v-if="showRecentSearchBox && recentSearch.length > 0"
+          :recentSearch="recentSearch"
+          @clickSearchItem="searchAlbums"
+          @clickRemoveRecentSearchItem="removeRecentSearchItem"
+        >
+        </recent-search-box>
+      </transition>
       <the-searchbar
         @clickSearch="searchAlbums"
         @clickClearSearch="clearSearch"
@@ -26,15 +35,6 @@
       </the-searchbar>
     </div>
     <main>
-      <transition name="fade">
-        <recent-search-box
-          v-if="showRecentSearchBox && recentSearch.length > 0"
-          :recentSearch="recentSearch"
-          @clickSearchItem="searchAlbums"
-          @clickRemoveRecentSearchItem="removeRecentSearchItem"
-        >
-        </recent-search-box>
-      </transition>
       <album-list
         @clickUpdateSettings="updateSettings"
         @clickAlbumName="getAlbumTracks"
@@ -60,6 +60,7 @@
           :settings="settings"
           @close="isSettingsModalActive = !isSettingsModalActive"
           @clickUpdateSettings="updateSettings"
+          @dialogClosed="switchDialog"
         >
         </the-settings>
       </v-dialog>
@@ -103,10 +104,21 @@
         </album-track-list>
       </v-dialog>
     </main>
-  </div>
+
+    <v-snackbar v-model="snackbar" :timeout="2000" :color="snackbarColor">
+      {{ snackbarText }}
+      <template v-slot:action="{ attrs }">
+        <v-btn dark text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </v-container>
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 import TheNavbar from "@/components/basicSearch/TheNavbar";
 import TheSearchbar from "@/components/basicSearch/TheSearchbar";
 import RecentSearchBox from "@/components/basicSearch/RecentSearchBox";
@@ -121,10 +133,14 @@ export default {
   name: "app",
   data() {
     return {
+      //initialSearchQuery: "",
       isSettingsModalActive: false,
       isAlbumTracksModalActive: false,
       windowWidth: window.innerWidth,
-      showNavbar: true
+      showNavbar: true,
+      snackbar: false,
+      snackbarText: "",
+      snackbarColor: ""
     };
   },
   components: {
@@ -163,11 +179,11 @@ export default {
     this.$store.dispatch(albumStore + "/GET_SETTINGS");
     this.$store.dispatch(albumStore + "/GET_RECENT_SEARCH");
     this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS");
-    window.addEventListener("scroll", this.toggleNavbar);
+    //window.addEventListener("scroll", this.toggleNavbar);
     window.scrollTo(0, 0);
   },
   destroyed() {
-    window.removeEventListener("scroll", this.toggleNavbar);
+    //window.removeEventListener("scroll", this.toggleNavbar);
   },
   methods: {
     searchAlbums(query) {
@@ -191,37 +207,30 @@ export default {
     },
     bookmarkAlbum(album) {
       if (this.isInBookmark(album.collectionCensoredName)) {
-        this.$dialog.confirm({
-          message: `Are you sure you want to unbookmark this album? <b>${album.collectionCensoredName} album</b>`,
-          type: "is-danger",
-          hasIcon: true,
-          onConfirm: () => {
+        Swal.fire({
+          icon: "question",
+          text: `"${album.collectionCensoredName}"를(을) 북마크에서 삭제하나요?`,
+          showCancelButton: true,
+          confirmButtonText: `Yes`
+        }).then(res => {
+          if (res.isConfirmed) {
             this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
               album: album,
               status: "unbookmarked"
             });
-            this.$toast.open({
-              duration: 3000,
-              message: `"${album.collectionCensoredName} album" has been unbookmark!`,
-              position: "is-bottom-right",
-              type: "is-danger"
-            });
+            this.snackbar = true;
+            this.snackbarColor = "error";
+            this.snackbarText = `${album.collectionCensoredName} 북마크에서 제거`;
           }
         });
       } else {
-        console.log("before");
-        // 나중에 snackbar 추가하셈...
-        // this.$toast.open({
-        //   duration: 3000,
-        //   message: `"${album.collectionCensoredName} album" bookmarked!`,
-        //   position: "is-bottom",
-        //   type: "is-info"
-        // });
         this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
           album: album,
           status: "bookmark"
         });
-        console.log("after");
+        this.snackbar = true;
+        this.snackbarColor = "success";
+        this.snackbarText = `"${album.collectionCensoredName}" 북마크에 추가`;
       }
     },
     isInBookmark(albumName) {
@@ -231,15 +240,15 @@ export default {
         ) > -1
       );
     },
+    switchDialog() {
+      this.isSettingsModalActive = !this.isSettingsModalActive;
+    },
     showBookmarks() {
       this.$store.commit(albumStore + "/SET_PAGE_TYPE", "bookmarks");
     },
     updateSettings(settingName, settingValue) {
       const payload = { settingName: settingName, settingValue: settingValue };
       this.$store.dispatch(albumStore + "/UPDATE_SETTINGS", payload);
-    },
-    showSettingsModal() {
-      this.isSettingsModalActive = true;
     },
     getAlbumTracks(albumId) {
       if (albumId) {
@@ -265,15 +274,15 @@ export default {
     },
     replaceArtworkUrlSize(albumArtwork, newSize) {
       return albumArtwork.replace("100x100", newSize);
-    },
-    toggleNavbar() {
-      let scrollBarPosition = window.pageYOffset | document.body.scrollTop;
-      if (scrollBarPosition > 100) {
-        this.showNavbar = false;
-      } else {
-        this.showNavbar = true;
-      }
     }
+    // toggleNavbar() {
+    //   let scrollBarPosition = window.pageYOffset | document.body.scrollTop;
+    //   if (scrollBarPosition > 100) {
+    //     this.showNavbar = false;
+    //   } else {
+    //     this.showNavbar = true;
+    //   }
+    // },
   }
 };
 </script>
