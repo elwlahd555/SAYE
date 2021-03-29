@@ -28,6 +28,16 @@ public class MusicServiceImpl implements MusicService {
 		// TODO Auto-generated method stub
 		return musicMapper.selectByTitle(mTitle);
 	}
+//	@Override
+//	public String temp(int i) {
+//		// TODO Auto-generated method stub
+//		return musicMapper.temp(i);
+//	}
+//	@Override
+//	public void update(int i, String artist) {
+//		// TODO Auto-generated method stub
+//		musicMapper.update(i,artist);
+//	}
 
 
 

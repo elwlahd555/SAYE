@@ -16,15 +16,31 @@
 	<select id="selectByDate" resultType="music">
 		select *
 		from music
-		order by m_date desc
+		order by
+		m_date desc
 		limit 20;
 	</select>
 	<!-- 제목으로 검색 -->
 	<select id="selectByTitle" resultType="music">
 		select *
 		from music
-		where m_title like "%"#{mTitle}"%"
+		where
+		m_title like "%"#{mTitle}"%"
 		limit 20;
 	</select>
 
+<!--
+	<select id="temp" resultType="String">
+		select m_artist
+		from music
+		where
+		m_no=#{i};
+	</select>
+	<update id="update">
+		UPDATE music
+		SET
+		m_artist = #{artist}
+		WHERE m_no = #{i};
+	</update>
+	  -->
 </mapper>

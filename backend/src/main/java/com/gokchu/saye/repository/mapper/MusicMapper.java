@@ -15,7 +15,10 @@ public interface MusicMapper {
 
 	List<Music> selectByTitle(String mTitle);
 
-	
+//	String temp(int i);
+//
+//	void update(int i, String artist);
+
 
 
 }

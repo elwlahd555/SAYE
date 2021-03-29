@@ -46,8 +46,8 @@ public class SpotifyController {
 		try {
 			final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
 			// Set access token for further "spotifyApi" object usage
+			System.out.println(clientCredentials.getAccessToken());
 			spotifyApi.setAccessToken(clientCredentials.getAccessToken());
-
 			System.out.println("Expires in: " + clientCredentials.getExpiresIn());
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
 			System.out.println("Error: " + e.getMessage());
@@ -105,7 +105,7 @@ public class SpotifyController {
 	@GetMapping("/genre")
 	public List<Music> getRecommendations_Sync(String genre) {
 		GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations()
-	          .limit(100)
+	          .limit(10)
 			.market(CountryCode.KR)
 //	          .max_popularity(50)
 	          .min_popularity(50)
