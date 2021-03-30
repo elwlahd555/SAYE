@@ -26,7 +26,7 @@
               :color="!toggle ? 'grey' : speaking ? 'red' : 'red darken-3'"
               :class="{ 'animated infinite pulse': toggle }"
             >
-              <v-icon>{{ toggle ? "mic_off" : "mic" }}</v-icon>
+              <v-icon>{{ toggle ? "mdi-text-to-speech" : "mdi-text-to-speech-off" }}</v-icon>
             </v-btn>
           </v-flex>
         </v-layout>
