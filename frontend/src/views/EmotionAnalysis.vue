@@ -48,7 +48,7 @@ export default {
     testEmotion() {
       console.log(this.query);
       axios
-        .post(`${spring_URL}/saye/emotion/analysis`, this.query, {
+        .post(`${spring_URL}/emotion/analysis`, this.query, {
           headers: {
             "Content-Type": "application/json"
           }
