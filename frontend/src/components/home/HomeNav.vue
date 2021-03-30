@@ -27,18 +27,18 @@
 export default {
   data() {
     return {
-      scY: 0
+      scY: 0,
     };
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
-    handleScroll: function() {
+    handleScroll: function () {
       this.scY = window.scrollY;
       //console.log(this.scY);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -55,7 +55,7 @@ export default {
 /*WRAPPER*/
 .wrapper {
   position: fixed;
-  margin: 10px auto;
+  margin: -10px auto;
   background-color: black;
   z-index: 999;
 }

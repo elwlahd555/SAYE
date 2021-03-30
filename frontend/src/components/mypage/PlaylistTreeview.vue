@@ -1,9 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="indigo white--text headline">
-      <v-icon dark style="padding-right: 10px">
-        mdi-playlist-music
-      </v-icon>
+      <v-icon dark style="padding-right: 10px"> mdi-playlist-music </v-icon>
       My Playlist
     </v-card-title>
     <v-row class="pa-4" justify="space-between">
@@ -13,15 +11,16 @@
           :items="items"
           :load-children="fetchPlaylists"
           :open.sync="open"
+          rounded
+          hoverable
           activatable
           color="warning"
-          open-all
+          open-on-click
           transition
         >
           <template v-slot:prepend="{ item }">
-            <v-icon v-if="!item.children">
-              mdi-music-circle
-            </v-icon>
+            <h1>{{ item }}</h1>
+            <v-icon v-if="!item.children"> mdi-music-circle </v-icon>
           </template>
         </v-treeview>
       </v-col>
@@ -33,7 +32,7 @@
           <div
             v-if="!selected"
             class="title grey--text text--lighten-1 font-weight-light"
-            style="align-self: center;"
+            style="align-self: center"
           >
             Select a Playlist
           </div>
@@ -45,41 +44,42 @@
 </template>
 
 <script>
-import axios from "axios";
+//import axios from "axios";
 import { mapState } from "vuex";
 
 import Playlist from "@/components/mypage/Playlist";
 
 const spring_URL = process.env.VUE_APP_SPRING_URL;
-const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default {
   components: {
-    Playlist
+    Playlist,
   },
   data: () => ({
     active: [],
     avatar: null,
     open: [],
-    playlist: []
+    playlist: [],
   }),
   computed: {
-    ...mapState({ uId: "uId" }),
+    ...mapState({ uName: "uName" }),
     items() {
       return [
         {
-          name: this.uId + "님의 플레이리스트",
-          children: this.playlist
-        }
+          name: this.uName + "님의 플레이리스트",
+          children: this.playlist,
+        },
       ];
     },
     selected() {
       if (!this.active.length) return undefined;
 
       const id = this.active[0];
+      console.log(id);
 
-      return this.users.find(user => user.id === id);
-    }
+      return this.playlist.find((list) => list.pName === id);
+    },
   },
   methods: {
     async fetchPlaylists(item) {
@@ -87,13 +87,15 @@ export default {
       // you've made optimizations! :)
       await pause(1000);
 
-      return axios
-        .get(`${spring_URL}/playlist?uNo=1`)
-        .then(res => {
-          item.children.push(...res.data);
+      return fetch(`${spring_URL}/playlist?uNo=1`)
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+          item.children.push(...json);
         })
-        .catch(err => console.warn(err));
-    }
-  }
+        .then(() => console.log(item))
+        .catch((err) => console.warn(err));
+    },
+  },
 };
 </script>

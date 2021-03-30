@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid ml-10>
+  <v-container fluid ml-15>
     <p id="latest_music_title">{{ title }}</p>
     <p id="latest_music_subtitle">
       {{ subTitle }}
@@ -17,7 +17,6 @@
         v-for="(music, idx) in musicList"
         :key="idx"
         :music="music"
-        @click="playLatestMusic"
         v-slot="{ active, toggle }"
       >
         <v-hover v-slot="{ hover }">
@@ -60,33 +59,20 @@ export default {
     model: null,
     videoId: "",
     playerVars: {
-      autoplay: 1
+      autoplay: 1,
     },
 
-    temp: null
+    temp: null,
   }),
   methods: {
-    playLatestMusic: function(videoId) {
-      console.log("clicked play");
-      const playlist = this.exposedLatestMusic.map(music => {
-        return {
-          video: music.video,
-          artist: music.artistId,
-          title: music.title,
-          singer: music.singer
-        };
-      });
-
-      this.$store.dispatch("setPlaylist", playlist);
-      console.log(videoId);
-      //this.$store.dispatch("setVideoId", videoId);
-    },
-
     handleClick(music) {
-      console.log("music title", music?.mUrl);
+      console.log("music title", music);
       this.videoId = getYouTubeID(music.mUrl);
       this.$store.dispatch("setVideoId", this.videoId);
-    }
-  }
+      this.$store.dispatch("setPlayMusic", music);
+      this.$store.dispatch("addToPlaylist", music);
+      console.log(this.$store.state.playlist);
+    },
+  },
 };
 </script>

@@ -1,13 +1,37 @@
 <template>
   <div>
     <aside id="frame_aside_mini" v-show="!playerShow">
-      <v-icon @click="playerShow = !playerShow">mdi-arrow-expand-left</v-icon>
+      <v-icon large color="red" @click="playerShow = !playerShow">
+        mdi-chevron-left-box
+      </v-icon>
+
+      <div style="margin-top: 7vh">
+        <v-icon large @click="prev">mdi-skip-previous-circle</v-icon>
+        <v-icon large @click="play">mdi-play-circle</v-icon>
+        <v-icon large @click="pause">mdi-pause-circle</v-icon>
+        <v-icon large @click="next">mdi-skip-next-circle</v-icon>
+        <p
+          style="
+            transform: rotateZ(90deg);
+            transform-origin: left bottom;
+            height: 30px;
+            width: 200px;
+          "
+        >
+          {{ playMusic.mTitle }}
+        </p>
+      </div>
     </aside>
 
     <aside id="frame_aside" v-show="playerShow">
-      <v-icon style="padding:10px" @click="playerShow = !playerShow"
-        >mdi-arrow-expand-right</v-icon
+      <v-icon
+        large
+        color="red"
+        style="padding: 10px"
+        @click="playerShow = !playerShow"
       >
+        mdi-chevron-right-box
+      </v-icon>
       <div
         id="player_container"
         class="noselect"
@@ -112,12 +136,8 @@
         <div id="aside_partition">
           <div id="aside_partition_text_wrap">
             <!--                    <span id="active_chatting_wrap_button" class="aside_partition_text" v-bind:class="{ on : chattingMode }" @click="chattingMode = true">채팅</span><span id="aside_partition_button_token"> / </span>-->
-            <span
-              id="active_lyrics_wrap_button"
-              class="aside_partition_text"
-              v-bind:class="{ on: !chattingMode }"
-              @click="chattingMode = false"
-              >가사</span
+            <span id="active_lyrics_wrap_button" class="aside_partition_text"
+              >재생목록</span
             >
           </div>
         </div>
@@ -147,10 +167,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Header",
   components: {},
-  data: function() {
+  data: function () {
     return {
       YT: null,
       player: null,
@@ -174,12 +196,15 @@ export default {
       chattingMode: false,
       chattingList: [],
       chattingMessage: "",
-      chattingFirstDraw: true
+      chattingFirstDraw: true,
     };
   },
   computed: {
+    ...mapState({
+      playMusic: "playMusic",
+    }),
     playlist() {
-      let playlist = this.$store.getters.playlist.map(item => item);
+      let playlist = this.$store.getters.playlist.map((item) => item);
 
       if (this.playerShuffle) {
         let j, x, i;
@@ -195,7 +220,7 @@ export default {
     },
     videoId() {
       return this.$store.getters.videoId;
-    }
+    },
   },
   watch: {
     playlist() {
@@ -203,7 +228,7 @@ export default {
     },
     videoId(videoId) {
       this.start(videoId);
-    }
+    },
   },
   mounted() {
     // Youtube Player
@@ -215,13 +240,13 @@ export default {
     window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
   },
   methods: {
-    onYouTubeIframeAPIReady: function() {
+    onYouTubeIframeAPIReady: function () {
       this.YT = window.YT;
     },
-    onPlayerReady: function(event) {
+    onPlayerReady: function (event) {
       event.target.playVideo();
     },
-    onPlayerStateChange: function(event) {
+    onPlayerStateChange: function (event) {
       if (event.data === this.YT.PlayerState.ENDED) {
         this.playerStatus = "ENDED";
 
@@ -265,18 +290,18 @@ export default {
             this.playCount++;
             if (this.playCount === 300) {
               const video = this.playlist.filter(
-                item => item.video === this.videoId
+                (item) => item.video === this.videoId
               )[0];
 
               this.axios
                 .post(this.$store.getters.serverUrl + "api/music/play", {
                   video: video.video,
-                  artist: video.artist
+                  artist: video.artist,
                 })
                 .then(() => {
                   //
                 })
-                .catch(error => {
+                .catch((error) => {
                   console.log(error);
                 });
             }
@@ -295,7 +320,7 @@ export default {
         }
       }
     },
-    start: function(videoId) {
+    start: function (videoId) {
       this.playCount = 0;
 
       if (this.player === null) {
@@ -310,13 +335,13 @@ export default {
             modestbranding: 1,
             rel: 0,
             showinfo: 0,
-            playsinline: 0
+            playsinline: 0,
           },
           videoId: videoId,
           events: {
             onReady: this.onPlayerReady,
-            onStateChange: this.onPlayerStateChange
-          }
+            onStateChange: this.onPlayerStateChange,
+          },
         });
       } else {
         try {
@@ -328,25 +353,25 @@ export default {
         }
       }
 
-      const video = this.playlist.filter(item => item.video === videoId)[0];
+      const video = this.playlist.filter((item) => item.video === videoId)[0];
       this.musicTitle = video.title + " - " + video.singer[0].name;
       this.getLyricsFile(videoId);
     },
-    play: function() {
+    play: function () {
       if (this.player === null) {
         return;
       }
 
       this.player.playVideo();
     },
-    pause: function() {
+    pause: function () {
       if (this.player === null) {
         return;
       }
 
       this.player.pauseVideo();
     },
-    prev: function() {
+    prev: function () {
       if (this.player === null) {
         return;
       }
@@ -357,7 +382,7 @@ export default {
       }
 
       const currentVideoIndex = this.playlist
-        .map(item => item.video)
+        .map((item) => item.video)
         .indexOf(this.videoId);
       if (currentVideoIndex === 0) {
         this.$store.dispatch(
@@ -371,7 +396,7 @@ export default {
         );
       }
     },
-    next: function() {
+    next: function () {
       if (this.player === null) {
         return;
       }
@@ -382,7 +407,7 @@ export default {
       }
 
       const currentVideoIndex = this.playlist
-        .map(item => item.video)
+        .map((item) => item.video)
         .indexOf(this.videoId);
       if (currentVideoIndex === this.playlist.length - 1) {
         this.$store.dispatch("setVideoId", this.playlist[0].video);
@@ -393,21 +418,21 @@ export default {
         );
       }
     },
-    repeat: function(playerRepeat) {
+    repeat: function (playerRepeat) {
       if (this.player === null) {
         return;
       }
 
       this.playerRepeat = playerRepeat;
     },
-    shuffle: function(playerShuffle) {
+    shuffle: function (playerShuffle) {
       if (this.player === null) {
         return;
       }
 
       this.playerShuffle = playerShuffle;
     },
-    mute: function(playerMute) {
+    mute: function (playerMute) {
       if (this.player === null) {
         return;
       }
@@ -422,7 +447,7 @@ export default {
         this.playerVolumeBarsWidth = 80;
       }
     },
-    fullscreen: function() {
+    fullscreen: function () {
       if (this.player === null) {
         return;
       }
@@ -436,7 +461,7 @@ export default {
         requestFullScreen.bind(ppp("#player"))();
       }
     },
-    progressBarDown: function(event) {
+    progressBarDown: function (event) {
       if (this.player === null) {
         return;
       }
@@ -446,23 +471,23 @@ export default {
 
       this.progressBarHandle(event);
     },
-    progressBarUp: function() {
+    progressBarUp: function () {
       this.isProgressBarHover = false;
     },
-    progressBarEnter: function() {
+    progressBarEnter: function () {
       if (this.isProgressBarDown) {
         this.isProgressBarHover = true;
       }
     },
-    progressBarLeave: function() {
+    progressBarLeave: function () {
       this.isProgressBarHover = false;
     },
-    progressBarMove: function(event) {
+    progressBarMove: function (event) {
       if (this.isProgressBarDown) {
         this.progressBarHandle(event);
       }
     },
-    progressBarHandle: function(event) {
+    progressBarHandle: function (event) {
       if (this.isProgressBarHover) {
         let x;
         if (event.target.id === "player_control_progress_bar")
@@ -499,7 +524,7 @@ export default {
             : parseInt(duration) % 60);
       }
     },
-    volumeBarDown: function(event) {
+    volumeBarDown: function (event) {
       if (this.player === null) {
         return;
       }
@@ -509,15 +534,15 @@ export default {
 
       this.volumeBarHandle(event);
     },
-    volumeBarUp: function() {
+    volumeBarUp: function () {
       this.isVolumeBarHover = false;
     },
-    volumeBarEnter: function() {
+    volumeBarEnter: function () {
       if (this.isVolumeBarDown) {
         this.isVolumeBarHover = true;
       }
     },
-    volumeBarLeave: function(event) {
+    volumeBarLeave: function (event) {
       if (this.isVolumeBarHover) {
         if (event.offsetX >= 100) {
           this.playerVolumeBarsWidth = "100";
@@ -531,12 +556,12 @@ export default {
       }
       this.isVolumeBarHover = false;
     },
-    volumeBarMove: function(event) {
+    volumeBarMove: function (event) {
       if (this.isVolumeBarDown) {
         this.volumeBarHandle(event);
       }
     },
-    volumeBarHandle: function(event) {
+    volumeBarHandle: function (event) {
       if (this.isVolumeBarHover) {
         let x;
         if (event.target.id === "player_control_volume_bar")
@@ -563,16 +588,16 @@ export default {
         }
       }
     },
-    playerLeave: function() {
+    playerLeave: function () {
       this.isProgressBarDown = false;
       this.isProgressBarHover = false;
       this.isVolumeBarDown = false;
       this.isVolumeBarHover = false;
     },
-    getLyricsFile: function(videoId) {
+    getLyricsFile: function (videoId) {
       this.axios
         .get(this.$store.getters.serverUrl + "lyrics/" + videoId)
-        .then(response => {
+        .then((response) => {
           const lyrics = response.data.split("\n");
           this.lyricsTitle = lyrics[0];
 
@@ -588,11 +613,11 @@ export default {
 
           this.$refs.lyricsContainer.scrollTop = 0;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -661,7 +686,7 @@ export default {
 <style scoped lang="scss">
 #frame_aside_mini {
   position: fixed;
-  width: 50px;
+  width: 70px;
   height: 100%;
   min-height: 500px;
   right: 0;
@@ -687,7 +712,7 @@ export default {
   #player_container {
     & {
       position: relative;
-      padding-top: 40px;
+      padding-top: 48px;
       width: 450px;
     }
 

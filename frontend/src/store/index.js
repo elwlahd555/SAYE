@@ -23,6 +23,7 @@ export const store = new Vuex.Store({
     // youtube playlist
     playlist: [],
     videoId: "",
+    playMusic: null,
     playType: "",
     playShow: false
   },
@@ -55,6 +56,7 @@ export const store = new Vuex.Store({
       state.uId = null;
       state.uName = null;
       state.uImage = null;
+      state.playlist = [];
     },
     SET_USER_ID(state, uId) {
       state.uId = uId;
@@ -72,8 +74,14 @@ export const store = new Vuex.Store({
     setVideoId(state, payload) {
       state.videoId = payload.videoId;
     },
+    setPlayMusic(state, payload) {
+      state.playMusic = payload.music;
+    },
     setPlayType(state, payload) {
       state.playType = payload.playType;
+    },
+    addMusicToPlaylist(state, payload) {
+      state.playlist.push(payload.music);
     }
   },
   actions: {
@@ -96,8 +104,14 @@ export const store = new Vuex.Store({
     setVideoId({ commit }, videoId) {
       commit("setVideoId", { videoId });
     },
+    setPlayMusic({ commit }, music) {
+      commit("setPlayMusic", { music })
+    },
     setPlayType({ commit }, playType) {
       commit("setPlayType", { playType });
+    },
+    addToPlaylist({ commit }, music) {
+      commit("addMusicToPlaylist", { music });
     }
   }
 });
