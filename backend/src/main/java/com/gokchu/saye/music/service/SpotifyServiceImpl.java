@@ -22,4 +22,10 @@ public class SpotifyServiceImpl implements SpotifyService{
 		
 	}
 
+	@Override
+	public Music selectByMId(String mId) {
+		// TODO Auto-generated method stub
+		return spotifyMapper.selectByMId(mId);
+	}
+
 }

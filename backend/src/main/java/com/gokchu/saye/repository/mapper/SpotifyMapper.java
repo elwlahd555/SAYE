@@ -14,5 +14,6 @@ public interface SpotifyMapper {
 	int checkMusic(Music music);
 	//검색횟수
 	int updateMusicCnt(String mId);
+	Music selectByMId(String mId);
 
 }

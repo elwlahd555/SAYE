@@ -48,9 +48,33 @@ public class MusicController {
 		return musics;
 	}
 	//가수로 검색
-	
+	@GetMapping("artist")
+	public List<Music> selectByArtist(String mArtist){
+		List<Music>musics=new ArrayList<Music>();
+		musics=musicService.selectByArtist(mArtist);
+		return musics;
+	}
 	//앨범으로 검색
-	
+	@GetMapping("album")
+	public List<Music> selectByAlbum(String mAlbum){
+		List<Music>musics=new ArrayList<Music>();
+		musics=musicService.selectByAlbum(mAlbum);
+		return musics;
+	}
+	//장르로 검색
+	@GetMapping("genre")
+	public List<Music> selectByGenre(String mGenre){
+		List<Music>musics=new ArrayList<Music>();
+		musics=musicService.selectByGenre(mGenre);
+		return musics;
+	}
+	//감정으로 검색
+	@GetMapping("emotion")
+	public List<Music> selectByEmotion(String mEmotion){
+		List<Music>musics=new ArrayList<Music>();
+		musics=musicService.selectByEmotion(mEmotion);
+		return musics;
+	}
 //	@GetMapping("temp")
 //	public void temp() throws IOException{
 //		String filePath = "C:/SSAFY/kpop.txt";
