@@ -5,16 +5,14 @@
         <v-layout row wrap justify-space-around>
           <v-flex xs8 sm9 text-xs-center>
             <p v-if="error" class="grey--text">{{ error }}</p>
-            <p v-else class="mb-0">
+            <div v-else class="mb-0">
               <ul v-if="sentences.length > 0">
-              <span
-                v-for="sentence in sentences"
-                :key="sentence"
-                >{{ sentence }}. </span
-              >
+                <span v-for="sentence in sentences" :key="sentence"
+                  >{{ sentence }}.
+                </span>
               </ul>
               <span>{{ runtimeTranscription }}</span>
-            </p>
+            </div>
           </v-flex>
           <v-flex xs2 sm1 text-xs-center>
             <v-btn
@@ -26,7 +24,9 @@
               :color="!toggle ? 'grey' : speaking ? 'red' : 'red darken-3'"
               :class="{ 'animated infinite pulse': toggle }"
             >
-              <v-icon>{{ toggle ? "mdi-text-to-speech" : "mdi-text-to-speech-off" }}</v-icon>
+              <v-icon>{{
+                toggle ? "mdi-text-to-speech" : "mdi-text-to-speech-off"
+              }}</v-icon>
             </v-btn>
           </v-flex>
         </v-layout>
