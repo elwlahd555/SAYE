@@ -122,7 +122,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/signup", "/", "/404"];
+  const publicPages = ["/login", "/signup", "/", "/404", "/kakaocallback"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = store.state.isLogin;
   //const authToken = localStorage.getItem("auth-token");
