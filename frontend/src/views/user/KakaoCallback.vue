@@ -68,7 +68,7 @@ export default {
             });
           } else {
             Swal.fire({
-              title: `${this.uNickname} 님`,
+              title: `${this.user.uNickname} 님`,
               text: "반가워요!! ^.^",
               imageUrl: "https://unsplash.it/400/200",
               imageWidth: 400,
@@ -102,7 +102,7 @@ export default {
           .post(`${spring_URL}/auth/kakao/callback`, this.user)
           .then(() => {
             Swal.fire({
-              title: `${this.uNickname} 님`,
+              title: `${this.user.uNickname} 님`,
               text: "반가워요!! ^.^",
               imageUrl: "https://unsplash.it/400/200",
               imageWidth: 400,
