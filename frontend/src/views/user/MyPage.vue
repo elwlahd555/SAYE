@@ -1,109 +1,101 @@
 <template>
-  <v-container color="black">
-    <v-row>
-      <h1>나만의 플레이리스트</h1>
-    </v-row>
-    <v-row>
-      <div id="root" class="playlist">
-        <ul class="items">
-          <drag title="Time / Date"></drag>
-          <drag title="Location"></drag>
-        </ul>
+  <v-container pt-5>
+    <v-col cols="12">
+      <PlaylistTreeview />
+    </v-col>
 
-        <dropzone :class="{ 'dropzone--over': isOver }"></dropzone>
-      </div>
+    <v-col cols="12">
+      <Bookmark v-show="false" :bookmarkAlbums="bookmarkAlbums" />
+    </v-col>
+
+    <v-row>
+      <v-col cols="3">
+        <h3>Draggable 1</h3>
+        <draggable
+          class="dragArea list-group"
+          :list="list1"
+          :group="{ name: 'people', pull: 'clone', put: false }"
+          :clone="cloneDog"
+          @change="log"
+        >
+          <div
+            class="list-group-item"
+            v-for="element in list1"
+            :key="element.id"
+          >
+            {{ element.name }}
+          </div>
+        </draggable>
+      </v-col>
+
+      <v-col cols="3">
+        <h3>Draggable 2</h3>
+        <draggable
+          class="dragArea list-group"
+          :list="list2"
+          group="people"
+          @change="log"
+        >
+          <div
+            class="list-group-item"
+            v-for="element in list2"
+            :key="element.id"
+          >
+            {{ element.name }}
+          </div>
+        </draggable>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import Dropzone from "@/components/mypage/Dropzone";
-import Drag from "@/components/mypage/Drag";
+import PlaylistTreeview from "@/components/mypage/PlaylistTreeview";
+import Bookmark from "@/components/mypage/Bookmark";
+
+import { mapGetters } from "vuex";
+import draggable from "vuedraggable";
+
+const albumStore = "albumStore";
+let idGlobal = 8;
 
 export default {
   components: {
-    Dropzone,
-    Drag
+    PlaylistTreeview,
+    Bookmark,
+    draggable
   },
-  data() {
-    return {
-      isOver: false
-    };
+  data: () => ({
+    list1: [
+      { name: "dog 1", id: 1 },
+      { name: "dog 2", id: 2 },
+      { name: "dog 3", id: 3 },
+      { name: "dog 4", id: 4 }
+    ],
+    list2: [
+      { name: "cat 5", id: 5 },
+      { name: "cat 6", id: 6 },
+      { name: "cat 7", id: 7 }
+    ]
+  }),
+  computed: {
+    ...mapGetters(albumStore, {
+      bookmarkAlbums: "BOOKMARK_ALBUMS"
+    })
   },
   created() {
-    this.$on("hitDropZone", function(value) {
-      this.isOver = value;
-    });
+    this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS");
+  },
+  methods: {
+    log: function(evt) {
+      window.console.log(evt);
+    },
+    cloneDog({ id }) {
+      return {
+        id: idGlobal++,
+        name: `cat ${id}`
+      };
+    }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.playlist {
-  margin-top: 50px;
-  padding: 0 5%;
-  display: flex;
-}
-
-.items {
-  padding: 10px;
-  margin-right: 20px;
-  border: 4px solid black;
-  width: 320px;
-  height: 400px;
-}
-
-.item {
-  position: relative;
-  margin-bottom: 10px;
-  height: 50px;
-
-  &__drag {
-    position: absolute;
-    left: 0;
-    right: 0;
-    padding-top: 15px;
-    height: 50px;
-    background-color: #6495ed;
-    text-align: center;
-    font-weight: 700;
-    line-height: 1;
-    transition: background-color, border 0.2s ease-in;
-
-    &:active {
-      background-color: #3b6cc3;
-      border: 1px solid black;
-    }
-  }
-}
-
-.dropzone {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border: 4px dotted black;
-  background-color: lightgrey;
-  transition: background-color 0.2s linear;
-
-  &__txt {
-    font-weight: 700;
-    font-size: 30px;
-    color: black;
-  }
-
-  &--over {
-    background-color: #dc143c;
-    color: white;
-  }
-
-  &--over &__icon {
-    fill: white;
-  }
-
-  &--over &__txt {
-    color: white;
-  }
-}
-</style>

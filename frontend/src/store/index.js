@@ -40,8 +40,8 @@ export const store = new Vuex.Store({
   mutations: {
     SET_USER_AUTH_DATA(state, payload) {
       state.isLogin = true;
-      state.uId = payload["uId"];
-      state.uName = payload["uName"];
+      state.uId = payload["uNo"];
+      state.uName = payload["uNickname"];
       if (!payload["uImage"]) {
         state.uImage =
           "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg";
@@ -55,6 +55,9 @@ export const store = new Vuex.Store({
       state.uId = null;
       state.uName = null;
       state.uImage = null;
+    },
+    SET_USER_ID(state, uId) {
+      state.uId = uId;
     },
     SET_USER_NAME(state, uName) {
       state.uName = uName;
@@ -74,11 +77,9 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    FETCH_USER_NAME(context, uName) {
-      context.commit("SET_USER_NAME", uName);
-    },
-    FETCH_USER_IMAGE(context, uImage) {
-      context.commit("SET_USER_IMAGE", uImage);
+    LOGIN(context, user) {
+      context.commit("SET_USER_ID", user.uId);
+      context.commit("SET_USER_NAME", user.uName);
     },
     LOGOUT(context) {
       context.commit("SET_USER_AUTH_DATA_LOGOUT");

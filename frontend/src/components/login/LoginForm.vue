@@ -48,7 +48,7 @@ export default {
 
   components: {},
   computed: {
-    ...mapState(["uId"])
+    ...mapState(["uName"])
   },
   methods: {
     loginsubmit() {
@@ -85,7 +85,7 @@ export default {
               this.$router.push({ name: "HomePage" });
 
               Swal.fire({
-                title: `${this.uId} 님`,
+                title: `${this.uName} 님`,
                 text: "반가워요!! ^.^",
                 imageUrl: "https://unsplash.it/400/200",
                 imageWidth: 400,

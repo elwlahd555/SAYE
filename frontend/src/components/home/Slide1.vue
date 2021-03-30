@@ -1,9 +1,6 @@
 <template>
-  <article id="panel-1" class="panel full-screen grey">
+  <article id="panel-1" class="panel full-screen white-3">
     <v-container fill-height>
-      <v-row justify="center" ma-0>
-        <h1>Search</h1>
-      </v-row>
       <v-row justify="center">
         <div class="searchBox">
           <input
@@ -14,10 +11,10 @@
             v-model="keyword"
             @keyup.enter="enterSearch"
           />
-
+          <!-- btn Color : #d1ebd9-->
           <v-btn
             class="searchButton"
-            color="#d1ebd9"
+            color="white"
             depressed
             fab
             x-large
