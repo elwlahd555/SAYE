@@ -12,7 +12,7 @@ const getKakaoToken = async code => {
   try {
     const data = {
       grant_type: "authorization_code",
-      client_id: "deace353f1fd1555201a07f914bc5598",
+      client_id: "e000fe4772870c3a157787b3e779e2ce",
       redirect_uri: `${server_URL}/kakaocallback`,
       code: code
     };
