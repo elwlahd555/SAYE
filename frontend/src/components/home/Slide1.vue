@@ -1,23 +1,24 @@
 <template>
-  <article id="panel-1" class="panel full-screen grey">
+  <article id="panel-1" class="panel full-screen white-3">
     <v-container fill-height>
-      <v-row justify="center" ma-0>
-        <h2>일반 검색</h2>
-      </v-row>
       <v-row justify="center">
-        <div class="description" v-show="scY <= 80">
-          <p>
-            듣고 싶은 음악을 검색하세요. [Spotify API를 사용한 결과 표시]
-          </p>
-        </div>
-        <div class="searchBox" v-show="scY > 80">
-          <input class="searchInput" type="text" name="" :placeholder="text" />
+        <div class="searchBox">
+          <input
+            class="searchInput"
+            type="text"
+            name=""
+            :placeholder="text"
+            v-model="keyword"
+            @keyup.enter="enterSearch"
+          />
+          <!-- btn Color : #d1ebd9-->
           <v-btn
             class="searchButton"
-            color="#d1ebd9"
+            color="white"
             depressed
             fab
             x-large
+            @click="setQuery"
             :to="{ name: 'BasicSearch' }"
           >
             <v-icon>mdi-magnify</v-icon>
@@ -32,16 +33,24 @@
 export default {
   data() {
     return {
-      scY: 0,
-      text: "음악을 검색 (버튼 클릭!) ==>"
+      text: "음악을 검색 (버튼 클릭!) ==>",
+      keyword: ""
     };
   },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
-  },
   methods: {
-    handleScroll: function() {
-      this.scY = window.scrollY;
+    enterSearch() {
+      const payload = {
+        settingName: "initialSearchQuery",
+        settingValue: this.keyword
+      };
+      this.$store.dispatch("albumStore/UPDATE_SETTINGS", payload);
+
+      this.$router.push({
+        name: "BasicSearch"
+      });
+    },
+    setQuery() {
+      this.$store.state.albumStore.settings.initialSearchQuery = this.keyword;
     }
   }
 };

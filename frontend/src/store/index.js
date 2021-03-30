@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
+import albumStore from "./modules/albumStore";
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -9,6 +11,9 @@ export const store = new Vuex.Store({
     // storage 에 넣어준당
     createPersistedState()
   ],
+  modules: {
+    albumStore
+  },
   state: {
     // social
     isLogin: false,
@@ -18,6 +23,7 @@ export const store = new Vuex.Store({
     // youtube playlist
     playlist: [],
     videoId: "",
+    playMusic: null,
     playType: "",
     playShow: false
   },
@@ -35,8 +41,8 @@ export const store = new Vuex.Store({
   mutations: {
     SET_USER_AUTH_DATA(state, payload) {
       state.isLogin = true;
-      state.uId = payload["uId"];
-      state.uName = payload["uName"];
+      state.uId = payload["uNo"];
+      state.uName = payload["uNickname"];
       if (!payload["uImage"]) {
         state.uImage =
           "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/436/8142f53e51d2ec31bc0fa4bec241a919_crop.jpeg";
@@ -50,6 +56,10 @@ export const store = new Vuex.Store({
       state.uId = null;
       state.uName = null;
       state.uImage = null;
+      state.playlist = [];
+    },
+    SET_USER_ID(state, uId) {
+      state.uId = uId;
     },
     SET_USER_NAME(state, uName) {
       state.uName = uName;
@@ -64,16 +74,20 @@ export const store = new Vuex.Store({
     setVideoId(state, payload) {
       state.videoId = payload.videoId;
     },
+    setPlayMusic(state, payload) {
+      state.playMusic = payload.music;
+    },
     setPlayType(state, payload) {
       state.playType = payload.playType;
+    },
+    addMusicToPlaylist(state, payload) {
+      state.playlist.push(payload.music);
     }
   },
   actions: {
-    FETCH_USER_NAME(context, uName) {
-      context.commit("SET_USER_NAME", uName);
-    },
-    FETCH_USER_IMAGE(context, uImage) {
-      context.commit("SET_USER_IMAGE", uImage);
+    LOGIN(context, user) {
+      context.commit("SET_USER_ID", user.uId);
+      context.commit("SET_USER_NAME", user.uName);
     },
     LOGOUT(context) {
       context.commit("SET_USER_AUTH_DATA_LOGOUT");
@@ -90,8 +104,14 @@ export const store = new Vuex.Store({
     setVideoId({ commit }, videoId) {
       commit("setVideoId", { videoId });
     },
+    setPlayMusic({ commit }, music) {
+      commit("setPlayMusic", { music })
+    },
     setPlayType({ commit }, playType) {
       commit("setPlayType", { playType });
+    },
+    addToPlaylist({ commit }, music) {
+      commit("addMusicToPlaylist", { music });
     }
   }
 });

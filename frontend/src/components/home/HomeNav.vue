@@ -9,7 +9,7 @@
         <a href="#panel-3" class="anchor four">Board</a>
 
         <transition name="component-fade" mode="out-in">
-          <div class="circle" v-show="scY > 900">
+          <div class="circle" v-show="false">
             <ul>
               <li>1</li>
               <li>2</li>
@@ -27,18 +27,18 @@
 export default {
   data() {
     return {
-      scY: 0
+      scY: 0,
     };
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
-    handleScroll: function() {
+    handleScroll: function () {
       this.scY = window.scrollY;
       //console.log(this.scY);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -55,7 +55,8 @@ export default {
 /*WRAPPER*/
 .wrapper {
   position: fixed;
-  margin: 20px auto;
+  margin: -10px auto;
+  background-color: black;
   z-index: 999;
 }
 
