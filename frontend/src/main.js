@@ -6,7 +6,7 @@ import vuetify from "./plugins/vuetify";
 import VueCookies from "vue-cookies";
 import VueYoutube from "vue-youtube";
 
-window.Kakao.init("443b00f34027675b5dffb8a2d9a6bdd7");
+window.Kakao.init("c626463e9b79a84d5a8185d060679ef3");
 
 Vue.config.productionTip = false;
 Vue.use(VueCookies);

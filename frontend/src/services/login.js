@@ -3,7 +3,7 @@ import axios from "@/services/axios";
 const server_URL = process.env.VUE_APP_SERVER_URL;
 
 const kakaoHeader = {
-  Authorization: "c7f41dd3c6ebfe77ee6ffffa6e688c9b",
+  Authorization: "1e4d6ec5ac4ae596f29fc38663d8a0ed",
   "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
 };
 
