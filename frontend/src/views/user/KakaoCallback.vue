@@ -8,6 +8,7 @@
 const axios = require("axios");
 const spring_URL = process.env.VUE_APP_SPRING_URL;
 
+import Swal from "sweetalert2";
 import { getKakaoToken, getKakaoUserInfo } from "@/services/login";
 
 export default {
@@ -31,7 +32,12 @@ export default {
       console.log("카카오 인증 코드", this.$route.query.code);
       const { data } = await getKakaoToken(this.$route.query.code);
       if (data.error) {
-        alert("카카오톡 로그인 오류입니다.");
+        Swal.fire({
+          icon: "warning",
+          title: "힝!",
+          text: "카카오톡 로그인 오류입니다ㅠ",
+          confirmButtonColor: "#f8bb86"
+        });
         this.$router.replace("/login");
         return;
       }
@@ -54,9 +60,21 @@ export default {
           // console.log(res);
           let token = res.data["auth-token"];
           if (token === undefined) {
-            alert("비밀번호가 틀렸습니다.");
+            Swal.fire({
+              icon: "warning",
+              title: "비밀번호 오류",
+              text: "비밀번호를 다시 확인하세요!",
+              confirmButtonColor: "#f8bb86"
+            });
           } else {
-            alert("로그인 되었습니다.");
+            Swal.fire({
+              title: `${this.uNickname} 님`,
+              text: "반가워요!! ^.^",
+              imageUrl: "https://unsplash.it/400/200",
+              imageWidth: 400,
+              imageHeight: 200,
+              padding: "3em"
+            });
             // context.commit('SET_USER_AUTH_DATA', res.data)
             localStorage.setItem("auth-token", token);
             // axios default 헤더에 현재 token 적재
@@ -69,7 +87,12 @@ export default {
         })
         .catch(err => {
           console.log(err);
-          alert("로그인에 실패하셨습니다.");
+          Swal.fire({
+            icon: "error",
+            title: "로그인 실패",
+            text: "Oops.... T.T",
+            confirmButtonColor: "#f27474"
+          });
         });
     },
     submit() {
@@ -78,11 +101,23 @@ export default {
         axios
           .post(`${spring_URL}/auth/kakao/callback`, this.user)
           .then(() => {
-            alert("카카오 소셜 로그인 완료되었습니다.");
+            Swal.fire({
+              title: `${this.uNickname} 님`,
+              text: "반가워요!! ^.^",
+              imageUrl: "https://unsplash.it/400/200",
+              imageWidth: 400,
+              imageHeight: 200,
+              padding: "3em"
+            });
             this.$router.push({ name: "HomePage" });
           })
           .catch(() => {
-            alert("카카오 소셜 로그인에 실패하셨습니다.");
+            Swal.fire({
+              icon: "error",
+              title: "로그인 실패",
+              text: "Oops.... T.T",
+              confirmButtonColor: "#f27474"
+            });
           });
       } else {
         console.log("카카오 소셜 로그인에 실패");
