@@ -15,7 +15,23 @@ public interface MusicMapper {
 
 	List<Music> selectByTitle(String mTitle);
 
-	
+	List<Music> selectByArtist(String mArtist);
+
+	List<Music> selectByAlbum(String mAlbum);
+
+	List<Music> selectByGenre(String mGenre);
+
+	List<Music> selectByEmotion(String mEmotion);
+
+
+	String temp(int i);
+//
+//	void update(int i, String artist);
+
+	void update(Music music);
+
+	String artist(int i);
+
 
 
 }

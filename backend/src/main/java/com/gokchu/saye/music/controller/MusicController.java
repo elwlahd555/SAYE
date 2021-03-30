@@ -1,7 +1,13 @@
 package com.gokchu.saye.music.controller;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +48,69 @@ public class MusicController {
 		return musics;
 	}
 	//가수로 검색
-	
+	@GetMapping("artist")
+	public List<Music> selectByArtist(String mArtist){
+		List<Music>musics=new ArrayList<Music>();
+		musics=musicService.selectByArtist(mArtist);
+		return musics;
+	}
 	//앨범으로 검색
-	
-	
+	@GetMapping("album")
+	public List<Music> selectByAlbum(String mAlbum){
+		List<Music>musics=new ArrayList<Music>();
+		musics=musicService.selectByAlbum(mAlbum);
+		return musics;
+	}
+	//장르로 검색
+	@GetMapping("genre")
+	public List<Music> selectByGenre(String mGenre){
+		List<Music>musics=new ArrayList<Music>();
+		musics=musicService.selectByGenre(mGenre);
+		return musics;
+	}
+	//감정으로 검색
+	@GetMapping("emotion")
+	public List<Music> selectByEmotion(String mEmotion){
+		List<Music>musics=new ArrayList<Music>();
+		musics=musicService.selectByEmotion(mEmotion);
+		return musics;
+	}
+//	@GetMapping("temp")
+//	public void temp() throws IOException{
+//		String filePath = "C:/SSAFY/kpop.txt";
+//		String line = "";
+//		HashMap<String, String> map=new HashMap<String, String>();
+//		BufferedReader br;
+//		try {
+//			br = new BufferedReader(new FileReader(filePath));
+//			while ((line = br.readLine()) != null) {
+//				StringTokenizer st=new StringTokenizer(line,",");
+//				map.put(st.nextToken(), st.nextToken());
+//				
+//			}
+////	           System.out.println(new String(readBuffer,"UTF-8"));
+//
+//			// 객체 사용을 다한 경우 스트림을 닫아준다
+//			br.close(); // 스트림 닫기
+//			System.out.println(map.size());
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//
+//		}
+//		for (int i = 4001; i <= 4394; i++) {
+//			String artist=musicService.temp(i);
+//			System.out.println(artist);
+//			if(map.get(artist) != null) {
+//				artist=artist +"("+map.get(artist)+")";
+//				System.out.println(artist);
+//				musicService.update(i,artist);
+//			}else {
+//				System.out.println("없음");
+//				continue;
+//			}
+//			
+//		}
+//		
+//	}
 }
