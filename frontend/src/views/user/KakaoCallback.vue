@@ -79,7 +79,7 @@ export default {
           .post(`${spring_URL}/saye/auth/kakao/callback`, this.user)
           .then(() => {
             alert("카카오 소셜 로그인 완료되었습니다.");
-            this.$router.push({ name: "LoginPage" });
+            this.$router.push({ name: "HomePage" });
           })
           .catch(() => {
             alert("카카오 소셜 로그인에 실패하셨습니다.");
