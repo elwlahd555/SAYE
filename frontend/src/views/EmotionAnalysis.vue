@@ -15,7 +15,7 @@
         <v-icon small>mdi-check</v-icon>
       </span>
     </v-btn>
-    <v-container fluid>
+    <v-container>
       <speech-to-text @speechend="speechEnd"></speech-to-text>
     </v-container>
     <div style="text-align: center">{{ sentences }}</div>
