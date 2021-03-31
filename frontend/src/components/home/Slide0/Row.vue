@@ -66,12 +66,12 @@ export default {
   }),
   methods: {
     handleClick(music) {
-      console.log("music title", music);
       this.videoId = getYouTubeID(music.mUrl);
       this.$store.dispatch("setVideoId", this.videoId);
       this.$store.dispatch("setPlayMusic", music);
       this.$store.dispatch("addToPlaylist", music);
-      console.log(this.$store.state.playlist);
+      //console.log("music title", music);
+      //console.log(this.$store.state.asidePlaylist);
     },
   },
 };
