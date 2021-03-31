@@ -1,38 +1,37 @@
 <template>
   <div>
-    <v-row justify="center">
-      <div class="balloon transform" :class="{ 'transform-active': toggle }">
-        <v-textarea
-          solo
-          flat
-          :height="toggle ? 300 : 0"
-          class="think area text-center pa-2"
-          type="text"
-          style="line-height:200%"
-          v-model="sentences"
-        />
-      </div>
-      <div class="micBox" :class="{ transbutton: toggle }">
-        <v-btn
-          class="micButton"
-          dark
-          @click.stop="
-            toggle ? endSpeechRecognition() : startSpeechRecognition()
-          "
-          icon
-          :color="!toggle ? 'grey' : speaking ? 'red' : 'red darken-3'"
-          :class="{ 'animated infinite pulse': toggle }"
-          depressed
-          fab
-          x-large
-          :to="{ name: '' }"
-        >
-          <v-icon>{{
-            toggle ? "mdi-text-to-speech" : "mdi-text-to-speech-off"
-          }}</v-icon>
-        </v-btn>
-      </div>
-    </v-row>
+    <v-card>
+      <v-card-text>
+        <v-layout row wrap justify-space-around>
+          <v-flex xs8 sm9 text-xs-center>
+            <p v-if="error" class="grey--text">{{ error }}</p>
+            <div v-else class="mb-0">
+              <ul v-if="sentences.length > 0">
+                <span v-for="sentence in sentences" :key="sentence"
+                  >{{ sentence }}.
+                </span>
+              </ul>
+              <span>{{ runtimeTranscription }}</span>
+            </div>
+          </v-flex>
+          <v-flex xs2 sm1 text-xs-center>
+            <v-btn
+              dark
+              @click.stop="
+                toggle ? endSpeechRecognition() : startSpeechRecognition()
+              "
+              icon
+              :color="!toggle ? 'grey' : speaking ? 'red' : 'red darken-3'"
+              :class="{ 'animated infinite pulse': toggle }"
+            >
+              <v-icon>{{
+                toggle ? "mdi-text-to-speech" : "mdi-text-to-speech-off"
+              }}</v-icon>
+            </v-btn>
+          </v-flex>
+        </v-layout>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
@@ -40,18 +39,7 @@
 let SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = SpeechRecognition ? new SpeechRecognition() : false;
-
 export default {
-  data() {
-    return {
-      error: false,
-      speaking: false,
-      toggle: false,
-      runtimeTranscription: "",
-      sentences: [],
-      scY: 0
-    };
-  },
   props: {
     lang: {
       type: String,
@@ -61,6 +49,16 @@ export default {
       type: [String, null],
       required: false
     }
+  },
+  data() {
+    return {
+      error: false,
+      speaking: false,
+      toggle: false,
+      runtimeTranscription: "",
+      sentences: [],
+      scY: 0
+    };
   },
   methods: {
     handleScroll: function() {
@@ -80,7 +78,7 @@ export default {
         text: this.sentences.join(". ")
       });
       // console.log(this.text);
-      // console.log(this.sentences);
+      console.log(this.sentences);
     },
     startSpeechRecognition() {
       if (!recognition) {
@@ -138,17 +136,14 @@ export default {
 };
 </script>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
-
+<style scoped>
 .description {
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, 50%);
 }
-
-.micBox {
+.searchBox {
   position: absolute;
   top: 40%;
   left: 50%;
@@ -159,7 +154,17 @@ export default {
   padding: 10px;
 }
 
-.micButton {
+.searchBox:hover > .searchInput {
+  width: 440px;
+  padding: 0 6px;
+}
+
+.searchBox:hover > .searchBtton {
+  background: white;
+  color: #d1ebd9;
+}
+
+.searchButton {
   float: right;
   background: #d1ebd9;
   display: flex;
@@ -168,7 +173,7 @@ export default {
   transition: 0.4s;
 }
 
-.micInput {
+.searchInput {
   border: none;
   background: none;
   outline: none;
@@ -181,44 +186,10 @@ export default {
   transform: translateX(20px);
 }
 
-.balloon {
-  visibility: hidden;
-  font-size: 2em;
-  font-family: "Do Hyeon", sans-serif;
-  text-align: center;
-  position: relative;
-  width: 0px;
-  height: 0px;
-  background: #2f3640;
-  border-radius: 10px;
-}
-
-.area {
-  font-size: 1.2em;
-  margin: 15px;
-}
-
-.transform {
-  -webkit-transition: all 0.8s ease;
-  -moz-transition: all 0.8s ease;
-  -o-transition: all 0.8s ease;
-  -ms-transition: all 0.8s ease;
-  transition: all 0.8s ease;
-}
-
-.transform-active {
-  visibility: visible;
-  background-color: white;
-  height: 350px;
-  width: 500px;
-}
-
-.transbutton {
-  -webkit-transition: all 0.8s ease;
-  -moz-transition: all 0.8s ease;
-  -o-transition: all 0.8s ease;
-  -ms-transition: all 0.8s ease;
-  transition: all 0.8s ease;
-  margin-top: 160px;
+@media screen and (max-width: 1250px) {
+  .searchBox:hover > .searchInput {
+    width: 300px;
+    padding: 0 6px;
+  }
 }
 </style>
