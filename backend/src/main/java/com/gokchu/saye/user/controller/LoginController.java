@@ -35,7 +35,7 @@ public class LoginController {
 	
 	/* 로그인 */
 	@PostMapping("/login")
-	public ResponseEntity<?> login(User user) throws Exception {
+	public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
 		
 		System.out.println(user+"유저정보"+user.getuId()+user.getuPassword());
 		Map<String, Object> resultMap = new HashMap<>();
