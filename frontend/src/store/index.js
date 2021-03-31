@@ -57,6 +57,7 @@ export const store = new Vuex.Store({
       state.uId = null;
       state.uName = null;
       state.uImage = null;
+      state.playMusic = null;
       state.playlist.length = 0;
       state.asidePlaylist = [];
     },
@@ -83,11 +84,20 @@ export const store = new Vuex.Store({
       state.playType = payload.playType;
     },
     addMusicToPlaylist(state, payload) {
-      if(state.asidePlaylist.includes(payload.music)){
-        console.log('hi')
-      }else{
-      state.asidePlaylist.push(payload.music);
+      const alist = state.asidePlaylist;
+      let flag = false;
+      for (let m of alist) {
+        if (m.mId == payload.music.mId) {
+          console.log("already in playlist");
+          flag = true;
+        }
       }
+
+      if (!flag) {
+        state.asidePlaylist.push(payload.music);
+      }
+
+      // console.log(state.asidePlaylist);
     }
   },
   actions: {
@@ -111,7 +121,7 @@ export const store = new Vuex.Store({
       commit("setVideoId", { videoId });
     },
     setPlayMusic({ commit }, music) {
-      commit("setPlayMusic", { music })
+      commit("setPlayMusic", { music });
     },
     setPlayType({ commit }, playType) {
       commit("setPlayType", { playType });

@@ -14,7 +14,7 @@
           </v-list-item-content>
 
           <v-list-item-action>
-            <v-btn icon @click="alert('click')">
+            <v-btn icon @click="handleClick(item)">
               <v-icon color="red darken-4" class="mr-2"> mdi-play </v-icon>
             </v-btn>
           </v-list-item-action>
@@ -25,15 +25,18 @@
 </template>
 
 <script>
+import getYouTubeID from "get-youtube-id";
+
 export default {
   props: ["playlist"],
   data: () => ({}),
   computed: {},
 
   methods: {
-    genRandomIndex(length) {
-      return Math.ceil(Math.random() * (length - 1));
-    },
-  },
+    handleClick(music) {
+      this.videoId = getYouTubeID(music.mUrl);
+      this.$store.dispatch("setVideoId", this.videoId);
+    }
+  }
 };
 </script>

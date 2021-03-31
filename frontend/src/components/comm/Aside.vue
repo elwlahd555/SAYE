@@ -7,8 +7,15 @@
 
       <div style="margin-top: 7vh">
         <v-icon large @click="prev">mdi-skip-previous-circle</v-icon>
-        <v-icon large @click="play">mdi-play-circle</v-icon>
-        <v-icon large @click="pause">mdi-pause-circle</v-icon>
+        <v-icon large v-if="playerStatus === 'ENDED'" @click="play"
+          >mdi-stop-circle</v-icon
+        >
+        <v-icon large v-if="playerStatus === 'PAUSED'" @click="play"
+          >mdi-play-circle</v-icon
+        >
+        <v-icon large v-if="playerStatus === 'PLAYING'" @click="pause"
+          >mdi-pause-circle</v-icon
+        >
         <v-icon large @click="next">mdi-skip-next-circle</v-icon>
         <p
           style="
@@ -154,6 +161,7 @@
 </template>
 
 <script>
+import getYouTubeID from "get-youtube-id";
 import { mapState } from "vuex";
 
 import Playlist from "@/components/mypage/Playlist";
@@ -161,9 +169,9 @@ import Playlist from "@/components/mypage/Playlist";
 export default {
   name: "Header",
   components: {
-    Playlist,
+    Playlist
   },
-  data: function () {
+  data: function() {
     return {
       YT: null,
       player: null,
@@ -181,16 +189,17 @@ export default {
       isVolumeBarDown: false,
       isVolumeBarHover: false,
       musicTitle: "",
-      musicTime: "0:00 / 0:00",
+      musicTime: "0:00 / 0:00"
     };
   },
   computed: {
     ...mapState({
       playMusic: "playMusic",
       asidePlaylist: "asidePlaylist",
+      videoId: "videoId"
     }),
     playlist() {
-      let playlist = this.$store.getters.playlist.map((item) => item);
+      let playlist = this.$store.getters.playlist.map(item => item);
 
       if (this.playerShuffle) {
         let j, x, i;
@@ -203,17 +212,17 @@ export default {
       }
 
       return playlist;
-    },
-    videoId() {
-      return this.$store.getters.videoId;
-    },
+    }
   },
   watch: {
     videoId(videoId) {
       this.start(videoId);
-    },
+    }
   },
   mounted() {
+    if (this.playMusic) {
+      this.playMusic.mTitle = "재생중인 노래가 없습니다";
+    }
     // Youtube Player
     let tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
@@ -223,13 +232,13 @@ export default {
     window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
   },
   methods: {
-    onYouTubeIframeAPIReady: function () {
+    onYouTubeIframeAPIReady: function() {
       this.YT = window.YT;
     },
-    onPlayerReady: function (event) {
+    onPlayerReady: function(event) {
       event.target.playVideo();
     },
-    onPlayerStateChange: function (event) {
+    onPlayerStateChange: function(event) {
       if (event.data === this.YT.PlayerState.ENDED) {
         this.playerStatus = "ENDED";
 
@@ -273,18 +282,18 @@ export default {
             this.playCount++;
             if (this.playCount === 300) {
               const video = this.playlist.filter(
-                (item) => item.video === this.videoId
+                item => item.video === this.videoId
               )[0];
 
               this.axios
                 .post(this.$store.getters.serverUrl + "api/music/play", {
                   video: video.video,
-                  artist: video.artist,
+                  artist: video.artist
                 })
                 .then(() => {
                   //
                 })
-                .catch((error) => {
+                .catch(error => {
                   console.log(error);
                 });
             }
@@ -303,7 +312,7 @@ export default {
         }
       }
     },
-    start: function (videoId) {
+    start: function(videoId) {
       this.playCount = 0;
 
       if (this.player === null) {
@@ -318,13 +327,13 @@ export default {
             modestbranding: 1,
             rel: 0,
             showinfo: 0,
-            playsinline: 0,
+            playsinline: 0
           },
           videoId: videoId,
           events: {
             onReady: this.onPlayerReady,
-            onStateChange: this.onPlayerStateChange,
-          },
+            onStateChange: this.onPlayerStateChange
+          }
         });
       } else {
         try {
@@ -339,82 +348,88 @@ export default {
       //const video = this.playlist.filter((item) => item.video === videoId)[0];
       //this.musicTitle = video.title + " - " + video.singer[0].name;
     },
-    play: function () {
+    play: function() {
       if (this.player === null) {
         return;
       }
-
       this.player.playVideo();
     },
-    pause: function () {
+    pause: function() {
       if (this.player === null) {
         return;
       }
-
+      this.player.playVideo();
       this.player.pauseVideo();
     },
-    prev: function () {
+    prev: function() {
       if (this.player === null) {
         return;
       }
 
-      if (this.playerInterval != null) {
-        clearInterval(this.playerInterval);
-        this.playerInterval = null;
-      }
+      // if (this.playerInterval != null) {
+      //   clearInterval(this.playerInterval);
+      //   this.playerInterval = null;
+      // }
 
-      const currentVideoIndex = this.playlist
-        .map((item) => item.video)
-        .indexOf(this.videoId);
+      const currentVideoIndex = this.asidePlaylist
+        .map(item => item.mId)
+        .indexOf(this.playMusic.mId);
+
+      let nxtId = null;
+      let nxtMusic = null;
       if (currentVideoIndex === 0) {
-        this.$store.dispatch(
-          "setVideoId",
-          this.playlist[this.playlist.length - 1].video
+        nxtId = getYouTubeID(
+          this.asidePlaylist[this.asidePlaylist.length - 1].mUrl
         );
+        nxtMusic = this.asidePlaylist[this.asidePlaylist.length - 1];
       } else {
-        this.$store.dispatch(
-          "setVideoId",
-          this.playlist[currentVideoIndex - 1].video
-        );
+        nxtId = getYouTubeID(this.asidePlaylist[currentVideoIndex - 1].mUrl);
+        nxtMusic = this.asidePlaylist[currentVideoIndex - 1];
       }
+      this.$store.dispatch("setVideoId", nxtId);
+      this.$store.dispatch("setPlayMusic", nxtMusic);
     },
-    next: function () {
+    next: function() {
       if (this.player === null) {
         return;
       }
 
-      if (this.playerInterval != null) {
-        clearInterval(this.playerInterval);
-        this.playerInterval = null;
-      }
+      // if (this.playerInterval != null) {
+      //   clearInterval(this.playerInterval);
+      //   this.playerInterval = null;
+      // }
 
-      const currentVideoIndex = this.playlist
-        .map((item) => item.video)
-        .indexOf(this.videoId);
-      if (currentVideoIndex === this.playlist.length - 1) {
-        this.$store.dispatch("setVideoId", this.playlist[0].video);
+      const currentVideoIndex = this.asidePlaylist
+        .map(item => item.mId)
+        .indexOf(this.playMusic.mId);
+
+      let nxtId = null;
+      let nxtMusic = null;
+      if (currentVideoIndex === this.asidePlaylist.length - 1) {
+        nxtId = getYouTubeID(this.asidePlaylist[0].mUrl);
+        nxtMusic = this.asidePlaylist[0];
       } else {
-        this.$store.dispatch(
-          "setVideoId",
-          this.playlist[currentVideoIndex + 1].video
-        );
+        nxtId = getYouTubeID(this.asidePlaylist[currentVideoIndex + 1].mUrl);
+        nxtMusic = this.asidePlaylist[currentVideoIndex + 1];
       }
+      this.$store.dispatch("setVideoId", nxtId);
+      this.$store.dispatch("setPlayMusic", nxtMusic);
     },
-    repeat: function (playerRepeat) {
+    repeat: function(playerRepeat) {
       if (this.player === null) {
         return;
       }
-
+      alert("죄송해여 아직 구현 중입니다ㅠ");
       this.playerRepeat = playerRepeat;
     },
-    shuffle: function (playerShuffle) {
+    shuffle: function(playerShuffle) {
       if (this.player === null) {
         return;
       }
-
+      alert("죄송해여 아직 구현 중입니다ㅠ");
       this.playerShuffle = playerShuffle;
     },
-    mute: function (playerMute) {
+    mute: function(playerMute) {
       if (this.player === null) {
         return;
       }
@@ -429,7 +444,7 @@ export default {
         this.playerVolumeBarsWidth = 80;
       }
     },
-    fullscreen: function () {
+    fullscreen: function() {
       if (this.player === null) {
         return;
       }
@@ -443,7 +458,7 @@ export default {
         requestFullScreen.bind(ppp("#player"))();
       }
     },
-    progressBarDown: function (event) {
+    progressBarDown: function(event) {
       if (this.player === null) {
         return;
       }
@@ -453,23 +468,23 @@ export default {
 
       this.progressBarHandle(event);
     },
-    progressBarUp: function () {
+    progressBarUp: function() {
       this.isProgressBarHover = false;
     },
-    progressBarEnter: function () {
+    progressBarEnter: function() {
       if (this.isProgressBarDown) {
         this.isProgressBarHover = true;
       }
     },
-    progressBarLeave: function () {
+    progressBarLeave: function() {
       this.isProgressBarHover = false;
     },
-    progressBarMove: function (event) {
+    progressBarMove: function(event) {
       if (this.isProgressBarDown) {
         this.progressBarHandle(event);
       }
     },
-    progressBarHandle: function (event) {
+    progressBarHandle: function(event) {
       if (this.isProgressBarHover) {
         let x;
         if (event.target.id === "player_control_progress_bar")
@@ -506,7 +521,7 @@ export default {
             : parseInt(duration) % 60);
       }
     },
-    volumeBarDown: function (event) {
+    volumeBarDown: function(event) {
       if (this.player === null) {
         return;
       }
@@ -516,15 +531,15 @@ export default {
 
       this.volumeBarHandle(event);
     },
-    volumeBarUp: function () {
+    volumeBarUp: function() {
       this.isVolumeBarHover = false;
     },
-    volumeBarEnter: function () {
+    volumeBarEnter: function() {
       if (this.isVolumeBarDown) {
         this.isVolumeBarHover = true;
       }
     },
-    volumeBarLeave: function (event) {
+    volumeBarLeave: function(event) {
       if (this.isVolumeBarHover) {
         if (event.offsetX >= 100) {
           this.playerVolumeBarsWidth = "100";
@@ -538,12 +553,12 @@ export default {
       }
       this.isVolumeBarHover = false;
     },
-    volumeBarMove: function (event) {
+    volumeBarMove: function(event) {
       if (this.isVolumeBarDown) {
         this.volumeBarHandle(event);
       }
     },
-    volumeBarHandle: function (event) {
+    volumeBarHandle: function(event) {
       if (this.isVolumeBarHover) {
         let x;
         if (event.target.id === "player_control_volume_bar")
@@ -570,13 +585,13 @@ export default {
         }
       }
     },
-    playerLeave: function () {
+    playerLeave: function() {
       this.isProgressBarDown = false;
       this.isProgressBarHover = false;
       this.isVolumeBarDown = false;
       this.isVolumeBarHover = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
