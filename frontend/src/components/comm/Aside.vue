@@ -1,11 +1,16 @@
 <template>
   <div>
     <aside id="frame_aside_mini" v-show="!playerShow">
-      <v-icon large color="red" @click="playerShow = !playerShow">
+      <v-icon
+        class="mt-5 ml-1"
+        large
+        color="red"
+        @click="playerShow = !playerShow"
+      >
         mdi-chevron-left-box
       </v-icon>
 
-      <div style="margin-top: 7vh">
+      <div style="margin-top: 7vh" class="ml-1">
         <v-icon large @click="prev">mdi-skip-previous-circle</v-icon>
         <v-icon large v-if="playerStatus === 'ENDED'" @click="play"
           >mdi-stop-circle</v-icon
@@ -17,7 +22,7 @@
           >mdi-pause-circle</v-icon
         >
         <v-icon large @click="next">mdi-skip-next-circle</v-icon>
-        <p
+        <div
           style="
             transform: rotateZ(90deg);
             transform-origin: left bottom;
@@ -25,8 +30,10 @@
             width: 200px;
           "
         >
-          {{ playMusic.mTitle }}
-        </p>
+          <p class="text-center subtitle-1 font-weight-bold text-truncate">
+            {{ playMusic ? playMusic.mTitle : "재생중인 노래가 없습니다." }}
+          </p>
+        </div>
       </div>
     </aside>
 
@@ -34,7 +41,7 @@
       <v-icon
         large
         color="red"
-        style="padding: 10px"
+        class="mt-5 ml-2"
         @click="playerShow = !playerShow"
       >
         mdi-chevron-right-box
@@ -220,9 +227,6 @@ export default {
     }
   },
   mounted() {
-    if (this.playMusic) {
-      this.playMusic.mTitle = "재생중인 노래가 없습니다";
-    }
     // Youtube Player
     let tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";

@@ -6,25 +6,61 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn large :to="links.login" v-show="!isLogin">
-      <v-icon>mdi-account-circle</v-icon>
-      login
-    </v-btn>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          :to="links.login"
+          v-show="!isLogin"
+          v-bind="attrs"
+          v-on="on"
+          plain
+        >
+          <v-icon large color="success">
+            mdi-account-check
+          </v-icon>
+        </v-btn>
+      </template>
+      <span>Login</span>
+    </v-tooltip>
 
-    <v-btn large @click="logout" v-show="isLogin">
-      <v-icon>mdi-connection</v-icon>
-      logout
-    </v-btn>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn @click="logout" v-show="isLogin" v-bind="attrs" v-on="on" plain>
+          <v-icon large color="error">
+            mdi-connection
+          </v-icon>
+        </v-btn>
+      </template>
+      <span>Logout</span>
+    </v-tooltip>
 
-    <v-btn large :to="{ name: 'MyPage' }" v-show="isLogin">
-      <v-icon>mdi-buffer</v-icon>
-      mypage
-    </v-btn>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          :to="{ name: 'MyPage' }"
+          v-show="isLogin"
+          v-bind="attrs"
+          v-on="on"
+          plain
+        >
+          <v-icon large color="success">
+            mdi-buffer
+          </v-icon>
+        </v-btn>
+      </template>
+      <span>MyPage</span>
+    </v-tooltip>
 
-    <v-btn large to="/">
-      <v-icon>mdi-information</v-icon>
-      info
-    </v-btn>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn to="/" v-bind="attrs" v-on="on" plain>
+          <v-icon large color="primary">
+            mdi-information
+          </v-icon>
+        </v-btn>
+      </template>
+      <span>Info</span>
+    </v-tooltip>
   </v-app-bar>
 </template>
 
@@ -38,14 +74,14 @@ export default {
         login: "/login",
         logout: "",
         mypage: "/mypage",
-        about: "/about",
+        about: "/about"
       },
       menuFlag: false,
-      activeMenu: null,
+      activeMenu: null
     };
   },
   computed: {
-    ...mapState(["isLogin", "uName"]),
+    ...mapState(["isLogin", "uName"])
   },
   methods: {
     //...mapActions({ logout: "LOGOUT" }),
@@ -62,8 +98,8 @@ export default {
       } else {
         this.activeMenu = null;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
