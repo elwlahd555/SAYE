@@ -26,7 +26,9 @@ export const store = new Vuex.Store({
     videoId: "",
     playMusic: null,
     playType: "",
-    playShow: false
+    playShow: false,
+    // Spotify API Token
+    spotifyToken: null
   },
   getters: {
     playlist(state) {
@@ -98,6 +100,10 @@ export const store = new Vuex.Store({
       }
 
       // console.log(state.asidePlaylist);
+    },
+    /*=========================================================================================================== */
+    SET_SPOTIFY_TOKEN(state, payload) {
+      state.spotifyToken = payload.accessToken;
     }
   },
   actions: {
@@ -128,6 +134,10 @@ export const store = new Vuex.Store({
     },
     addToPlaylist({ commit }, music) {
       commit("addMusicToPlaylist", { music });
+    },
+    /*=========================================================================================================== */
+    UPDATE_SPOTIFY_TOKEN({ commit }, accessToken) {
+      commit("SET_SPOTIFY_TOKEN", { accessToken });
     }
   }
 });

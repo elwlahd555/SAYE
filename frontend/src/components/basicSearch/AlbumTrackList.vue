@@ -13,12 +13,7 @@
           <article class="media media-modal">
             <figure class="media-left">
               <p class="image">
-                <img
-                  v-if="albumInfo.artworkUrl100"
-                  :src="
-                    replaceArtworkUrlSize(albumInfo.artworkUrl100, '130x130')
-                  "
-                />
+                <img v-if="albumInfo.mImg" :src="albumInfo.mImg" />
               </p>
             </figure>
             <div class="media-content">
@@ -162,10 +157,6 @@ export default {
   props: {
     albumTracks: {
       type: Array,
-      required: true
-    },
-    replaceArtworkUrlSize: {
-      type: Function,
       required: true
     },
     settings: {

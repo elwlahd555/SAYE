@@ -36,16 +36,16 @@
           :key="pageType"
         >
           <v-col
-            cols="3"
             v-for="album in displayedAlbums"
-            :key="album.collectionId"
+            :key="album.mId"
+            :cols="colSize"
           >
             <!-- Card Panel  -->
             <v-card v-if="settings.panelType === 'card'">
               <v-img
-                :src="replaceArtworkUrlSize(album.artworkUrl100, '300x250')"
+                :src="album.mImg"
                 lazy-src="https://picsum.photos/id/11/100/60"
-                :alt="album.collectionCensoredName"
+                :alt="album.mImg"
                 max-height="200"
               >
                 <template v-slot:placeholder>
@@ -61,24 +61,29 @@
                   </v-row>
                 </template>
               </v-img>
-              <v-card-title>
-                <a
-                  v-if="album.collectionId"
-                  @click="onClickAlbumName(album.collectionId)"
-                >
+              <v-card-title class="pt-1">
+                <a v-if="album.mId" @click="onClickAlbumName(album.mId)">
                   <span
                     class="d-inline-block text-truncate"
                     style="max-width: 200px"
-                    >{{ album.collectionCensoredName }}</span
+                    >{{ album.mTitle }}</span
                   >
                 </a>
               </v-card-title>
-              <v-card-subtitle>
+              <v-card-subtitle class="py-0">
+                <span
+                  class="d-inline-block text-truncate "
+                  style="max-width: 200px"
+                >
+                  {{ album.mAlbum }}
+                </span>
+              </v-card-subtitle>
+              <v-card-subtitle class="py-0">
                 <span
                   class="d-inline-block text-truncate"
                   style="max-width: 200px"
                 >
-                  {{ album.artistName }}
+                  {{ album.mArtist }}
                 </span>
               </v-card-subtitle>
               <v-card-text>
@@ -86,7 +91,7 @@
                   class="d-inline-block text-truncate"
                   style="max-width: 200px"
                 >
-                  {{ album.primaryGenreName }}
+                  {{ album.mGenre }}
                 </span>
               </v-card-text>
 
@@ -97,17 +102,13 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon
                       color="warning"
-                      dark
+                      large
                       v-bind="attrs"
                       v-on="on"
                       @click="clickBookmarkAlbum(album)"
                     >
                       {{ settings.bookmarkIcon
-                      }}{{
-                        isInBookmark(album.collectionCensoredName)
-                          ? ""
-                          : "-outline"
-                      }}
+                      }}{{ isInBookmark(album.mId) ? "" : "-outline" }}
                     </v-icon>
                   </template>
                   <span>북마크 추가/제거</span>
@@ -120,7 +121,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon
                       color="primary"
-                      dark
+                      large
                       v-bind="attrs"
                       v-on="on"
                       @click="clickBookmarkAlbum(album)"
@@ -136,117 +137,92 @@
                   <!-- 유튜브 -->
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn
+                      <v-icon
                         color="error"
-                        icon
+                        large
                         v-bind="attrs"
                         v-on="on"
-                        :href="
-                          `https://www.youtube.com/results?search_query=${album.artistName} - ${album.collectionCensoredName}`
-                        "
-                        target="_blank"
+                        @click="handleClick(album)"
                       >
-                        <v-icon> mdi-youtube </v-icon>
-                      </v-btn>
+                        mdi-youtube
+                      </v-icon>
                     </template>
                     <span>유튜브 검색</span>
                   </v-tooltip>
                 </span>
               </v-card-actions>
             </v-card>
-
             <!-- Media Panel-->
-            <article
-              class="media media-wrap"
-              v-if="settings.panelType === 'media'"
-            >
-              <figure class="media-left">
-                <p class="image">
-                  <img
-                    :src="replaceArtworkUrlSize(album.artworkUrl100, '130x130')"
-                    :alt="album.collectionCensoredName"
+            <article v-if="settings.panelType === 'media'">
+              <v-list two-line>
+                <v-list-item>
+                  <v-img
+                    :src="album.mImg"
+                    :alt="album.mAlbum"
+                    style="border-radius: 50%; 
+                            max-height: 100px;
+                            max-width: 100px;"
                   />
-                </p>
-              </figure>
-              <div class="media-content">
-                <div class="content overflow-content">
-                  <div>
-                    <strong
-                      ><a
-                        v-if="album.collectionId"
-                        @click="onClickAlbumName(album.collectionId)"
-                        >{{ album.collectionCensoredName }}</a
-                      ></strong
-                    >
-                    <br />
-                    {{ album.artistName }} (
-                    <span class="has-text-grey-light">{{
-                      album.primaryGenreName
-                    }}</span>
-                    )
-                  </div>
-                </div>
-                <div class="level is-mobile">
-                  <div class="level-left">
-                    <a
-                      class="level-item"
-                      :href="album.collectionViewUrl"
-                      target="_blank"
-                    >
-                      <v-tooltip
-                        type="is-light"
-                        label="Download on iTunes"
-                        position="is-top"
-                        :active="!isMobile"
-                      >
-                        <i class="fab fa-itunes-note"></i>
+
+                  <v-list-item-content class="ml-12">
+                    <v-list-item-title>{{ album.mTitle }}</v-list-item-title>
+
+                    <v-list-item-subtitle>
+                      {{ album.mAlbum }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-action class="mr-12">
+                    <v-row>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            color="warning"
+                            large
+                            v-bind="attrs"
+                            v-on="on"
+                            @click="clickBookmarkAlbum(album)"
+                          >
+                            {{ settings.bookmarkIcon
+                            }}{{ isInBookmark(album.mId) ? "" : "-outline" }}
+                          </v-icon>
+                        </template>
+                        <span>북마크 추가/제거</span>
                       </v-tooltip>
-                    </a>
-                    <a class="level-item">
-                      <v-tooltip
-                        type="is-light"
-                        :label="
-                          isInBookmark(album.collectionCensoredName)
-                            ? 'click to unbookmarked'
-                            : 'click to bookmark'
-                        "
-                        position="is-top"
-                        :active="!isMobile"
-                      >
-                        <i
-                          @click="clickBookmarkAlbum(album)"
-                          class="fas bookmarkIcon"
-                          :class="[
-                            {
-                              favorite: isInBookmark(
-                                album.collectionCensoredName
-                              )
-                            },
-                            settings.bookmarkIcon
-                          ]"
-                        ></i>
+
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            color="primary"
+                            large
+                            v-bind="attrs"
+                            v-on="on"
+                            @click="clickBookmarkAlbum(album)"
+                          >
+                            mdi-playlist-music
+                          </v-icon>
+                        </template>
+                        <span>플레이리스트 추가/제거</span>
                       </v-tooltip>
-                    </a>
-                    <a
-                      v-if="settings.youtubeLink === 'true'"
-                      class="level-item"
-                      :href="
-                        `https://www.youtube.com/results?search_query=${album.artistName} - ${album.collectionCensoredName}`
-                      "
-                      target="_blank"
-                    >
-                      <v-tooltip
-                        type="is-light"
-                        label="search on youtube"
-                        position="is-top"
-                        :active="!isMobile"
-                      >
-                        <i class="fab fa-youtube"></i>
+
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            color="error"
+                            large
+                            v-bind="attrs"
+                            v-on="on"
+                            @click="handleClick(album)"
+                          >
+                            mdi-youtube
+                          </v-icon>
+                        </template>
+                        <span>유튜브 검색</span>
                       </v-tooltip>
-                    </a>
-                  </div>
-                </div>
-              </div>
+                    </v-row>
+                  </v-list-item-action>
+                </v-list-item>
+              </v-list>
             </article>
           </v-col>
         </v-row>
@@ -298,6 +274,8 @@
 </template>
 
 <script>
+import getYouTubeID from "get-youtube-id";
+
 export default {
   name: "AlbumList",
   data() {
@@ -343,15 +321,14 @@ export default {
     isInBookmark: {
       type: Function,
       required: true
-    },
-    replaceArtworkUrlSize: {
-      type: Function,
-      required: true
     }
   },
   computed: {
     displayedAlbums() {
       return this.paginate(this.albums);
+    },
+    colSize() {
+      return this.settings.panelType === "card" ? "3" : "12";
     }
   },
   watch: {
@@ -378,6 +355,20 @@ export default {
     },
     onClickAlbumName(albumId) {
       this.$emit("clickAlbumName", albumId);
+    },
+    handleClick(music) {
+      let videoId = getYouTubeID(music.mUrl);
+      if (!videoId) {
+        console.log("nothing...");
+        const url = `https://www.youtube.com/results?search_query=${music.mArtist} - ${music.mTitle}`;
+        const strWindowFeatures =
+          "location=yes,height=800,width=600,scrollbars=yes,status=yes";
+        window.open(url, "_blank", strWindowFeatures);
+      } else {
+        this.$store.dispatch("setVideoId", videoId);
+        this.$store.dispatch("setPlayMusic", music);
+        this.$store.dispatch("addToPlaylist", music);
+      }
     }
   }
 };

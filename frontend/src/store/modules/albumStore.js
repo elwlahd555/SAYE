@@ -131,10 +131,12 @@ const albumStore = {
       try {
         // show loading animation
         commit("IS_ALBUM_LOADING", true);
-        const { data } = await axios.get(`${payload.url}`);
-        console.log(data.results)
+        const { data } = await axios.get(
+          process.env.VUE_APP_SPRING_URL + `${payload.url}`
+        );
+        //console.log(data);
 
-        if (data.results.length === 0) {
+        if (data.length === 0) {
           // if search response data results is empty commit search failed and clear the search input
           commit("CLEAR_SEARCH");
           commit("SEARCH_FAILED", true);
@@ -143,7 +145,7 @@ const albumStore = {
           // assign the search data results to set album state and query to set search query state
           commit("IS_ALBUM_LOADING", false);
           commit("SEARCH_FAILED", false);
-          commit("SET_ALBUM", data.results);
+          commit("SET_ALBUM", data);
           commit("SET_SEARCH_QUERY", payload.query);
           dispatch("SAVE_TO_RECENT_SEARCH", payload.query);
         }
@@ -222,23 +224,39 @@ const albumStore = {
     },
     BOOKMARK_ALBUM: ({ commit }, payload) => {
       try {
-        // destructure and assign payload album objects to the new variables
         const {
-          artistName,
-          collectionCensoredName,
-          artworkUrl100,
-          primaryGenreName,
-          collectionViewUrl,
-          collectionId
+          mAlbum,
+          mAlbumId,
+          mArtist,
+          mArtistId,
+          mCnt,
+          mDate,
+          mEmotion,
+          mGenre,
+          mId,
+          mImg,
+          mNo,
+          mPopularity,
+          mPreview,
+          mTitle,
+          mUrl
         } = payload.album;
-        // assign the new payload album variables as object items to newBookmarkItem variable
         const newBookmarkItem = {
-          artistName,
-          collectionCensoredName,
-          artworkUrl100,
-          primaryGenreName,
-          collectionViewUrl,
-          collectionId
+          mAlbum,
+          mAlbumId,
+          mArtist,
+          mArtistId,
+          mCnt,
+          mDate,
+          mEmotion,
+          mGenre,
+          mId,
+          mImg,
+          mNo,
+          mPopularity,
+          mPreview,
+          mTitle,
+          mUrl
         };
         let bookmarkAlbums = [];
         // check payload status
@@ -248,9 +266,9 @@ const albumStore = {
           // check if the bookmarkAlbums item is already in the array
           const oldBookmarkAlbums = bookmarkAlbums
             .map(e => {
-              return e.collectionCensoredName;
+              return e.mAlbumId;
             })
-            .indexOf(collectionCensoredName);
+            .indexOf(mAlbumId);
           // if is in the array remove payload item to bookmarkAlbums
           if (oldBookmarkAlbums !== -1)
             bookmarkAlbums.splice(oldBookmarkAlbums, 1);
