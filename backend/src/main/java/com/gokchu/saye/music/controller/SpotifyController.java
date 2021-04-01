@@ -171,7 +171,9 @@ public class SpotifyController {
 					music.setmNo(m.getmNo());
 				}
 				
-				musics.add(music);
+				if(!music.getmUrl().equals("https://www.youtube.com/watch?v=")) {
+					musics.add(music);
+				}
 				
 				System.out.println("리스트에 들어간 뮤직 : "+music.toString());
 
