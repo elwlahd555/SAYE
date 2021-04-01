@@ -72,7 +72,7 @@ export default {
       this.$store.dispatch("addToPlaylist", music);
       //console.log("music title", music);
       //console.log(this.$store.state.asidePlaylist);
-    },
-  },
+    }
+  }
 };
 </script>

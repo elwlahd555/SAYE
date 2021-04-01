@@ -39,7 +39,6 @@
         @clickUpdateSettings="updateSettings"
         @clickAlbumName="getAlbumTracks"
         :clickBookmarkAlbum="bookmarkAlbum"
-        :replaceArtworkUrlSize="replaceArtworkUrlSize"
         :isInBookmark="isInBookmark"
         :albums="pageType === 'search' ? albums : bookmarkAlbums"
         :pageType="pageType"
@@ -97,7 +96,6 @@
           :albumTracks="albumTracks"
           :clickBookmarkAlbum="bookmarkAlbum"
           :isInBookmark="isInBookmark"
-          :replaceArtworkUrlSize="replaceArtworkUrlSize"
           :settings="settings"
           :isMobile="isMobile"
         >
@@ -179,17 +177,15 @@ export default {
     this.$store.dispatch(albumStore + "/GET_SETTINGS");
     this.$store.dispatch(albumStore + "/GET_RECENT_SEARCH");
     this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS");
-    //window.addEventListener("scroll", this.toggleNavbar);
     window.scrollTo(0, 0);
-  },
-  destroyed() {
-    //window.removeEventListener("scroll", this.toggleNavbar);
   },
   methods: {
     searchAlbums(query) {
       if (query) {
         const payload = {
-          url: `/api/search?term=${query}&entity=album&media=music`,
+          // iTunes api를 활용한 url
+          // url: `/api/search?term=${query}&entity=album&media=music`,
+          url: `/spotify/search?q=${query}`,
           query: query
         };
         this.$store.dispatch(albumStore + "/SEARCH_ALBUMS", payload);
@@ -206,10 +202,10 @@ export default {
       this.$store.dispatch(albumStore + "/REMOVE_RECENT_SEARCH_ITEM", item);
     },
     bookmarkAlbum(album) {
-      if (this.isInBookmark(album.collectionCensoredName)) {
+      if (this.isInBookmark(album.mId)) {
         Swal.fire({
           icon: "question",
-          text: `"${album.collectionCensoredName}"를(을) 북마크에서 삭제하나요?`,
+          text: `"${album.mTitle}"를(을) 북마크에서 삭제하나요?`,
           showCancelButton: true,
           confirmButtonText: `Yes`
         }).then(res => {
@@ -220,7 +216,7 @@ export default {
             });
             this.snackbar = true;
             this.snackbarColor = "error";
-            this.snackbarText = `${album.collectionCensoredName} 북마크에서 제거`;
+            this.snackbarText = `${album.mTitle} 북마크에서 제거`;
           }
         });
       } else {
@@ -230,14 +226,12 @@ export default {
         });
         this.snackbar = true;
         this.snackbarColor = "success";
-        this.snackbarText = `"${album.collectionCensoredName}" 북마크에 추가`;
+        this.snackbarText = `"${album.mTitle}" 북마크에 추가`;
       }
     },
     isInBookmark(albumName) {
       return (
-        this.bookmarkAlbums.findIndex(
-          album => album.collectionCensoredName === albumName
-        ) > -1
+        this.bookmarkAlbums.findIndex(album => album.mId === albumName) > -1
       );
     },
     switchDialog() {
@@ -271,9 +265,6 @@ export default {
     },
     resetAlbumTracks() {
       this.$store.commit(albumStore + "/RESET_ALBUM_TRACKS");
-    },
-    replaceArtworkUrlSize(albumArtwork, newSize) {
-      return albumArtwork.replace("100x100", newSize);
     }
     // toggleNavbar() {
     //   let scrollBarPosition = window.pageYOffset | document.body.scrollTop;

@@ -1,22 +1,24 @@
 <template>
   <v-card>
-    <v-toolbar>
+    <v-toolbar color="#008a94" dark>
       <v-card-title>Settings</v-card-title>
     </v-toolbar>
     <v-container>
       <v-row>
         <v-col cols="6">
-          <label>Initial Search Query</label>
+          <div class="title font-weight-black text-center">
+            Initial Search Query
+          </div>
         </v-col>
         <v-col cols="6">
           <v-text-field
-            filled
             dense
+            solo
             v-model="settings.initialSearchQuery"
           ></v-text-field>
         </v-col>
         <v-col cols="6">
-          <label>Panel Type</label>
+          <div class="title font-weight-black text-center">Panel Type</div>
         </v-col>
         <v-col cols="6">
           <v-radio-group v-model="settings.panelType" row mandatory>
@@ -31,7 +33,7 @@
           </v-radio-group>
         </v-col>
         <v-col cols="6">
-          <label>Bookmark Icon</label>
+          <div class="title font-weight-black text-center">Bookmark Icon</div>
         </v-col>
         <v-col cols="6">
           <v-radio-group v-model="settings.bookmarkIcon" row mandatory>
@@ -45,8 +47,10 @@
             </v-radio>
           </v-radio-group>
         </v-col>
-        <v-col cols="6">
-          <label>Search on youtube icon</label>
+        <!-- <v-col cols="6">
+          <div class="title font-weight-black text-center">
+            Search on youtube icon
+          </div>
         </v-col>
         <v-col cols="6">
           <v-radio-group v-model="settings.youtubeLink" row mandatory>
@@ -59,27 +63,29 @@
               <span>Hide</span>
             </v-radio>
           </v-radio-group>
-        </v-col>
+        </v-col> -->
         <v-col cols="6">
-          <label>Search Results Per Page</label>
+          <div class="title font-weight-black text-center">
+            Results Per Page
+          </div>
         </v-col>
         <v-col cols="6">
           <v-radio-group v-model="settings.perPage" row mandatory>
-            <v-radio label="20" value="20" color="lime">
-              <span>20</span>
+            <v-radio label="8" value="8" color="lime">
+              <span>8</span>
             </v-radio>
-            <v-radio label="40" value="40" color="lime">
-              <span>40</span>
+            <v-radio label="16" value="16" color="lime">
+              <span>16</span>
             </v-radio>
-            <v-radio label="60" value="60" color="lime">
-              <span>60</span>
+            <v-radio label="32" value="32" color="lime">
+              <span>32</span>
             </v-radio>
           </v-radio-group>
         </v-col>
       </v-row>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="warning" @click="closeDialog"> close </v-btn>
+        <v-btn color="grey" @click="closeDialog"> close </v-btn>
       </v-card-actions>
     </v-container>
   </v-card>

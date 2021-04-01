@@ -6,8 +6,12 @@
   >
     <v-container>
       <v-row>
-        <v-col class="d-flex align-self-center" @click="onClickTitle">
-          <div class="title white--text font-weight-medium">일반 검색</div>
+        <v-col
+          style="cursor: pointer"
+          class="d-flex align-self-center"
+          @click="onClickTitle"
+        >
+          <div class="headline white--text font-weight-black">일반 검색</div>
         </v-col>
         <v-spacer></v-spacer>
         <v-col class="text-right">
@@ -80,21 +84,21 @@
                   <v-list-item
                     v-for="(album, index) in latestBookmarkAlbums"
                     :key="index"
-                    @click="onClickAlbumName(album.collectionId)"
+                    @click="onClickAlbumName(album.mId)"
                   >
                     <v-list-item-avatar tile size="80">
-                      <img :src="album.artworkUrl100" />
+                      <img :src="album.mImg" />
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <div class="overline mb-4">
-                        {{ album.artistName }}
+                        {{ album.mArtist }}
                       </div>
 
                       <v-list-item-title>
                         <span
                           class="d-inline-block text-truncate"
                           style="max-width: 80px"
-                          >{{ album.collectionCensoredName }}</span
+                          >{{ album.mTitle }}</span
                         >
                       </v-list-item-title>
                     </v-list-item-content>
