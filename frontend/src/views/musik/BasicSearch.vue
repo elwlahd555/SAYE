@@ -177,11 +177,7 @@ export default {
     this.$store.dispatch(albumStore + "/GET_SETTINGS");
     this.$store.dispatch(albumStore + "/GET_RECENT_SEARCH");
     this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS");
-    //window.addEventListener("scroll", this.toggleNavbar);
     window.scrollTo(0, 0);
-  },
-  destroyed() {
-    //window.removeEventListener("scroll", this.toggleNavbar);
   },
   methods: {
     searchAlbums(query) {

@@ -9,7 +9,7 @@ const albumStore = {
       searchQuery: "",
       panelType: "card",
       bookmarkIcon: "mdi-heart",
-      perPage: "20",
+      perPage: "8",
       youtubeLink: "false"
     },
     albums: [],
