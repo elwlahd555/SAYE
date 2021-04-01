@@ -44,11 +44,6 @@ const routes = [
     component: () => import("@/views/musik/BasicSearch.vue")
   },
   {
-    path: "/board",
-    name: "BoardPage",
-    component: () => import("@/views/musik/BoardPage.vue")
-  },
-  {
     path: "/myplaylist",
     name: "MyplaylistPage",
     component: () => import("@/views/musik/MyplaylistPage.vue")
@@ -57,6 +52,16 @@ const routes = [
     path: "/ranking",
     name: "RankingPage",
     component: () => import("@/views/musik/RankingPage.vue")
+  },
+  {
+    path: "/board",
+    name: "BoardPage",
+    component: () => import("@/views/board/BoardPage.vue")
+  },
+  {
+    path: "/boardDetail",
+    name: "BoardDetailPage",
+    component: () => import("@/views/board/BoardDetailPage.vue")
   },
   /**
    * user 관련 (로그인, 회원가입)

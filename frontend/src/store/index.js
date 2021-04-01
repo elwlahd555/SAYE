@@ -105,7 +105,7 @@ export const store = new Vuex.Store({
       commit("setVideoId", { videoId });
     },
     setPlayMusic({ commit }, music) {
-      commit("setPlayMusic", { music })
+      commit("setPlayMusic", { music });
     },
     setPlayType({ commit }, playType) {
       commit("setPlayType", { playType });
