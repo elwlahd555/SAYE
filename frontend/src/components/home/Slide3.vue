@@ -1,16 +1,19 @@
 <template>
-  <article id="panel-3" class="panel full-screen purple">
+  <article
+    id="panel-3"
+    class="panel full-screen pink"
+    style="background: ffb6c1"
+  >
     <v-container fill-height>
       <v-row justify="center">
         <v-col>
           <div class="writeBox">
             <v-btn
               class="writeButton"
-              color="white"
               depressed
               fab
               x-large
-              :to="{ name: '' }"
+              :to="{ name: 'BoardDetailPage' }"
             >
               <v-icon>mdi-lead-pencil</v-icon>
             </v-btn>
@@ -20,11 +23,10 @@
           <div class="listBox">
             <v-btn
               class="listButton"
-              color="white"
               depressed
               fab
               x-large
-              :to="{ name: '' }"
+              :to="{ name: 'BoardPage' }"
             >
               <v-icon>mdi-view-list</v-icon>
             </v-btn>
@@ -45,7 +47,7 @@ export default {};
 .writeBox {
   position: absolute;
   top: 40%;
-  left: 25%;
+  left: 28%;
   transform: translate(-50%, 50%);
   background: #2f3640;
   height: 90px;
@@ -55,7 +57,7 @@ export default {};
 
 .writeButton {
   float: right;
-  background: #d1ebd9;
+  background: #ffdca7;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +67,7 @@ export default {};
 .listBox {
   position: absolute;
   top: 40%;
-  left: 75%;
+  left: 72%;
   transform: translate(-50%, 50%);
   background: #2f3640;
   height: 90px;
@@ -75,7 +77,7 @@ export default {};
 
 .listButton {
   float: right;
-  background: #d1ebd9;
+  background: #ffdca7;
   display: flex;
   justify-content: center;
   align-items: center;
