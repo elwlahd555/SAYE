@@ -6,10 +6,10 @@
         <td>내용</td>
         <td>조회수</td>
       </tr>
-      <tr :key="index" v-for="{ board, index } in data">
-        <td>{{ board.bClass }}</td>
+      <tr :key="index" v-for="{ board, index } in boardList">
+        <td>{{ board.bTitle }}</td>
         <td>{{ board.bContent }}</td>
-        <td>{{ board.bView }}</td>
+        <td>{{ board.bViewCnt }}</td>
       </tr>
     </table>
 
@@ -26,27 +26,34 @@ export default {
   name: "BoardPage",
   data() {
     return {
-      data: ""
+      boardList: {},
+      board: {
+        bTitle: "",
+        bContent: "",
+        bViewCnt: ""
+      },
     };
   },
   mounted() {
-    this.getLatestMusic();
+    this.getBoardList();
   },
   methods: {
-    getLatestMusic: function() {
+    getBoardList: function() {
       axios
-        .get(`${spring_URL}` + "/music/date")
+        .get(`${spring_URL}` + "/board")
         .then(response => {
-          this.latestMusic = response.data.map(music => {
-            music.isActive = false;
-            music.isArrow = false;
-            music.isFavorite = music.isFavorite === 1;
-            return music;
-          });
+          this.boardList = response.boardList;
+          console.log(response);
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    write() {
+      this.$router.push({
+        path: ''
+        // path: 'BoardWrite'
+      })
     }
   }
 };
