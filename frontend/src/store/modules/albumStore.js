@@ -10,7 +10,7 @@ const albumStore = {
       panelType: "card",
       bookmarkIcon: "mdi-heart",
       perPage: "8",
-      youtubeLink: "false"
+      youtubeLink: "true"
     },
     albums: [],
     albumTracks: [],

@@ -19,14 +19,7 @@
             <!-- ====================================== 최근 검색 기록 ====================================== -->
             <v-tooltip bottom :active="!isMobile">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  x-large
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                  v-if="recentSearch.length > 0"
-                >
+                <v-btn icon x-large dark v-bind="attrs" v-on="on">
                   <v-icon
                     @click="onClickToggleRecentSearchBox"
                     :class="{ 'icon-active': showRecentSearchBox }"

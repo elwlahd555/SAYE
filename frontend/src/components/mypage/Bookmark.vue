@@ -7,7 +7,7 @@
       <span> My Bookmarks</span>
     </v-card-title>
 
-    <draggable v-model="bookmarkAlbums" tag="v-row">
+    <draggable v-model="bookmarkAlbums" tag="div">
       <v-col v-for="(bookmark, i) in bookmarkAlbums" :key="i" cols="3">
         <v-card color="pink darken-3" dark>
           <v-card-title

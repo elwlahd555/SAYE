@@ -22,18 +22,45 @@
           >mdi-pause-circle</v-icon
         >
         <v-icon large @click="next">mdi-skip-next-circle</v-icon>
+        <v-icon
+          class="player_control_volume_btn"
+          v-if="playerMute"
+          large
+          @click="mute(false)"
+        >
+          mdi-volume-off
+        </v-icon>
+        <v-icon
+          large
+          class="player_control_volume_btn"
+          v-else
+          @click="mute(true)"
+        >
+          mdi-volume-high
+        </v-icon>
         <div
           style="
             transform: rotateZ(90deg);
             transform-origin: left bottom;
             height: 30px;
-            width: 200px;
+            width: 15vh;
           "
         >
           <p class="text-center subtitle-1 font-weight-bold text-truncate">
             {{ playMusic ? playMusic.mTitle : "재생중인 노래가 없습니다." }}
           </p>
         </div>
+      </div>
+      <!-- @mousedown="progressBarDown"
+        @mouseup="progressBarUp"
+        @mouseenter="progressBarEnter"
+        @mouseleave="progressBarLeave"
+        @mousemove="progressBarMove" -->
+      <div id="player_control_progress_bar_vert" ref="playerProgressBar">
+        <div
+          id="player_control_progress_bar_vert_active"
+          :style="{ width: playerProgressBarWidth + '%' }"
+        ></div>
       </div>
     </aside>
 
@@ -94,7 +121,7 @@
             <v-icon id="player_control_large_btn" @click="fullscreen">
               mdi-arrow-expand
             </v-icon>
-            <v-icon
+            <!-- <v-icon
               id="player_control_repeat_btn"
               v-if="playerRepeat"
               @click="repeat(false)"
@@ -117,19 +144,23 @@
               @click="repeat(true)"
             >
               mdi-shuffle-variant
-            </v-icon>
+            </v-icon> -->
             <v-icon
-              id="player_control_volume_btn"
+              class="player_control_volume_btn"
               v-if="playerMute"
               @click="mute(false)"
             >
               mdi-volume-off
             </v-icon>
-            <v-icon id="player_control_volume_btn" v-else @click="mute(true)">
+            <v-icon
+              class="player_control_volume_btn"
+              v-else
+              @click="mute(true)"
+            >
               mdi-volume-high
             </v-icon>
             <div
-              id="player_control_volume_bar"
+              class="player_control_volume_bar"
               ref="playerVolumeBar"
               @mousedown="volumeBarDown"
               @mouseup="volumeBarUp"
@@ -138,7 +169,7 @@
               @mousemove="volumeBarMove"
             >
               <div
-                id="player_control_volume_bar_active"
+                class="player_control_volume_bar_active"
                 :style="{ width: playerVolumeBarsWidth + '%' }"
               ></div>
             </div>
@@ -853,34 +884,33 @@ export default {
         height: 23px;
         cursor: pointer;
       }
-      #player_control_volume_bar {
-        width: 100px;
-        height: 8px;
-        margin: 0 auto;
-        background-color: #ffffff;
-        border-radius: 4px;
-        cursor: pointer;
-        display: inline-block;
-        vertical-align: top;
-        margin-top: 19px;
-      }
-      #player_control_volume_bar_active {
-        width: 100%;
-        height: 8px;
-        background-color: rebeccapurple;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      #player_control_volume_btn {
-        margin-right: 14px;
-        margin-left: 36px;
-        margin-top: 12px;
-        height: 23px;
-        cursor: pointer;
-      }
     }
   }
-
+  .player_control_volume_bar {
+    width: 100px;
+    height: 8px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 19px;
+  }
+  .player_control_volume_bar_active {
+    width: 100%;
+    height: 8px;
+    background-color: rebeccapurple;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .player_control_volume_btn {
+    margin-right: 14px;
+    margin-left: 36px;
+    margin-top: 12px;
+    height: 23px;
+    cursor: pointer;
+  }
   #aside_container {
     & {
       position: relative;
@@ -939,6 +969,22 @@ export default {
       }
     }
   }
+}
+#player_control_progress_bar_vert {
+  transform: rotate(90deg) translate(35vh, 13vh);
+  width: 30vh;
+  height: 8px;
+  margin: 0 auto;
+  background-color: grey;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#player_control_progress_bar_vert_active {
+  width: 0%;
+  height: 8px;
+  background-color: rebeccapurple;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 1440px) {
