@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.gokchu.saye.repository.mapper.CommentMapper">
+
+	<insert id="insertComment">
+		INSERT into comment
+			(c_no, c_b_no, c_writer, c_content, c_date, c_u_no)
+		VALUES
+			(#{cNo}, #{cBNo}, #{cWriter}, #{cContent}, now(), #{cUNo})
+	</insert>
+	
+	<select id="selectComment" parameterType="int" resultType="comment">
+		SELECT *
+		  FROM comment
+		 WHERE c_b_no = #{cBNo}
+	</select>
+	
+	<update id="updateComment">
+		UPDATE comment
+		   SET c_content=#{cContent}, c_writer=#{cWriter}, c_date=now()
+		 WHERE c_b_no=#{cBNo} and c_no=#{cNo} and c_u_no=#{cUNo}
+	</update>
+
+	<delete id="deleteComment" parameterType="int">
+		DELETE
+		  FROM comment
+		 WHERE c_u_no=#{cUNo} and c_b_no=#{cBNo} and c_no = #{cNo}
+	</delete>
+	
+</mapper>
+

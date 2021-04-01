@@ -169,6 +169,16 @@
 			<artifactId>spotify-web-api-java</artifactId>
 			<version>master-SNAPSHOT</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-youtube -->
+		<!-- youtube -->
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-youtube</artifactId>
+			<version>v3-rev212-1.25.0</version>
+			
+		</dependency>
+		
 	</dependencies>
 
 	<repositories>
@@ -176,6 +186,10 @@
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
+		    <repository>
+      <id>google-api-services</id>
+      <url>http://google-api-client-libraries.appspot.com/mavenrepo</url>
+    </repository>
 	</repositories>
 
 	<build>

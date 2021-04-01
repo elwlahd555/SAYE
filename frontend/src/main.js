@@ -8,7 +8,7 @@ import VueYoutube from "vue-youtube";
 import vueMoment from "vue-moment";
 import VueMq from "vue-mq";
 
-window.Kakao.init("c626463e9b79a84d5a8185d060679ef3");
+window.Kakao.init("443b00f34027675b5dffb8a2d9a6bdd7");
 
 Vue.config.productionTip = false;
 Vue.use(VueCookies);

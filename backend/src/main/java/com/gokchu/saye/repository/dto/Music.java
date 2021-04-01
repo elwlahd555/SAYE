@@ -18,12 +18,36 @@ public class Music {
 	private String mImg;
 	private String mPopularity;
 	private String mId;
-	private String mAId;
-	private String mAlId;
-	private String mCnt;
-	
-	
-	
+	private String mArtistId;
+	private String mAlbumId;
+	private int mCnt;
+	private String mEmotion;
+	private String mDate;
+	private String mUrl;
+	public Music() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Music(int mNo, String mTitle, String mGenre, String mArtist, String mAlbum, String mPreview, String mImg,
+			String mPopularity, String mId, String mArtistId, String mAlbumId, int mCnt, String mEmotion, String mDate,
+			String mUrl) {
+		super();
+		this.mNo = mNo;
+		this.mTitle = mTitle;
+		this.mGenre = mGenre;
+		this.mArtist = mArtist;
+		this.mAlbum = mAlbum;
+		this.mPreview = mPreview;
+		this.mImg = mImg;
+		this.mPopularity = mPopularity;
+		this.mId = mId;
+		this.mArtistId = mArtistId;
+		this.mAlbumId = mAlbumId;
+		this.mCnt = mCnt;
+		this.mEmotion = mEmotion;
+		this.mDate = mDate;
+		this.mUrl = mUrl;
+	}
 	public int getmNo() {
 		return mNo;
 	}
@@ -78,25 +102,41 @@ public class Music {
 	public void setmId(String mId) {
 		this.mId = mId;
 	}
-	public String getmAId() {
-		return mAId;
+	public String getmArtistId() {
+		return mArtistId;
 	}
-	public void setmAId(String mAId) {
-		this.mAId = mAId;
+	public void setmArtistId(String mArtistId) {
+		this.mArtistId = mArtistId;
 	}
-	public String getmAlId() {
-		return mAlId;
+	public String getmAlbumId() {
+		return mAlbumId;
 	}
-	public void setmAlId(String mAlId) {
-		this.mAlId = mAlId;
+	public void setmAlbumId(String mAlbumId) {
+		this.mAlbumId = mAlbumId;
 	}
-	public String getmCnt() {
+	public int getmCnt() {
 		return mCnt;
 	}
-	public void setmCnt(String mCnt) {
+	public void setmCnt(int mCnt) {
 		this.mCnt = mCnt;
 	}
+	public String getmEmotion() {
+		return mEmotion;
+	}
+	public void setmEmotion(String mEmotion) {
+		this.mEmotion = mEmotion;
+	}
+	public String getmDate() {
+		return mDate;
+	}
+	public void setmDate(String mDate) {
+		this.mDate = mDate;
+	}
+	public String getmUrl() {
+		return mUrl;
+	}
+	public void setmUrl(String mUrl) {
+		this.mUrl = mUrl;
+	}
 	
-	
-
 }
