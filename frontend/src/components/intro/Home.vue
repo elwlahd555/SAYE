@@ -7,10 +7,12 @@
 
       <v-divider dark></v-divider>
       <p style="margin-top:20px">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, quia
-        neque. Voluptas id nulla qui inventore reiciendis iusto maiores
-        distinctio?
+        오늘 하루는 어떠셨나요? 당신이 느낀 감정을 입력해주세요. 감정에 맞는
+        음원 추천 및 스트리밍 서비스를 제공함으로써, 당신의 감정을 노래합니다.
       </p>
+      <h4>
+        Just write your feelings today. Just listen to the music for you.
+      </h4>
     </div>
   </div>
 </template>

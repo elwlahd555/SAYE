@@ -59,10 +59,10 @@ export default {
     model: null,
     videoId: "",
     playerVars: {
-      autoplay: 1,
+      autoplay: 1
     },
 
-    temp: null,
+    temp: null
   }),
   methods: {
     handleClick(music) {
@@ -72,7 +72,7 @@ export default {
       this.$store.dispatch("setPlayMusic", music);
       this.$store.dispatch("addToPlaylist", music);
       console.log(this.$store.state.playlist);
-    },
-  },
+    }
+  }
 };
 </script>

@@ -1,14 +1,42 @@
 <template>
   <div class="about">
     <div style="height:300px">
-      <h1>About Page</h1>
-
-      <h3>Working on it</h3>
-      <p style="margin-top:20px">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, quia
-        neque. Voluptas id nulla qui inventore reiciendis iusto maiores
-        distinctio?
-      </p>
+      <h1>SAYE's Dev Engineers</h1>
+      <div>
+        <h4>
+          Jee-hyun, KIM :: #Backend #AWS Server #Leader
+        </h4>
+        <hr />
+        <hr color="orange" />
+        <h4>
+          Dong-bin, KIM :: #Backend #NLP API #STT API
+        </h4>
+        <hr />
+        <hr color="orange" />
+        <h4>
+          Yeon-jung, KIM :: #QA #PM
+        </h4>
+        <hr />
+        <hr color="orange" />
+        <h4>
+          Tae-jin, KIM :: #Frontend
+        </h4>
+        <hr />
+        <hr color="orange" />
+        <h4>
+          Ho-bin, IM :: #Backend #Database #Spotify API
+        </h4>
+        <hr />
+        <hr color="orange" />
+        <h4>
+          Min-ho, JANG :: #Data-Analysist #Backend #Django
+        </h4>
+      </div>
+      <a
+        href="https://www.notion.so/oct14jh/SAYE-Sing-About-Your-Emotion-301b283ab8ca4fb7b49647eb99e98a20"
+        target="_blank"
+        >Saye's Dev Workplace</a
+      >
     </div>
   </div>
 </template>
