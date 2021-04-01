@@ -27,18 +27,18 @@
 export default {
   data() {
     return {
-      scY: 0,
+      scY: 0
     };
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
-    handleScroll: function () {
+    handleScroll: function() {
       this.scY = window.scrollY;
       //console.log(this.scY);
-    },
-  },
+    }
+  }
 };
 </script>
 

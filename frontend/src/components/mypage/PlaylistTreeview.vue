@@ -50,17 +50,17 @@ import { mapState } from "vuex";
 import Playlist from "@/components/mypage/Playlist";
 
 const spring_URL = process.env.VUE_APP_SPRING_URL;
-const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export default {
   components: {
-    Playlist,
+    Playlist
   },
   data: () => ({
     active: [],
     avatar: null,
     open: [],
-    playlist: [],
+    playlist: []
   }),
   computed: {
     ...mapState({ uName: "uName" }),
@@ -68,8 +68,8 @@ export default {
       return [
         {
           name: this.uName + "님의 플레이리스트",
-          children: this.playlist,
-        },
+          children: this.playlist
+        }
       ];
     },
     selected() {
@@ -78,8 +78,8 @@ export default {
       const id = this.active[0];
       console.log(id);
 
-      return this.playlist.find((list) => list.pName === id);
-    },
+      return this.playlist.find(list => list.pName === id);
+    }
   },
   methods: {
     async fetchPlaylists(item) {
@@ -88,14 +88,14 @@ export default {
       await pause(1000);
 
       return fetch(`${spring_URL}/playlist?uNo=1`)
-        .then((res) => res.json())
-        .then((json) => {
+        .then(res => res.json())
+        .then(json => {
           console.log(json);
           item.children.push(...json);
         })
         .then(() => console.log(item))
-        .catch((err) => console.warn(err));
-    },
-  },
+        .catch(err => console.warn(err));
+    }
+  }
 };
 </script>

@@ -38,14 +38,14 @@ export default {
         login: "/login",
         logout: "",
         mypage: "/mypage",
-        about: "/about",
+        about: "/about"
       },
       menuFlag: false,
-      activeMenu: null,
+      activeMenu: null
     };
   },
   computed: {
-    ...mapState(["isLogin", "uName"]),
+    ...mapState(["isLogin", "uName"])
   },
   methods: {
     //...mapActions({ logout: "LOGOUT" }),
@@ -62,8 +62,8 @@ export default {
       } else {
         this.activeMenu = null;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
