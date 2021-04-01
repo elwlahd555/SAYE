@@ -1,16 +1,28 @@
 <template>
   <div>
     <aside id="frame_aside_mini" v-show="!playerShow">
-      <v-icon large color="red" @click="playerShow = !playerShow">
+      <v-icon
+        class="mt-5 ml-1"
+        large
+        color="red"
+        @click="playerShow = !playerShow"
+      >
         mdi-chevron-left-box
       </v-icon>
 
-      <div style="margin-top: 7vh">
+      <div style="margin-top: 7vh" class="ml-1">
         <v-icon large @click="prev">mdi-skip-previous-circle</v-icon>
-        <v-icon large @click="play">mdi-play-circle</v-icon>
-        <v-icon large @click="pause">mdi-pause-circle</v-icon>
+        <v-icon large v-if="playerStatus === 'ENDED'" @click="play"
+          >mdi-stop-circle</v-icon
+        >
+        <v-icon large v-if="playerStatus === 'PAUSED'" @click="play"
+          >mdi-play-circle</v-icon
+        >
+        <v-icon large v-if="playerStatus === 'PLAYING'" @click="pause"
+          >mdi-pause-circle</v-icon
+        >
         <v-icon large @click="next">mdi-skip-next-circle</v-icon>
-        <p
+        <div
           style="
             transform: rotateZ(90deg);
             transform-origin: left bottom;
@@ -18,8 +30,10 @@
             width: 200px;
           "
         >
-          {{ playMusic.mTitle }}
-        </p>
+          <p class="text-center subtitle-1 font-weight-bold text-truncate">
+            {{ playMusic ? playMusic.mTitle : "재생중인 노래가 없습니다." }}
+          </p>
+        </div>
       </div>
     </aside>
 
@@ -27,7 +41,7 @@
       <v-icon
         large
         color="red"
-        style="padding: 10px"
+        class="mt-5 ml-2"
         @click="playerShow = !playerShow"
       >
         mdi-chevron-right-box
@@ -135,31 +149,18 @@
       <div id="aside_container">
         <div id="aside_partition">
           <div id="aside_partition_text_wrap">
-            <!--                    <span id="active_chatting_wrap_button" class="aside_partition_text" v-bind:class="{ on : chattingMode }" @click="chattingMode = true">채팅</span><span id="aside_partition_button_token"> / </span>-->
             <span id="active_lyrics_wrap_button" class="aside_partition_text"
               >재생목록</span
             >
           </div>
         </div>
         <div id="aside_contents_wrap">
-          <div id="aside_lyrics_wrap" v-bind:class="{ on: !chattingMode }">
+          <div id="aside_lyrics_wrap" v-if="videoId === null">
             <div id="aside_lyrics_container" ref="lyricsContainer">
-              <p class="aside_lyrics_title empty" v-if="lyricsTitle === null">
-                재생중인 음악이 없습니다
-              </p>
-              <p
-                class="aside_lyrics_title empty"
-                v-else-if="lyricsTitle === ''"
-              >
-                가사가 지원되지 않는 음악입니다
-              </p>
-              <p class="aside_lyrics_title" v-else>{{ lyricsTitle }}</p>
-              <div
-                id="aside_lyrics_contents_wrap"
-                v-html="lyricsContents"
-              ></div>
+              <p class="aside_lyrics_title empty">재생중인 음악이 없습니다</p>
             </div>
           </div>
+          <Playlist v-else :playlist="asidePlaylist" />
         </div>
       </div>
     </aside>
@@ -167,11 +168,16 @@
 </template>
 
 <script>
+import getYouTubeID from "get-youtube-id";
 import { mapState } from "vuex";
+
+import Playlist from "@/components/mypage/Playlist";
 
 export default {
   name: "Header",
-  components: {},
+  components: {
+    Playlist
+  },
   data: function() {
     return {
       YT: null,
@@ -190,18 +196,14 @@ export default {
       isVolumeBarDown: false,
       isVolumeBarHover: false,
       musicTitle: "",
-      musicTime: "0:00 / 0:00",
-      lyricsTitle: null,
-      lyricsContents: "",
-      chattingMode: false,
-      chattingList: [],
-      chattingMessage: "",
-      chattingFirstDraw: true
+      musicTime: "0:00 / 0:00"
     };
   },
   computed: {
     ...mapState({
-      playMusic: "playMusic"
+      playMusic: "playMusic",
+      asidePlaylist: "asidePlaylist",
+      videoId: "videoId"
     }),
     playlist() {
       let playlist = this.$store.getters.playlist.map(item => item);
@@ -217,15 +219,9 @@ export default {
       }
 
       return playlist;
-    },
-    videoId() {
-      return this.$store.getters.videoId;
     }
   },
   watch: {
-    playlist() {
-      this.chattingMode = false;
-    },
     videoId(videoId) {
       this.start(videoId);
     }
@@ -353,22 +349,20 @@ export default {
         }
       }
 
-      const video = this.playlist.filter(item => item.video === videoId)[0];
-      this.musicTitle = video.title + " - " + video.singer[0].name;
-      this.getLyricsFile(videoId);
+      //const video = this.playlist.filter((item) => item.video === videoId)[0];
+      //this.musicTitle = video.title + " - " + video.singer[0].name;
     },
     play: function() {
       if (this.player === null) {
         return;
       }
-
       this.player.playVideo();
     },
     pause: function() {
       if (this.player === null) {
         return;
       }
-
+      this.player.playVideo();
       this.player.pauseVideo();
     },
     prev: function() {
@@ -376,60 +370,67 @@ export default {
         return;
       }
 
-      if (this.playerInterval != null) {
-        clearInterval(this.playerInterval);
-        this.playerInterval = null;
-      }
+      // if (this.playerInterval != null) {
+      //   clearInterval(this.playerInterval);
+      //   this.playerInterval = null;
+      // }
 
-      const currentVideoIndex = this.playlist
-        .map(item => item.video)
-        .indexOf(this.videoId);
+      const currentVideoIndex = this.asidePlaylist
+        .map(item => item.mId)
+        .indexOf(this.playMusic.mId);
+
+      let nxtId = null;
+      let nxtMusic = null;
       if (currentVideoIndex === 0) {
-        this.$store.dispatch(
-          "setVideoId",
-          this.playlist[this.playlist.length - 1].video
+        nxtId = getYouTubeID(
+          this.asidePlaylist[this.asidePlaylist.length - 1].mUrl
         );
+        nxtMusic = this.asidePlaylist[this.asidePlaylist.length - 1];
       } else {
-        this.$store.dispatch(
-          "setVideoId",
-          this.playlist[currentVideoIndex - 1].video
-        );
+        nxtId = getYouTubeID(this.asidePlaylist[currentVideoIndex - 1].mUrl);
+        nxtMusic = this.asidePlaylist[currentVideoIndex - 1];
       }
+      this.$store.dispatch("setVideoId", nxtId);
+      this.$store.dispatch("setPlayMusic", nxtMusic);
     },
     next: function() {
       if (this.player === null) {
         return;
       }
 
-      if (this.playerInterval != null) {
-        clearInterval(this.playerInterval);
-        this.playerInterval = null;
-      }
+      // if (this.playerInterval != null) {
+      //   clearInterval(this.playerInterval);
+      //   this.playerInterval = null;
+      // }
 
-      const currentVideoIndex = this.playlist
-        .map(item => item.video)
-        .indexOf(this.videoId);
-      if (currentVideoIndex === this.playlist.length - 1) {
-        this.$store.dispatch("setVideoId", this.playlist[0].video);
+      const currentVideoIndex = this.asidePlaylist
+        .map(item => item.mId)
+        .indexOf(this.playMusic.mId);
+
+      let nxtId = null;
+      let nxtMusic = null;
+      if (currentVideoIndex === this.asidePlaylist.length - 1) {
+        nxtId = getYouTubeID(this.asidePlaylist[0].mUrl);
+        nxtMusic = this.asidePlaylist[0];
       } else {
-        this.$store.dispatch(
-          "setVideoId",
-          this.playlist[currentVideoIndex + 1].video
-        );
+        nxtId = getYouTubeID(this.asidePlaylist[currentVideoIndex + 1].mUrl);
+        nxtMusic = this.asidePlaylist[currentVideoIndex + 1];
       }
+      this.$store.dispatch("setVideoId", nxtId);
+      this.$store.dispatch("setPlayMusic", nxtMusic);
     },
     repeat: function(playerRepeat) {
       if (this.player === null) {
         return;
       }
-
+      alert("죄송해여 아직 구현 중입니다ㅠ");
       this.playerRepeat = playerRepeat;
     },
     shuffle: function(playerShuffle) {
       if (this.player === null) {
         return;
       }
-
+      alert("죄송해여 아직 구현 중입니다ㅠ");
       this.playerShuffle = playerShuffle;
     },
     mute: function(playerMute) {
@@ -593,29 +594,6 @@ export default {
       this.isProgressBarHover = false;
       this.isVolumeBarDown = false;
       this.isVolumeBarHover = false;
-    },
-    getLyricsFile: function(videoId) {
-      this.axios
-        .get(this.$store.getters.serverUrl + "lyrics/" + videoId)
-        .then(response => {
-          const lyrics = response.data.split("\n");
-          this.lyricsTitle = lyrics[0];
-
-          let html = "";
-          for (let i = 1; i < lyrics.length; i++) {
-            if (lyrics[i] === "") {
-              html += '<p class="aside_lyrics_nbsp_contents">&nbsp;</p>';
-            } else {
-              html += '<p class="aside_lyrics_contents">' + lyrics[i] + "</p>";
-            }
-          }
-          this.lyricsContents = html;
-
-          this.$refs.lyricsContainer.scrollTop = 0;
-        })
-        .catch(error => {
-          console.log(error);
-        });
     }
   }
 };
@@ -958,114 +936,6 @@ export default {
         width: 410px;
         height: calc(100% - 118px);
         margin: 0 auto;
-      }
-
-      #aside_chatting_wrap {
-        & {
-          width: 100%;
-          height: 100%;
-          display: none;
-          padding-bottom: 14px;
-        }
-        &.on {
-          display: block;
-        }
-
-        #aside_chatting_container {
-          position: relative;
-          width: 100%;
-          height: 100%;
-        }
-        #aside_chatting_contents_wrap {
-          position: relative;
-          height: calc(100% - 70px);
-          overflow-y: auto;
-        }
-        #aside_chatting_input_wrap {
-          width: 100%;
-          height: 55px;
-          position: relative;
-          margin-top: 10px;
-          box-sizing: border-box;
-          justify-content: flex-start;
-          align-items: center;
-          background-color: #fff;
-          display: flex;
-          display: -ms-flexbox;
-          -webkit-box-align: center;
-          -ms-flex-align: center;
-          -webkit-box-pack: start;
-          -ms-flex-pack: start;
-        }
-        #aside_chatting_textarea_wrap {
-          width: 343px;
-          height: 100%;
-          margin: 0 10px 0 0;
-        }
-        #aside_chatting_textarea {
-          width: 100%;
-          height: 100%;
-          padding: 10px 12px;
-          font-size: 20px;
-          box-sizing: border-box;
-          background-color: #eeeeee;
-          resize: none;
-          border: none;
-          letter-spacing: 0.4px;
-          border-radius: 5px;
-          font-weight: 400;
-        }
-        .aside_chatting_contents {
-          margin: 0;
-          font-size: 22px;
-          font-weight: 400;
-          line-height: 24px;
-          margin-bottom: 13px;
-        }
-        .chatting_message_name {
-          cursor: pointer;
-          color: #333333;
-          font-weight: 500;
-          text-decoration: none;
-        }
-        .chatting_message_name:hover {
-          text-decoration: none;
-        }
-        .chatting_message_time {
-          margin-left: 6px;
-          font-size: 19px;
-          color: #aaaaaa;
-        }
-        .chatting_message_content {
-          color: #666666;
-          display: block;
-          padding-left: 8px;
-        }
-        #aside_chatting_send_button {
-          width: 55px;
-          height: 100%;
-          margin: 0;
-          position: relative;
-          justify-content: center;
-          align-items: center;
-          border: 2px solid #f361a6;
-          box-sizing: border-box;
-          display: flex;
-          display: -ms-flexbox;
-          -webkit-box-align: center;
-          -ms-flex-align: center;
-          -webkit-box-pack: center;
-          -ms-flex-pack: center;
-          -webkit-border-radius: 10px;
-          -moz-border-radius: 10px;
-          -ms-border-radius: 10px;
-          -o-border-radius: 10px;
-          border-radius: 10px;
-        }
-        #aside_chatting_send_img {
-          width: 25px;
-          margin-left: 1px;
-        }
       }
     }
   }

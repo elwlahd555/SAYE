@@ -22,6 +22,7 @@ export const store = new Vuex.Store({
     uImage: null,
     // youtube playlist
     playlist: [],
+    asidePlaylist: [],
     videoId: "",
     playMusic: null,
     playType: "",
@@ -56,7 +57,9 @@ export const store = new Vuex.Store({
       state.uId = null;
       state.uName = null;
       state.uImage = null;
-      state.playlist = [];
+      state.playMusic = null;
+      state.playlist.length = 0;
+      state.asidePlaylist = [];
     },
     SET_USER_ID(state, uId) {
       state.uId = uId;
@@ -81,7 +84,20 @@ export const store = new Vuex.Store({
       state.playType = payload.playType;
     },
     addMusicToPlaylist(state, payload) {
-      state.playlist.push(payload.music);
+      const alist = state.asidePlaylist;
+      let flag = false;
+      for (let m of alist) {
+        if (m.mId == payload.music.mId) {
+          console.log("already in playlist");
+          flag = true;
+        }
+      }
+
+      if (!flag) {
+        state.asidePlaylist.push(payload.music);
+      }
+
+      // console.log(state.asidePlaylist);
     }
   },
   actions: {

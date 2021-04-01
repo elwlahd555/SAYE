@@ -69,19 +69,6 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    },
-    playLatestMusic: function(videoId) {
-      const playlist = this.exposedLatestMusic.map(music => {
-        return {
-          video: music.video,
-          artist: music.artistId,
-          title: music.title,
-          singer: music.singer
-        };
-      });
-
-      this.$store.dispatch("setPlaylist", playlist);
-      this.$store.dispatch("setVideoId", videoId);
     }
   }
 };
