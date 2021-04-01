@@ -14,12 +14,14 @@ public class Board {
 	private String bContent;
 	private String bWriter;
 	private String bDate;
+	private int bViewCnt;
 	private int bUNo;
+	
 	public Board() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Board(int bNo, String bClass, String bTitle, String bContent, String bWriter, String bDate, int bUNo) {
+	public Board(int bNo, String bClass, String bTitle, String bContent, String bWriter, String bDate, int bViewCnt, int bUNo) {
 		super();
 		this.bNo = bNo;
 		this.bClass = bClass;
@@ -27,6 +29,7 @@ public class Board {
 		this.bContent = bContent;
 		this.bWriter = bWriter;
 		this.bDate = bDate;
+		this.bViewCnt = bViewCnt; 
 		this.bUNo = bUNo;
 	}
 	public int getbNo() {
@@ -64,6 +67,12 @@ public class Board {
 	}
 	public void setbDate(String bDate) {
 		this.bDate = bDate;
+	}
+	public int getbViewCnt() {
+		return bViewCnt;
+	}
+	public void setbViewCnt(int bViewCnt) {
+		this.bViewCnt = bViewCnt;
 	}
 	public int getbUNo() {
 		return bUNo;
