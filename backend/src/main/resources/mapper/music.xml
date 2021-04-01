@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gokchu.saye.repository.mapper.MusicMapper">
+
+	<!-- 인기도순위로 출력 -->
+	<select id="selectByPopularity" resultType="music">
+		select *
+		from music
+		order by m_popularity desc
+		limit 20;
+	</select>
+
+	<!-- 발매일 순위로 출력 -->
+	<select id="selectByDate" resultType="music">
+		select *
+		from music
+		order by
+		m_date desc
+		limit 20;
+	</select>
+	<!-- 제목으로 검색 -->
+	<select id="selectByTitle" resultType="music">
+		select *
+		from music
+		where
+		m_title like "%"#{mTitle}"%"
+		limit 20;
+	</select>
+	<!-- 가수로 검색 -->
+	<select id="selectByArtist" resultType="music">
+		select *
+		from music
+		where
+		m_artist like "%"#{mArtist}"%"
+		limit 20;
+	</select>
+	<!-- 엘범으로 검색 -->
+	<select id="selectByAlbum" resultType="music">
+		select *
+		from music
+		where
+		m_album like "%"#{mAlbum}"%"
+		limit 20;
+	</select>
+	<!-- 장르로 검색 -->
+	<select id="selectByGenre" resultType="music">
+		select *
+		from music
+		where
+		m_genre like "%"#{mGenre}"%"
+		limit 20;
+	</select>
+	<!-- 감정으로 검색 -->
+	<select id="selectByEmotion" resultType="music">
+		select *
+		from music
+		where
+		m_emotion like "%"#{mEmotion}"%"
+		limit 20;
+	</select>
+
+	<select id="artist" resultType="String">
+		select m_artist
+		from music
+		where
+		m_no=#{i};
+	</select>
+<!--
+	<update id="update">
+		UPDATE music
+		SET
+		m_title = #{mTitle},
+		m_artist = #{mArtist},
+		m_genre = #{mGenre},
+		m_album = #{mAlbum},
+		m_preview = #{mPreview},
+		m_img = #{mImg},
+		m_popularity = #{mPopularity},
+		m_id = #{mId},
+		m_artist_id = #{mArtistId},
+		m_album_id = #{mAlbumId},
+		m_date = #{mDate}
+		WHERE m_no = #{mNo};
+	</update>
+	
+	<select id="temp" resultType="String">
+		select m_title
+		from music
+		where
+		m_no=#{i};
+	</select>
+	  -->
+</mapper>

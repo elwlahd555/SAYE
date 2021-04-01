@@ -59,10 +59,10 @@ export default {
     model: null,
     videoId: "",
     playerVars: {
-      autoplay: 1,
+      autoplay: 1
     },
 
-    temp: null,
+    temp: null
   }),
   methods: {
     handleClick(music) {

@@ -132,7 +132,7 @@ const albumStore = {
         // show loading animation
         commit("IS_ALBUM_LOADING", true);
         const { data } = await axios.get(`${payload.url}`);
-        console.log(data.results)
+        console.log(data.results);
 
         if (data.results.length === 0) {
           // if search response data results is empty commit search failed and clear the search input

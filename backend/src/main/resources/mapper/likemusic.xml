@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.gokchu.saye.repository.mapper.LikeMusicMapper">
+
+	<insert id="insertLikeMusic">
+		INSERT into like_music
+			(lm_u_no, lm_m_no)
+		VALUES
+			(#{lmUNo}, #{lmMNo})
+	</insert>
+	
+	<select id="selectLikeMusic" parameterType="int" resultType="music">
+		SELECT *
+		  FROM music
+		 WHERE m_no in (select lm_m_no from like_music where lm_u_no = #{lmUNo});
+	</select>
+
+	<delete id="deleteLikeMusic">
+		DELETE
+		  FROM like_music
+		 WHERE lm_m_no = #{lmMNo} and lm_u_no = #{lmUNo}
+	</delete>
+	
+</mapper>
+

@@ -10,6 +10,7 @@ import ErrorPage from "@/views/ErrorPage.vue";
 import KakaoCallback from "@/views/user/KakaoCallback.vue";
 import TestJython from "@/views/TestJython.vue";
 import EmotionAnalysis from "@/views/EmotionAnalysis.vue";
+import STTPage from "@/views/STTPage.vue";
 
 Vue.use(VueRouter);
 Vue.use(store);
@@ -43,11 +44,6 @@ const routes = [
     component: () => import("@/views/musik/BasicSearch.vue")
   },
   {
-    path: "/board",
-    name: "BoardPage",
-    component: () => import("@/views/musik/BoardPage.vue")
-  },
-  {
     path: "/myplaylist",
     name: "MyplaylistPage",
     component: () => import("@/views/musik/MyplaylistPage.vue")
@@ -56,6 +52,16 @@ const routes = [
     path: "/ranking",
     name: "RankingPage",
     component: () => import("@/views/musik/RankingPage.vue")
+  },
+  {
+    path: "/board",
+    name: "BoardPage",
+    component: () => import("@/views/board/BoardPage.vue")
+  },
+  {
+    path: "/boardDetail",
+    name: "BoardDetailPage",
+    component: () => import("@/views/board/BoardDetailPage.vue")
   },
   /**
    * user 관련 (로그인, 회원가입)
@@ -97,6 +103,14 @@ const routes = [
     component: EmotionAnalysis
   },
   /**
+   * Speech To Text
+   */
+  {
+    path: "/STTPage",
+    name: "STTPage",
+    component: STTPage
+  },
+  /**
    * page not found
    */
   {
@@ -113,7 +127,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/signup", "/", "/404"];
+  const publicPages = ["/login", "/signup", "/", "/404", "/kakaocallback"];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = store.state.isLogin;
   //const authToken = localStorage.getItem("auth-token");

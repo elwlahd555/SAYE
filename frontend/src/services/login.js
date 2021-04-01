@@ -3,7 +3,7 @@ import axios from "@/services/axios";
 const server_URL = process.env.VUE_APP_SERVER_URL;
 
 const kakaoHeader = {
-  Authorization: "c7f41dd3c6ebfe77ee6ffffa6e688c9b",
+  Authorization: "1e4d6ec5ac4ae596f29fc38663d8a0ed",
   "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
 };
 
@@ -12,7 +12,7 @@ const getKakaoToken = async code => {
   try {
     const data = {
       grant_type: "authorization_code",
-      client_id: "deace353f1fd1555201a07f914bc5598",
+      client_id: "e000fe4772870c3a157787b3e779e2ce",
       redirect_uri: `${server_URL}/kakaocallback`,
       code: code
     };

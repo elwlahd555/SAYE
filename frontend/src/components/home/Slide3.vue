@@ -2,17 +2,34 @@
   <article id="panel-3" class="panel full-screen purple">
     <v-container fill-height>
       <v-row justify="center">
-        <div class="col-6">
-          <img src="" alt="여기 이미지를 넣을까?" />
-        </div>
-        <div class="col-6 d-flex flex-column">
-          <h2>게시판 페이지</h2>
-
-          <p class="step-description">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Including versions of Lorem Ipsum.
-          </p>
-        </div>
+        <v-col>
+          <div class="writeBox">
+            <v-btn
+              class="writeButton"
+              color="white"
+              depressed
+              fab
+              x-large
+              :to="{ name: '' }"
+            >
+              <v-icon>mdi-lead-pencil</v-icon>
+            </v-btn>
+          </div>
+        </v-col>
+        <v-col>
+          <div class="listBox">
+            <v-btn
+              class="listButton"
+              color="white"
+              depressed
+              fab
+              x-large
+              :to="{ name: '' }"
+            >
+              <v-icon>mdi-view-list</v-icon>
+            </v-btn>
+          </div>
+        </v-col>
       </v-row>
     </v-container>
   </article>
@@ -22,4 +39,46 @@
 export default {};
 </script>
 
-<style></style>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+
+.writeBox {
+  position: absolute;
+  top: 40%;
+  left: 25%;
+  transform: translate(-50%, 50%);
+  background: #2f3640;
+  height: 90px;
+  border-radius: 40px;
+  padding: 10px;
+}
+
+.writeButton {
+  float: right;
+  background: #d1ebd9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+}
+
+.listBox {
+  position: absolute;
+  top: 40%;
+  left: 75%;
+  transform: translate(-50%, 50%);
+  background: #2f3640;
+  height: 90px;
+  border-radius: 40px;
+  padding: 10px;
+}
+
+.listButton {
+  float: right;
+  background: #d1ebd9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+}
+</style>
