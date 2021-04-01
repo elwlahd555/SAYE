@@ -19,8 +19,10 @@
           transition
         >
           <template v-slot:prepend="{ item }">
-            <h1>{{ item }}</h1>
-            <v-icon v-if="!item.children"> mdi-music-circle </v-icon>
+            <v-icon v-if="!item"> mdi-music-circle </v-icon>
+            <div v-else>
+              <span class="title text-center">{{ item.pName }}</span>
+            </div>
           </template>
         </v-treeview>
       </v-col>
