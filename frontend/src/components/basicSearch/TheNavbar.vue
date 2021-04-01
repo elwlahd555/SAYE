@@ -23,8 +23,10 @@
                   <v-icon
                     @click="onClickToggleRecentSearchBox"
                     :class="{ 'icon-active': showRecentSearchBox }"
-                    >mdi-history</v-icon
+                    color="indigo lighten-4"
                   >
+                    mdi-history
+                  </v-icon>
 
                   <span class="badge" v-if="recentSearch.length > 0">
                     {{ recentSearch.length }}
@@ -43,17 +45,20 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn icon x-large dark v-bind="attrs" v-on="on">
-                    <v-icon @click="onClickShowBookmarks">{{
-                      settings.bookmarkIcon
-                    }}</v-icon>
+                    <v-icon
+                      @click="onClickShowBookmarks"
+                      color="pink lighten-4"
+                    >
+                      {{ settings.bookmarkIcon }}
+                    </v-icon>
                   </v-btn>
                 </template>
                 <span> 북마크 {{ bookmarkAlbums.length }}</span>
               </v-tooltip>
 
-              <v-menu v-else open-on-hover left :nudge-width="200">
+              <v-menu v-else open-on-hover left :nudge-width="150">
                 <template v-slot:activator="{ on: menu, attrs }">
-                  <v-tooltip bottom>
+                  <v-tooltip top>
                     <template v-slot:activator="{ on: tooltip }">
                       <v-btn
                         icon
@@ -62,7 +67,10 @@
                         v-bind="attrs"
                         v-on="{ ...tooltip, ...menu }"
                       >
-                        <v-icon @click="onClickShowBookmarks">
+                        <v-icon
+                          @click="onClickShowBookmarks"
+                          color="pink lighten-4"
+                        >
                           {{ settings.bookmarkIcon }}
                         </v-icon>
                         <span class="badge" v-if="bookmarkAlbums.length > 0">
@@ -208,32 +216,8 @@ img {
   border-radius: 15px;
   z-index: 1;
 }
-.nav-icon {
-  position: relative;
-  margin-left: 10px;
-}
-.fas {
-  color: #ccc;
-}
-.fas:hover {
-  color: #fff;
-}
-.icon-inactive {
-  color: #ccc;
-}
-.icon-active {
-  color: #fff !important;
-}
+
 .is-gradient {
-  background-color: #008a94 !important;
-  background-image: linear-gradient(326deg, #00c8d6, #008a94 94%) !important;
-}
-.navbar-item {
-  color: #fff !important;
-}
-.navbar-end {
-  -webkit-box-pack: end !important;
-  -ms-flex-pack: end !important;
-  justify-content: flex-end !important;
+  background-color: #141212 !important;
 }
 </style>

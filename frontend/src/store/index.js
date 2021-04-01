@@ -21,7 +21,6 @@ export const store = new Vuex.Store({
     uName: null,
     uImage: null,
     // youtube playlist
-    playlist: [],
     asidePlaylist: [],
     videoId: "",
     playMusic: null,
@@ -31,9 +30,6 @@ export const store = new Vuex.Store({
     spotifyToken: null
   },
   getters: {
-    playlist(state) {
-      return state.playlist;
-    },
     videoId(state) {
       return state.videoId;
     },
@@ -60,7 +56,7 @@ export const store = new Vuex.Store({
       state.uName = null;
       state.uImage = null;
       state.playMusic = null;
-      state.playlist.length = 0;
+      state.myPlaylist.length = 0;
       state.asidePlaylist = [];
     },
     SET_USER_ID(state, uId) {
@@ -73,9 +69,7 @@ export const store = new Vuex.Store({
       state.uImage = uImage;
     },
     /*=========================================================================================================== */
-    setPlaylist(state, payload) {
-      state.playlist = payload.playlist;
-    },
+
     setVideoId(state, payload) {
       state.videoId = payload.videoId;
     },
@@ -120,9 +114,7 @@ export const store = new Vuex.Store({
       localStorage.removeItem("auth-token");
     },
     /*=========================================================================================================== */
-    setPlaylist({ commit }, playlist) {
-      commit("setPlaylist", { playlist });
-    },
+
     setVideoId({ commit }, videoId) {
       commit("setVideoId", { videoId });
     },

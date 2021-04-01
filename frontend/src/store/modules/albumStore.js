@@ -121,7 +121,7 @@ const albumStore = {
       Swal.fire({
         icon: "error",
         title: "잠깐!",
-        text: "ERROR!",
+        text: ` ${message} ERROR!`,
         confirmButtonColor: "#f8bb86"
       });
     }

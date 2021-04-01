@@ -124,7 +124,7 @@
                       large
                       v-bind="attrs"
                       v-on="on"
-                      @click="clickBookmarkAlbum(album)"
+                      @click="onClickMyPlaylist(album)"
                     >
                       mdi-playlist-music
                     </v-icon>
@@ -197,7 +197,7 @@
                             large
                             v-bind="attrs"
                             v-on="on"
-                            @click="clickBookmarkAlbum(album)"
+                            @click="playlistDialog = true"
                           >
                             mdi-playlist-music
                           </v-icon>
@@ -270,19 +270,39 @@
         </v-row>
       </template>
     </v-container>
+
+    <!-- Playlist Dialog -->
+    <v-dialog v-model="playlistDialog" persistent max-width="700">
+      <MyPlaylist
+        :myPlaylist="myPlaylist"
+        :selected="selected"
+        @close="playlistDialog = false"
+      />
+    </v-dialog>
   </section>
 </template>
 
 <script>
 import getYouTubeID from "get-youtube-id";
 
+import MyPlaylist from "@/components/mypage/MyPlaylist";
+import axios from "axios";
+
+const spring_URL = process.env.VUE_APP_SPRING_URL;
+
 export default {
   name: "AlbumList",
+  components: {
+    MyPlaylist
+  },
   data() {
     return {
       current: 1,
       size: "",
-      panelIcon: "mdi-grid"
+      panelIcon: "mdi-grid",
+      playlistDialog: false,
+      selected: [],
+      myPlaylist: []
     };
   },
   props: {
@@ -329,6 +349,9 @@ export default {
     },
     colSize() {
       return this.settings.panelType === "card" ? "3" : "12";
+    },
+    uNo() {
+      return this.$store.state.uId;
     }
   },
   watch: {
@@ -355,6 +378,13 @@ export default {
     },
     onClickAlbumName(albumId) {
       this.$emit("clickAlbumName", albumId);
+    },
+    onClickMyPlaylist(music) {
+      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then(list => {
+        this.myPlaylist = list.data;
+        this.selected = music;
+        this.playlistDialog = true;
+      });
     },
     handleClick(music) {
       let videoId = getYouTubeID(music.mUrl);
