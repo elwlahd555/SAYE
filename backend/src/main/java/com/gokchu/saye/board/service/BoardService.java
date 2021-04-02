@@ -12,6 +12,12 @@ public interface BoardService {
 	/* R :: 게시판 조회 */
 	List<Board> selectBoard(String key, String word) throws Exception;
 
+	/* R :: 도움글 리스트 조회 */
+	List<Board> selectHelpBoard() throws Exception;
+	
+	/* R :: 하소연 리스트 조회 */
+	List<Board> selectSayBoard() throws Exception;
+	
 	/* U :: 게시판 수정 */
 	boolean updateBoard(Board board) throws Exception;
 
