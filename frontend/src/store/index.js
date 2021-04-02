@@ -56,8 +56,8 @@ export const store = new Vuex.Store({
       state.uName = null;
       state.uImage = null;
       state.playMusic = null;
-      state.myPlaylist.length = 0;
       state.asidePlaylist = [];
+      state.albumStore.bookmarkAlbums.length = 0;
     },
     SET_USER_ID(state, uId) {
       state.uId = uId;
@@ -120,6 +120,7 @@ export const store = new Vuex.Store({
     },
     setPlayMusic({ commit }, music) {
       commit("setPlayMusic", { music });
+      commit("addMusicToPlaylist", { music });
     },
     setPlayType({ commit }, playType) {
       commit("setPlayType", { playType });

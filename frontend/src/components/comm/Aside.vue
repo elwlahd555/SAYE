@@ -202,7 +202,7 @@
 import getYouTubeID from "get-youtube-id";
 import { mapState } from "vuex";
 
-import Playlist from "@/components/mypage/Playlist";
+import Playlist from "@/components/comm/AsidePlaylist";
 
 export default {
   name: "Header",
@@ -843,7 +843,7 @@ export default {
       #player_control_progress_bar_active {
         width: 0%;
         height: 8px;
-        background-color: rebeccapurple;
+        background-color: crimson;
         border-radius: 4px;
         cursor: pointer;
       }
@@ -887,7 +887,7 @@ export default {
     }
   }
   .player_control_volume_bar {
-    width: 100px;
+    width: 150px;
     height: 8px;
     margin: 0 auto;
     background-color: #ffffff;
@@ -900,7 +900,7 @@ export default {
   .player_control_volume_bar_active {
     width: 100%;
     height: 8px;
-    background-color: rebeccapurple;
+    background-color: crimson;
     border-radius: 4px;
     cursor: pointer;
   }
@@ -982,7 +982,7 @@ export default {
 #player_control_progress_bar_vert_active {
   width: 0%;
   height: 8px;
-  background-color: rebeccapurple;
+  background-color: crimson;
   border-radius: 4px;
   cursor: pointer;
 }

@@ -45,6 +45,7 @@ export default {
       const currentVideoIndex = this.asidePlaylist
         .map(item => item.mId)
         .indexOf(music.mId);
+
       this.$store.dispatch(
         "setPlayMusic",
         this.asidePlaylist[currentVideoIndex]
