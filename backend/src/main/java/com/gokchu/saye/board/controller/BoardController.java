@@ -37,13 +37,13 @@ public class BoardController {
 	}
 
 	/* R :: 익명 게시판 도움글 리스트 조회 */
-	@GetMapping("")
+	@GetMapping("/helpList")
 	public ResponseEntity<List<Board>> helpBoardList(String key, String word) throws Exception {
 		return new ResponseEntity<List<Board>>(boardService.selectHelpBoard(), HttpStatus.OK);
 	}
 	
 	/* R :: 익명 게시판 하소연 리스트 조회 */
-	@GetMapping("")
+	@GetMapping("/sayList")
 	public ResponseEntity<List<Board>> sayBoardList(String key, String word) throws Exception {
 		return new ResponseEntity<List<Board>>(boardService.selectSayBoard(), HttpStatus.OK);
 	}
