@@ -25,6 +25,18 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> selectBoard(String key, String word) throws Exception {
 		return boardMapper.selectBoard(key, word);
 	}
+
+	/* R :: 도움글 리스트 조회 */
+	@Override
+	public List<Board> selectHelpBoard() throws Exception {
+		return boardMapper.selectHelpBoard();
+	}
+	
+	/* R :: 하소연 리스트 조회 */
+	@Override
+	public List<Board> selectSayBoard() throws Exception {
+		return boardMapper.selectSayBoard();
+	}
 	
 	/* U :: 게시판 수정 */
 	@Override
@@ -37,5 +49,4 @@ public class BoardServiceImpl implements BoardService {
 	public boolean deleteBoard(int bUNo, int bNo) throws Exception {
 		return boardMapper.deleteBoard(bUNo, bNo);
 	}
-
 }

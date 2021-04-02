@@ -15,6 +15,18 @@
 		SELECT *
 		  FROM board
 	</select>
+
+	<select id="selectHelpBoard" resultType="board">
+		SELECT *
+		  FROM board
+		 WHERE board.b_class = "도움글"
+	</select>
+
+	<select id="selectSayBoard" resultType="board">
+		SELECT *
+		  FROM board
+		 WHERE board.b_class = "하소연"
+	</select>
 	
 	<update id="updateBoard">
 		UPDATE board
