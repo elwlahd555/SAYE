@@ -1,55 +1,49 @@
 <template>
   <div>
-    <table>
-      <tr>
-        <td>제목</td>
-        <td>내용</td>
-        <td>조회수</td>
-      </tr>
-      <tr :key="index" v-for="{ board, index } in data">
-        <td>{{ board.bClass }}</td>
-        <td>{{ board.bContent }}</td>
-        <td>{{ board.bView }}</td>
-      </tr>
-    </table>
-
-    <button @click="write">글쓰기</button>
+    <div id="btnGroup" align="center">
+      <button id="helpBtn">도움글</button>
+      <button id="sayBtn">하소연</button>
+    </div>
+    <board-list />
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
-const spring_URL = process.env.VUE_APP_SPRING_URL;
+import BoardList from '@/components/board/BoardList.vue';
 
 export default {
-  name: "BoardPage",
-  data() {
-    return {
-      data: ""
-    };
+  components: {
+    BoardList,
   },
-  mounted() {
-    this.getLatestMusic();
-  },
-  methods: {
-    getLatestMusic: function() {
-      axios
-        .get(`${spring_URL}` + "/music/date")
-        .then(response => {
-          this.latestMusic = response.data.map(music => {
-            music.isActive = false;
-            music.isArrow = false;
-            music.isFavorite = music.isFavorite === 1;
-            return music;
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  }
+  name: 'BoardPage',
 };
 </script>
 
-<style></style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
+#helpBtn {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: -1px;
+}
+#sayBtn {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#btnGroup button {
+  width: 43px;
+  margin-top: 150px;
+  border: 1px solid #f7c9cb;
+  background-color: rgba(0, 0, 0, 0);
+  color: #f7c9cb;
+  padding: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-family: 'Nanum Pen Script', cursive;
+}
+#btnGroup button:hover {
+  color: white;
+  background-color: #f7c9cb;
+}
+</style>
