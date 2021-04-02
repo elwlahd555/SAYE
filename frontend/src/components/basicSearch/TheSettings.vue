@@ -4,7 +4,7 @@
       <v-card-title>Settings</v-card-title>
     </v-toolbar>
     <v-container>
-      <v-row>
+      <v-row class="mt-2">
         <v-col cols="6">
           <div class="title font-weight-black text-center">
             Initial Search Query
@@ -13,7 +13,7 @@
         <v-col cols="6">
           <v-text-field
             dense
-            solo
+            solo-inverted
             v-model="settings.initialSearchQuery"
           ></v-text-field>
         </v-col>
@@ -85,7 +85,7 @@
       </v-row>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="grey" @click="closeDialog"> close </v-btn>
+        <v-btn color="error" text @click="closeDialog"> close </v-btn>
       </v-card-actions>
     </v-container>
   </v-card>

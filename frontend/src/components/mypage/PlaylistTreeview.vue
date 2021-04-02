@@ -1,10 +1,10 @@
 <template>
   <v-card>
-    <v-card-title class="indigo white--text headline">
-      <v-icon dark style="padding-right: 10px"> mdi-playlist-music </v-icon>
+    <v-card-title class=" headline">
+      <v-icon style="padding-right: 10px"> mdi-playlist-music </v-icon>
       My Playlist
     </v-card-title>
-    <v-row class="pa-4" justify="space-between">
+    <v-row dense class="ma-0 pa-0">
       <v-col cols="5">
         <v-treeview
           :active.sync="active"
@@ -29,7 +29,7 @@
 
       <v-divider vertical></v-divider>
 
-      <v-col class="d-flex text-center">
+      <v-col cols="7" class="d-flex text-center">
         <v-scroll-y-transition mode="out-in">
           <div
             v-if="!selected"

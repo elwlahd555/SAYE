@@ -11,7 +11,7 @@
               <div class="control" v-for="(item, i) in recentSearch" :key="i">
                 <v-chip
                   close
-                  color="teal"
+                  color="indigo lighten-2"
                   text-color="white"
                   close-icon="mdi-delete"
                   @click:close="onClickRemoveRecentSearchItem(item)"

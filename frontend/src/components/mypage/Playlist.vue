@@ -27,15 +27,28 @@
 <script>
 import getYouTubeID from "get-youtube-id";
 
+import { mapState } from "vuex";
+
 export default {
   props: ["playlist"],
   data: () => ({}),
-  computed: {},
+  computed: {
+    ...mapState({
+      asidePlaylist: "asidePlaylist"
+    })
+  },
 
   methods: {
     handleClick(music) {
       this.videoId = getYouTubeID(music.mUrl);
       this.$store.dispatch("setVideoId", this.videoId);
+      const currentVideoIndex = this.asidePlaylist
+        .map(item => item.mId)
+        .indexOf(music.mId);
+      this.$store.dispatch(
+        "setPlayMusic",
+        this.asidePlaylist[currentVideoIndex]
+      );
     }
   }
 };
