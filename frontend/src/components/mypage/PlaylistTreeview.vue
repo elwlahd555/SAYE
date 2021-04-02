@@ -257,6 +257,10 @@ export default {
           });
           console.log(idx);
           this.playlist.splice(idx, 1);
+
+          this.snackbar = true;
+          this.snackbarColor = "warning";
+          this.snackbarText = `${evt.added.element.mTitle} 중복`;
         } else {
           console.log("axios good to go");
           axios
