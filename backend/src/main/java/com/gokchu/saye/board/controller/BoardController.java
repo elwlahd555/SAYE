@@ -30,7 +30,7 @@ public class BoardController {
 		return new ResponseEntity<String>("게시글 작성 실패", HttpStatus.NO_CONTENT);
 	}
 	
-	/* R :: 익명 게시판 글 조회 */
+	/* R :: 익명 게시판 리스트 조회 */
 	@GetMapping("")
 	public ResponseEntity<List<Board>> reviewBoard(String key, String word) throws Exception {
 		return new ResponseEntity<List<Board>>(boardService.selectBoard(key, word), HttpStatus.OK);
