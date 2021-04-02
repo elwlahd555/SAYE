@@ -1,34 +1,28 @@
 <template>
   <v-card>
-    <v-card-title class="pink white--text headline">
-      <v-icon dark style="padding-right: 10px">
-        mdi-heart
-      </v-icon>
-      <span> My Bookmarks</span>
+    <v-card-title class="headline pink lighten-2">
+      <span class="white--text headline font-weight-black">
+        Bookmark
+      </span>
     </v-card-title>
-
-    <draggable v-model="bookmarkAlbums" tag="div">
-      <v-col v-for="(bookmark, i) in bookmarkAlbums" :key="i" cols="3">
-        <v-card color="pink darken-3" dark>
-          <v-card-title
-            class="headline"
-            v-text="bookmark.mTitle"
-          ></v-card-title>
-
-          <v-card-subtitle v-text="bookmark.mArtist"></v-card-subtitle>
-
-          <v-card-actions>
-            <v-btn class="ml-2 mt-3" fab icon height="40px" right width="40px">
-              <v-icon>mdi-play</v-icon>
-            </v-btn>
-          </v-card-actions>
-
-          <v-avatar class="ma-3" size="125" tile>
-            <v-img :src="bookmark.mImg"></v-img>
-          </v-avatar>
-        </v-card>
-      </v-col>
-    </draggable>
+    <v-list-item-group v-model="selectedItem1" color="primary">
+      <draggable
+        class="dragArea"
+        :list="bookmarkAlbums"
+        :group="{ name: 'music', pull: 'clone', put: false }"
+        :clone="cloneMusic"
+      >
+        <v-list-item v-for="item in bookmarkAlbums" :key="item.mId">
+          <v-list-item-icon>
+            <v-icon>mdi-music</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title> {{ item.mTitle }}</v-list-item-title>
+            <v-list-item-subtitle>{{ item.mAlbum }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </draggable>
+    </v-list-item-group>
   </v-card>
 </template>
 
@@ -45,6 +39,13 @@ export default {
       required: true
     }
   },
-  data: () => ({})
+  data: () => ({
+    selectedItem1: 1
+  }),
+  methods: {
+    cloneMusic(music) {
+      return music;
+    }
+  }
 };
 </script>

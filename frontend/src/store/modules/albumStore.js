@@ -54,7 +54,7 @@ const albumStore = {
       return state.albumTracksFailed;
     },
     BOOKMARK_ALBUMS: state => {
-      return state.bookmarkAlbums.reverse();
+      return state.bookmarkAlbums;
     },
     PAGE_TYPE: state => {
       return state.pageType;
@@ -272,22 +272,22 @@ const albumStore = {
           // if is in the array remove payload item to bookmarkAlbums
           if (oldBookmarkAlbums !== -1)
             bookmarkAlbums.splice(oldBookmarkAlbums, 1);
-          // set the new bookmarkAlbums array to the localstorage
-          localStorage.setItem(
-            "bookmark_albums",
-            JSON.stringify(bookmarkAlbums)
-          );
+          // set the new bookmarkAlbums array to the localStorage(deprecated)
+          // localStorage.setItem(
+          //   "bookmark_albums",
+          //   JSON.stringify(bookmarkAlbums)
+          // );
         } else {
           // if status is bookmark
           // check if bookmark storage is null
           if (localStorage.getItem("bookmark_albums") === null) {
             // push the newBookmarkItem to bookmarkAlbums
             bookmarkAlbums.push(newBookmarkItem);
-            // set the new bookmarkAlbums array to the localstorage
-            localStorage.setItem(
-              "bookmark_albums",
-              JSON.stringify(bookmarkAlbums)
-            );
+            // set the new bookmarkAlbums array to the localStorage(deprecated)
+            // localStorage.setItem(
+            //   "bookmark_albums",
+            //   JSON.stringify(bookmarkAlbums)
+            // );
           } else {
             // if bookmark storage have datas
             // assign bookmark_album localstorage data to bookmarkAlbums
@@ -306,16 +306,25 @@ const albumStore = {
         commit("SET_BOOKMARK_ALBUMS", bookmarkAlbums);
       } catch (err) {
         commit("APP_ERROR", err.message);
+        console.log("여기??");
       }
     },
-    GET_BOOKMARK_ALBUMS: ({ commit }) => {
+    GET_BOOKMARK_ALBUMS: ({ commit }, uId) => {
       try {
-        // assign bookmark_albums localstorage to bookmarkAlbums variable
-        const bookmarkAlbums = localStorage.getItem("bookmark_albums");
-        if (bookmarkAlbums !== null) {
-          // if not null assign the new bookmark albums array to the bookmark albums state
-          commit("SET_BOOKMARK_ALBUMS", JSON.parse(bookmarkAlbums));
-        }
+        // assign bookmark_albums localstorage to bookmarkAlbums variable(deprecated)
+        // const bookmarkAlbums = localStorage.getItem("bookmark_albums");
+        let bookmarkAlbums = null;
+        axios
+          .get(
+            process.env.VUE_APP_SPRING_URL + `/playlist/likemusic?uNo=${uId}`
+          )
+          .then(res => {
+            bookmarkAlbums = res.data;
+            if (bookmarkAlbums !== null) {
+              // if not null assign the new bookmark albums array to the bookmark albums state
+              commit("SET_BOOKMARK_ALBUMS", bookmarkAlbums);
+            }
+          });
       } catch (err) {
         commit("APP_ERROR", err.message);
       }

@@ -115,7 +115,9 @@
 </template>
 
 <script>
+import axios from "axios";
 import Swal from "sweetalert2";
+import { mapState, mapGetters } from "vuex";
 
 import TheNavbar from "@/components/basicSearch/TheNavbar";
 import TheSearchbar from "@/components/basicSearch/TheSearchbar";
@@ -123,8 +125,8 @@ import RecentSearchBox from "@/components/basicSearch/RecentSearchBox";
 import AlbumList from "@/components/basicSearch/AlbumList";
 import TheSettings from "@/components/basicSearch/TheSettings";
 import AlbumTrackList from "@/components/basicSearch/AlbumTrackList";
-import { mapGetters } from "vuex";
 
+const spring_URL = process.env.VUE_APP_SPRING_URL;
 const albumStore = "albumStore";
 
 export default {
@@ -166,6 +168,7 @@ export default {
       settings: "GET_SETTINGS",
       isAppError: "IS_APP_ERROR"
     }),
+    ...mapState({ uId: "uId" }),
     showRecentSearchBox() {
       return this.$store.state.albumStore.showRecentSearchBox;
     },
@@ -176,7 +179,7 @@ export default {
   created() {
     this.$store.dispatch(albumStore + "/GET_SETTINGS");
     this.$store.dispatch(albumStore + "/GET_RECENT_SEARCH");
-    this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS");
+    this.$store.dispatch(albumStore + "/GET_BOOKMARK_ALBUMS", this.uId);
     window.scrollTo(0, 0);
   },
   methods: {
@@ -210,23 +213,62 @@ export default {
           confirmButtonText: `Yes`
         }).then(res => {
           if (res.isConfirmed) {
-            this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
-              album: album,
-              status: "unbookmarked"
-            });
-            this.snackbar = true;
-            this.snackbarColor = "error";
-            this.snackbarText = `${album.mTitle} 북마크에서 제거`;
+            // this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
+            //   album: album,
+            //   status: "unbookmarked"
+            // });
+            // Delete bookmarkAlbums in Backend(MySQL)
+            axios
+              .delete(
+                `${spring_URL}/likemusic/delete?lmMNo=${album.mNo}&lmUNo=${this.uId}`
+              )
+              .then(res => {
+                if (res.data == "관심 음원 삭제 성공") {
+                  this.snackbar = true;
+                  this.snackbarColor = "error";
+                  this.snackbarText = `${album.mTitle} 북마크에서 제거`;
+                }
+              })
+              .then(() => {
+                axios
+                  .get(`${spring_URL}/playlist/likemusic?uNo=${this.uId}`)
+                  .then(res => {
+                    this.$store.commit(
+                      albumStore + "/SET_BOOKMARK_ALBUMS",
+                      res.data
+                    );
+                  });
+              });
           }
         });
       } else {
-        this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
-          album: album,
-          status: "bookmark"
-        });
-        this.snackbar = true;
-        this.snackbarColor = "success";
-        this.snackbarText = `"${album.mTitle}" 북마크에 추가`;
+        // this.$store.dispatch(albumStore + "/BOOKMARK_ALBUM", {
+        //   album: album,
+        //   status: "bookmark"
+        // });
+
+        // Set the new bookmarkAlbums array to Backend(MySQL)
+        axios
+          .post(
+            `${spring_URL}/likemusic/add?lmMNo=${album.mNo}&lmUNo=${this.uId}`
+          )
+          .then(res => {
+            if (res.data == "관심 음원 등록 성공") {
+              this.snackbar = true;
+              this.snackbarColor = "success";
+              this.snackbarText = `"${album.mTitle}" 북마크에 추가`;
+            }
+          })
+          .then(() => {
+            axios
+              .get(`${spring_URL}/playlist/likemusic?uNo=${this.uId}`)
+              .then(res => {
+                this.$store.commit(
+                  albumStore + "/SET_BOOKMARK_ALBUMS",
+                  res.data
+                );
+              });
+          });
       }
     },
     isInBookmark(albumName) {
@@ -266,14 +308,6 @@ export default {
     resetAlbumTracks() {
       this.$store.commit(albumStore + "/RESET_ALBUM_TRACKS");
     }
-    // toggleNavbar() {
-    //   let scrollBarPosition = window.pageYOffset | document.body.scrollTop;
-    //   if (scrollBarPosition > 100) {
-    //     this.showNavbar = false;
-    //   } else {
-    //     this.showNavbar = true;
-    //   }
-    // },
   }
 };
 </script>

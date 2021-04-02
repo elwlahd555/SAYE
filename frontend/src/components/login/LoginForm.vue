@@ -38,11 +38,12 @@
 </template>
 
 <script>
+import axios from "axios";
 import Swal from "sweetalert2";
 import { mapState } from "vuex";
 
-const axios = require("axios");
 const spring_URL = process.env.VUE_APP_SPRING_URL;
+
 export default {
   name: "LoginForm",
 

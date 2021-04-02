@@ -43,8 +43,8 @@
           v-on="on"
           plain
         >
-          <v-icon large color="success">
-            mdi-buffer
+          <v-icon large color="amber darken-3">
+            mdi-folder-music
           </v-icon>
         </v-btn>
       </template>
