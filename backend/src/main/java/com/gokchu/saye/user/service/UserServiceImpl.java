@@ -84,6 +84,10 @@ public class UserServiceImpl implements UserService {
 		return userMapper.checkUId(uId);
 	}
 	
+
+	
+	
+	
 	/* R :: 비밀번호 찾기 */
 	@Override
 	public int findPasswordByUId(String uId) throws Exception {

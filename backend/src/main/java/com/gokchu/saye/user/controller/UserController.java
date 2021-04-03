@@ -98,6 +98,10 @@ public class UserController {
 		}
 	}
 
+	/* R:: 아이디 찾기 */
+	@GetMapping("/find/id")
+	public ResponseEntity<String> findId(String )
+	
 	/* R :: 비밀번호 찾기 */
 	@GetMapping("/find/password")
 	public ResponseEntity<String> findPassword(String uId) throws Exception {
