@@ -193,6 +193,10 @@ export default {
   border-radius: 10px;
 }
 
+.balloon textarea {
+  line-height: 100%;
+}
+
 .area {
   font-size: 1.2em;
   margin: 15px;
