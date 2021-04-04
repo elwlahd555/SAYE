@@ -33,5 +33,11 @@ VALUES
 	where m_id=#{mId};
 	
 	</select>
+	
+	<update id="updateMurlByMid">
+		update music
+	set m_url=#{mUrl}
+		 where m_no=#{mNo};
+	</update>
 
 </mapper>

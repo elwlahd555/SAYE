@@ -28,4 +28,10 @@ public class SpotifyServiceImpl implements SpotifyService{
 		return spotifyMapper.selectByMId(mId);
 	}
 
+	@Override
+	public void updateMurlByMid(int mNo, String mUrl) {
+		// TODO Auto-generated method stub
+		spotifyMapper.updateMurlByMid(mNo,mUrl);
+	}
+
 }

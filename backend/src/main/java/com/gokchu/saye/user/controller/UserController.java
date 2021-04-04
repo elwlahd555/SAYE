@@ -97,7 +97,7 @@ public class UserController {
 			return new ResponseEntity<String>("중복", HttpStatus.OK);
 		}
 	}
-
+	
 	/* R :: 비밀번호 찾기 */
 	@GetMapping("/find/password")
 	public ResponseEntity<String> findPassword(String uId) throws Exception {
