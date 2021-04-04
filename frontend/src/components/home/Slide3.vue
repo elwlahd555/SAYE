@@ -2,7 +2,7 @@
   <article
     id="panel-3"
     class="panel full-screen pink"
-    style="background: ffb6c1"
+    style="background-color: #f7c9cb"
   >
     <v-container fill-height>
       <v-row justify="center">

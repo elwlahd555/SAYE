@@ -1,5 +1,9 @@
 <template>
-  <article id="panel-1" class="panel full-screen white-3">
+  <article
+    id="panel-1"
+    class="panel full-screen white-3"
+    style="background-color: #00bcd4"
+  >
     <v-container fill-height>
       <v-row justify="center">
         <div class="searchBox">
@@ -34,25 +38,25 @@ export default {
   data() {
     return {
       text: "음악을 검색 (버튼 클릭!) ==>",
-      keyword: ""
+      keyword: "",
     };
   },
   methods: {
     enterSearch() {
       const payload = {
         settingName: "initialSearchQuery",
-        settingValue: this.keyword
+        settingValue: this.keyword,
       };
       this.$store.dispatch("albumStore/UPDATE_SETTINGS", payload);
 
       this.$router.push({
-        name: "BasicSearch"
+        name: "BasicSearch",
       });
     },
     setQuery() {
       this.$store.state.albumStore.settings.initialSearchQuery = this.keyword;
-    }
-  }
+    },
+  },
 };
 </script>
 

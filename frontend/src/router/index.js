@@ -16,19 +16,6 @@ import Board from '@/views/board/Board.vue';
 Vue.use(VueRouter);
 Vue.use(store);
 
-/* 이거 일단 써주되,, 우에사용할지 고려 */
-const onlyAuthUser = async (to, from, next) => {
-  let token = localStorage.getItem('auth-token'); // token 명 다를수이씀(access-token 등)
-  if (store.state.user == null && token) {
-    await store.dispatch('GET_CLIENT_INFO', token);
-  }
-  if (store.state.user === null) {
-    alert('로그인이 필요한 페이지입니다.');
-    router.push({ name: 'login' });
-  } else {
-    next();
-  }
-};
 
 const routes = [
   {
@@ -96,19 +83,16 @@ const routes = [
       {
         path: '/add',
         name: 'BoardRegister',
-        beforeEnter: onlyAuthUser,
         component: () => import('@/components/board/BoardRegister.vue'),
       },
       {
         path: '/detail/:bNo',
         name: 'BoardDetail',
-        beforeEnter: onlyAuthUser,
         component: () => import('@/components/board/BoardDetail.vue'),
       },
       {
         path: 'edit/:bNo',
         name: 'BoardEdit',
-        beforeEnter: onlyAuthUser,
         component: () => import('@/components/board/BoardEdit2.vue'),
       },
     ],
