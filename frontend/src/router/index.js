@@ -103,6 +103,14 @@ const routes = [
     component: EmotionAnalysis
   },
   /**
+   * Emotion base music recommendation
+   */
+  {
+    path: "/emotionMusic",
+    name: "EmotionMusic",
+    component: () => import("@/views/musik/EmotionMusic.vue")
+  },
+  /**
    * Speech To Text
    */
   {
