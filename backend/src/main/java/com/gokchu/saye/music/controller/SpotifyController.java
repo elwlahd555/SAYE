@@ -162,6 +162,10 @@ public class SpotifyController {
 					Music m=spotifyService.selectByMId(t.getId());
 					music.setmUrl(m.getmUrl());
 					music.setmNo(m.getmNo());
+					if(music.getmUrl().equals("https://www.youtube.com/watch?v=")) {
+						music.setmUrl("https://www.youtube.com/watch?v="+youtubeService.selectUrlByTitle(t.getName()+" "+artist.getName()));
+						spotifyService.updateMurlByMid(music.getmNo(),music.getmUrl());
+					}
 				}else {
 					String musicurl="https://www.youtube.com/watch?v="+youtubeService.selectUrlByTitle(t.getName()+" "+artist.getName());
 					System.out.println("뮤직 url : "+musicurl);
