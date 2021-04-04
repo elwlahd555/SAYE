@@ -128,7 +128,7 @@ export default {
 
       if (flag) {
         axios
-          .post(`${temp}/board/add`, this.form)
+          .post(`${spring_URL}/board/add`, this.form)
           .then(() => {
             this.$router.push({ name: "BoardList" });
           })
