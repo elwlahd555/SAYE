@@ -62,8 +62,8 @@ public class PlaylistController {
 	
 	/* R :: 플레이리스트 조회 (곡눌렀을 때 들어가있는 플레이리스트 확인) */
 	@GetMapping("/belong")
-	public ResponseEntity<List<Playlist>> reviewPlaylistBelong(Music music) throws Exception {
-		return new ResponseEntity<List<Playlist>>(playlistService.selectPlaylistBelong(music), HttpStatus.OK);
+	public ResponseEntity<List<Playlist>> reviewPlaylistBelong(int mNo, int uNo) throws Exception {
+		return new ResponseEntity<List<Playlist>>(playlistService.selectPlaylistBelong(mNo, uNo), HttpStatus.OK);
 	}
 
 }

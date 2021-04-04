@@ -20,5 +20,5 @@ public interface PlaylistService {
 	boolean deletePlaylist(int pNo) throws Exception;
 
 	/* R :: 플레이리스트 조회 (곡눌렀을 때 들어가있는 플레이리스트 확인) */
-	List<Playlist> selectPlaylistBelong(Music music) throws Exception;
+	List<Playlist> selectPlaylistBelong(int mNo, int uNo) throws Exception;
 }

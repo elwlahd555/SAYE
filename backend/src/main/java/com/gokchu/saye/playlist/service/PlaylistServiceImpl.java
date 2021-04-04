@@ -40,7 +40,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 	
 	/* R :: 플레이리스트 조회 (곡눌렀을 때 들어가있는 플레이리스트 확인) */
 	@Override
-	public List<Playlist> selectPlaylistBelong(Music music) throws Exception {
-		return playlistMapper.selectPlaylistBelong(music);
+	public List<Playlist> selectPlaylistBelong(int mNo, int uNo) throws Exception {
+		return playlistMapper.selectPlaylistBelong(mNo, uNo);
 	}
 }
