@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gokchu.saye.music.service.MusicService;
+import com.gokchu.saye.music.service.YoutubeService;
 import com.gokchu.saye.repository.dto.Music;
 
 @RestController
@@ -17,6 +18,8 @@ public class MusicController {
 	
 	@Autowired
 	MusicService musicService;
+	@Autowired
+	YoutubeService youtubeService;
 	
 	//인기도 순서로 출력
 	@GetMapping("popularity")
@@ -69,6 +72,22 @@ public class MusicController {
 		musics=musicService.selectByEmotion(mEmotion);
 		return musics;
 	}
+	
+	
+	//DATA SET CONTROLLER
+	@GetMapping("DATA SET CONTROLLER")
+	public void updateMurl(){
+		for (int i = 3000; i < 3001; i++) {
+		Music music=musicService.selectByNo(i);
+		String musicurl="https://www.youtube.com/watch?v="+youtubeService.selectUrlByTitle(music.getmTitle()+" "+music.getmArtist());
+		System.out.println("뮤직 url : "+musicurl);
+		musicService.updateMurlByNo(music.getmNo(),musicurl);
+		}
+	}
+	
+	
+	
+	
 //	@GetMapping("temp")
 //	public void temp() throws IOException{
 //		String filePath = "C:/SSAFY/kpop.txt";

@@ -32,6 +32,10 @@ public interface MusicMapper {
 
 	String artist(int i);
 
+	Music selectByNo(int mNo);
+
+	void updateMurlByNo(int mNo, String mUrl);
+
 
 
 }

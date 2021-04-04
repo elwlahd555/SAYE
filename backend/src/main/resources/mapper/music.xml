@@ -6,16 +6,19 @@
 
 	<!-- 인기도순위로 출력 -->
 	<select id="selectByPopularity" resultType="music">
-		select *
-		from music
-		order by m_popularity desc
-		limit 20;
+	select *
+	from music
+	where (not m_genre = "classical") and (not m_url = "") and (not m_genre =
+	"blues")
+	order by m_popularity desc
+	limit 20;
 	</select>
 
 	<!-- 발매일 순위로 출력 -->
 	<select id="selectByDate" resultType="music">
 		select *
 		from music
+        where (not m_genre = "classical") and (not m_url = "") and (not m_genre = "blues")
 		order by
 		m_date desc
 		limit 20;
@@ -27,6 +30,13 @@
 		where
 		m_title like "%"#{mTitle}"%"
 		limit 20;
+	</select>
+	<!-- 번호로 검색 -->
+	<select id="selectByNo" resultType="music">
+		select *
+		from music
+		where
+		m_no =#{mNo};
 	</select>
 	<!-- 가수로 검색 -->
 	<select id="selectByArtist" resultType="music">
@@ -67,6 +77,12 @@
 		where
 		m_no=#{i};
 	</select>
+	<update id="updateMurlByNo">
+		UPDATE music
+		SET
+		m_url = #{mUrl}
+		WHERE m_no = #{mNo};
+	</update>
 <!--
 	<update id="update">
 		UPDATE music

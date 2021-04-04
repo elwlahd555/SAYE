@@ -74,6 +74,17 @@ public class MusicServiceImpl implements MusicService {
 		// TODO Auto-generated method stub
 		return musicMapper.artist(i);
 	}
+	@Override
+	public Music selectByNo(int mNo) {
+		// TODO Auto-generated method stub
+		return musicMapper.selectByNo(mNo);
+	}
+	@Override
+	public void updateMurlByNo(int mNo, String mUrl) {
+		// TODO Auto-generated method stub
+		musicMapper.updateMurlByNo(mNo,mUrl);
+		
+	}
 
 
 
