@@ -65,11 +65,8 @@
       <comment-row
         v-for="(comment, index) in commentList"
         :key="index"
-        :cNo="comment.cNo"
-        :cBNo="comment.cBNo"
-        :cContent="comment.cContent"
-        :cDate="comment.cDate"
-        :cUNo="comment.cUNo"
+        :comment="comment"
+        @commentRefresh="getCommentList"
       />
     </v-container>
   </div>
@@ -84,7 +81,6 @@ const spring_URL = process.env.VUE_APP_SPRING_URL;
 // const config = {
 //   header: { "auth-token": window.localStorage.getItem("auth-token") }
 // };
-
 export default {
   name: "BoardDetail",
 
@@ -128,9 +124,7 @@ export default {
     getBoardDetail() {
       console.log(this.$route.params.bNo);
       axios
-        .get(
-          `http://localhost:8000/saye/board/detail?bNo=${this.$route.params.bNo}`
-        )
+        .get(`${spring_URL}/board/detail?bNo=${this.$route.params.bNo}`)
         .then((res) => {
           this.board = res.data;
         });
@@ -151,9 +145,14 @@ export default {
 
     getCommentList: function () {
       console.log(this.board.bNo + "번호 글의 댓글리스트를 불러옵니다.");
-      axios.get(
-        `http://localhost:8000/saye/board/comment?cBNo=${this.$route.params.cBNo}`
-      );
+      axios
+        .get(`${spring_URL}/board/comment?cBNo=${this.$route.params.bNo}`)
+        .then((res) => {
+          this.commentList = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

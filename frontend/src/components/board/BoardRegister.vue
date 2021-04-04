@@ -72,7 +72,8 @@
 
 <script>
 import axios from "axios";
-const spring_URL = process.env.VUE_APP_SPRING_URL;
+// const spring_URL = process.env.VUE_APP_SPRING_URL;
+const temp = "http://localhost:8000/saye";
 export default {
   name: "BoardRegister",
 
@@ -127,7 +128,7 @@ export default {
 
       if (flag) {
         axios
-          .post(`${spring_URL}/board/add`, this.form)
+          .post(`${temp}/board/add`, this.form)
           .then(() => {
             this.$router.push({ name: "BoardList" });
           })

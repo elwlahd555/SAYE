@@ -14,6 +14,7 @@
 	<select id="selectBoard" parameterType="string" resultType="board">
 		SELECT *
 		  FROM board
+		ORDER BY b_no desc
 	</select>
 
 	<select id="selectDetailBoard" parameterType="int" resultType="board">
