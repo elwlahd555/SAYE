@@ -35,6 +35,12 @@ public class BoardController {
 	public ResponseEntity<List<Board>> boardList(String key, String word) throws Exception {
 		return new ResponseEntity<List<Board>>(boardService.selectBoard(key, word), HttpStatus.OK);
 	}
+	
+	/* R :: 익명 게시판 글 상세보기 */
+	@GetMapping("/detail")
+	public ResponseEntity<Board> detailBoard(int bNo) throws Exception {
+		return new ResponseEntity<Board>(boardService.selectDetailBoard(bNo), HttpStatus.OK);
+	}
 
 	/* R :: 익명 게시판 도움글 리스트 조회 */
 	@GetMapping("/helpList")
@@ -62,6 +68,5 @@ public class BoardController {
 		if(boardService.deleteBoard(bUNo, bNo))
 			return new ResponseEntity<String>("게시판 삭제 성공", HttpStatus.OK);
 		return new ResponseEntity<String>("게시판 삭제 실패", HttpStatus.NO_CONTENT);
-		
 	}
 }

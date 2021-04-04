@@ -13,7 +13,7 @@
               depressed
               fab
               x-large
-              :to="{ name: 'BoardDetailPage' }"
+              :to="{ name: 'BoardRegister' }"
             >
               <v-icon>mdi-lead-pencil</v-icon>
             </v-btn>
@@ -26,7 +26,7 @@
               depressed
               fab
               x-large
-              :to="{ name: 'BoardPage' }"
+              :to="{ name: 'Board' }"
             >
               <v-icon>mdi-view-list</v-icon>
             </v-btn>

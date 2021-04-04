@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.gokchu.saye.repository.mapper.PlaylistMapper">
+
+	<insert id="insertPlaylist">
+		INSERT INTO playlist
+			(p_no, p_u_no, p_name)
+		VALUES
+			(#{pNo}, #{pUNo}, #{pName})
+	</insert>
+	
+	<select id="selectPlaylist" parameterType="int" resultType="playlist">
+		SELECT *
+		  FROM playlist
+		 WHERE p_u_no = #{pUNo}
+	</select>
+
+	<update id="updatePlaylistName">
+		UPDATE playlist
+		   SET p_name = #{pName}
+		 WHERE p_no = #{pNo}
+	</update>
+	
+	<delete id="deletePlaylist" parameterType="int">
+		DELETE
+		  FROM playlist
+		 WHERE p_no = #{pNo}
+	</delete>
+	
+</mapper>
+

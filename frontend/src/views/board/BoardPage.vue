@@ -3,13 +3,13 @@
 </template>
 
 <script>
-import BoardList from '@/components/board/BoardList.vue';
+import BoardList from "@/components/board/BoardList.vue";
 
 export default {
   components: {
-    BoardList,
+    BoardList
   },
-  name: 'BoardPage',
+  name: "BoardPage"
 };
 </script>
 

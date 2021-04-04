@@ -2,6 +2,7 @@ package com.gokchu.saye.playlist.service;
 
 import java.util.List;
 
+import com.gokchu.saye.repository.dto.Music;
 import com.gokchu.saye.repository.dto.Playlist;
 
 public interface PlaylistService {
@@ -18,4 +19,6 @@ public interface PlaylistService {
 	/* D :: 플레이리스트 삭제 */
 	boolean deletePlaylist(int pNo) throws Exception;
 
+	/* R :: 플레이리스트 조회 (곡눌렀을 때 들어가있는 플레이리스트 확인) */
+	List<Playlist> selectPlaylistBelong(Music music) throws Exception;
 }

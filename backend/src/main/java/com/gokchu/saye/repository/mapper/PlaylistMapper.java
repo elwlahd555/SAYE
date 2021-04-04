@@ -1,7 +1,10 @@
 package com.gokchu.saye.repository.mapper;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
+import com.gokchu.saye.repository.dto.Music;
 import com.gokchu.saye.repository.dto.Playlist;
 
 @Mapper
@@ -17,4 +20,7 @@ public interface PlaylistMapper {
 	
 	/* D :: 플레이리스트 삭제 */
 	boolean deletePlaylist(int pNo) throws Exception;
+	
+	/* R :: 플레이리스트 조회 (곡눌렀을 때 들어가있는 플레이리스트 확인) */
+	List<Playlist> selectPlaylistBelong(Music music) throws Exception;
 }

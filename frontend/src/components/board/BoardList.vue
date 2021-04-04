@@ -7,12 +7,18 @@
     <table style="width:40%;" align="center" id="tableBoard">
       <tr class="boardHeader">
         <th style="width:30%">제목</th>
-        <th style="width:50%">내용</th>
         <th style="width:10%">조회수</th>
       </tr>
-      <tr class="boardBody" :key="index" v-for="(board, index) in boardList">
+      <tr
+        class="boardBody"
+        :key="index"
+        v-for="(board, index) in boardList"
+        striped
+        hover
+        :item="board"
+        @click="detailBoard(board)"
+      >
         <td style="width:30%">{{ board.bTitle }}</td>
-        <td style="width:50%">{{ board.bContent }}</td>
         <td style="width:10%; text-align:center;">{{ board.bViewCnt }}</td>
       </tr>
     </table>
@@ -22,15 +28,15 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 const spring_URL = process.env.VUE_APP_SPRING_URL;
 
 export default {
-  name: 'BoardList',
+  name: "BoardList",
   data() {
     return {
-      boardList: [],
+      boardList: []
     };
   },
   mounted() {
@@ -39,63 +45,70 @@ export default {
   methods: {
     getBoardList: function() {
       axios
-        .get(`${spring_URL}` + '/board')
-        .then((response) => {
+        .get(`${spring_URL}` + "/board")
+        .then(response => {
           this.boardList = response.data;
           // console.log(this.boardList);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
     helpBtn: function() {
       axios
-        .get(`${spring_URL}` + '/board/helpList')
-        .then((response) => {
+        .get(`${spring_URL}` + "/board/helpList")
+        .then(response => {
           this.boardList = response.data;
           // console.log(this.boardList);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
     sayBtn: function() {
       axios
-        .get(`${spring_URL}` + '/board/sayList')
-        .then((response) => {
+        .get(`${spring_URL}` + "/board/sayList")
+        .then(response => {
           this.boardList = response.data;
           // console.log(this.boardList);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
     write() {
       this.$router.push({
-        path: '',
+        path: ""
         // path: 'BoardWrite'
       });
     },
-  },
+    detailBoard(item) {
+      console.log(item.bNo + "의 글 보기");
+      this.$router.replace({
+        name: "BoardDetail",
+        params: { bNo: item.bNo }
+      });
+    }
+  }
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
 
 .boardHeader {
   background-color: #f7c9cb;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: "Do Hyeon", sans-serif;
 }
 .boardHeader th {
   padding-top: 7px;
   padding-bottom: 7px;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: "Do Hyeon", sans-serif;
   font-size: 17px;
 }
 .boardBody td {
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: "Do Hyeon", sans-serif;
   font-size: 17px;
 }
 .writeBtn {
@@ -104,7 +117,7 @@ export default {
   padding: 5px;
   padding-top: 2px;
   padding-bottom: 2px;
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: "Nanum Pen Script", cursive;
   border: 1px solid #f7c9cb;
   background-color: rgba(0, 0, 0, 0);
   color: #f7c9cb;
@@ -132,7 +145,7 @@ export default {
   padding: 5px;
   padding-top: 2px;
   padding-bottom: 2px;
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: "Nanum Pen Script", cursive;
 }
 #btnGroup button:hover {
   color: white;
