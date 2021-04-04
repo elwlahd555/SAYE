@@ -66,7 +66,6 @@
         v-for="(comment, index) in commentList"
         :key="index"
         :comment="comment"
-        @commentRefresh="getCommentList"
       />
     </v-container>
   </div>
@@ -127,6 +126,9 @@ export default {
         .get(`${spring_URL}/board/detail?bNo=${this.$route.params.bNo}`)
         .then((res) => {
           this.board = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
     BoardDelete: function () {

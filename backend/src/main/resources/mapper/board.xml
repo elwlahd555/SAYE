@@ -41,6 +41,11 @@
 		 WHERE b_no=#{bNo}
 	</update>
 
+	<update id="viewCntIncrease">
+		UPDATE board
+		   SET b_view=#{b_view} + 1
+		 WHERE b_no=#{bNo}
+	</update>
 	<delete id="deleteBoard" parameterType="int">
 		DELETE
 		  FROM board

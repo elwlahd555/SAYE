@@ -46,9 +46,6 @@
 <script>
 import axios from "axios";
 const spring_URL = process.env.VUE_APP_SPRING_URL;
-const config = {
-  headers: { "auth-token": window.localStorage.getItem("auth-token") },
-};
 
 export default {
   name: "commentrow",
@@ -63,12 +60,10 @@ export default {
     };
   },
 
-  mounted: {},
-
   methods: {
     editComment: function () {
       axios
-        .put(`${spring_URL}` + "/board/comment/edit", this.comment, config)
+        .put(`${spring_URL}` + "/board/comment/edit", this.comment)
         .then((response) => {
           console.log(response.data);
           this.$router.go(this.$router.currentRoute);

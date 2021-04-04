@@ -28,4 +28,6 @@ public interface BoardMapper {
 	
 	/* D :: 게시판 삭제 */
 	boolean deleteBoard(int bUNo, int bNo) throws Exception;
+	
+	void viewCntIncrease(int bNo) throws Exception;
 }
