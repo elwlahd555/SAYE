@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gokchu.saye.repository.dto.Music;
 import com.gokchu.saye.repository.dto.Playlist;
 import com.gokchu.saye.repository.mapper.PlaylistMapper;
 
@@ -35,5 +36,11 @@ public class PlaylistServiceImpl implements PlaylistService {
 	@Override
 	public boolean deletePlaylist(int pNo) throws Exception {
 		return playlistMapper.deletePlaylist(pNo);
+	}
+	
+	/* R :: 플레이리스트 조회 (곡눌렀을 때 들어가있는 플레이리스트 확인) */
+	@Override
+	public List<Playlist> selectPlaylistBelong(Music music) throws Exception {
+		return playlistMapper.selectPlaylistBelong(music);
 	}
 }

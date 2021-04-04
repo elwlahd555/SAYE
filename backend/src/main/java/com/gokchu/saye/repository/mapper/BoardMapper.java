@@ -14,6 +14,9 @@ public interface BoardMapper {
 	/* R :: 게시판 조회 (검색포함) */
 	List<Board> selectBoard(String key, String word) throws Exception;
 
+	/* R :: 게시판 상세 조회 */
+	Board selectDetailBoard(int bNo) throws Exception;
+	
 	/* R :: 도움글 리스트 조회 */
 	List<Board> selectHelpBoard() throws Exception;
 	

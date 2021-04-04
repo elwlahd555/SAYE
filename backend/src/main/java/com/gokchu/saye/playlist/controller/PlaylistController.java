@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gokchu.saye.music.service.MusicService;
 import com.gokchu.saye.playlist.service.PlaylistService;
+import com.gokchu.saye.repository.dto.Music;
 import com.gokchu.saye.repository.dto.Playlist;
 
 @RestController
@@ -59,5 +60,10 @@ public class PlaylistController {
 		return new ResponseEntity<String>("플레이리스트 삭제 실패", HttpStatus.NO_CONTENT);
 	}
 	
+	/* R :: 플레이리스트 조회 (곡눌렀을 때 들어가있는 플레이리스트 확인) */
+	@GetMapping("/belong")
+	public ResponseEntity<List<Playlist>> reviewPlaylistBelong(Music music) throws Exception {
+		return new ResponseEntity<List<Playlist>>(playlistService.selectPlaylistBelong(music), HttpStatus.OK);
+	}
 
 }

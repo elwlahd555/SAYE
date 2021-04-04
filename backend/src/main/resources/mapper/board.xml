@@ -14,6 +14,13 @@
 	<select id="selectBoard" parameterType="string" resultType="board">
 		SELECT *
 		  FROM board
+		ORDER BY b_no desc
+	</select>
+
+	<select id="selectDetailBoard" parameterType="int" resultType="board">
+		SELECT *
+		  FROM board
+		 WHERE b_no = #{bNo}
 	</select>
 
 	<select id="selectHelpBoard" resultType="board">

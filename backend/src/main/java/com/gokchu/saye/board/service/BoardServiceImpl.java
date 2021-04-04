@@ -26,6 +26,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.selectBoard(key, word);
 	}
 
+	/* R :: 게시판 상세 조회 */
+	@Override
+	public Board selectDetailBoard(int bNo) throws Exception {
+		return boardMapper.selectDetailBoard(bNo);
+	}
 	/* R :: 도움글 리스트 조회 */
 	@Override
 	public List<Board> selectHelpBoard() throws Exception {

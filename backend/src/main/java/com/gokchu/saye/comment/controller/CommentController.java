@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class CommentController {
 	
 	/* C :: 댓글 생성 */
 	@PostMapping("/add")
-	public ResponseEntity<String> createComment(Comment comment) throws Exception {
+	public ResponseEntity<String> createComment(@RequestBody Comment comment) throws Exception {
 		if(commentService.insertComment(comment) > 0)
 			return new ResponseEntity<String>("댓글 추가 성공", HttpStatus.OK);
 		return new ResponseEntity<String>("댓글 추가 실패", HttpStatus.NO_CONTENT);

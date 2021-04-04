@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class BoardController {
 	
 	/* C :: 익명 게시판 글 작성 */
 	@PostMapping("/add")
-	public ResponseEntity<String> createBoard(Board board) throws Exception {
+	public ResponseEntity<String> createBoard(@RequestBody Board board) throws Exception {
 		if(boardService.insertBoard(board) > 0) 
 			return new ResponseEntity<String>("게시글 작성 성공", HttpStatus.OK);
 		return new ResponseEntity<String>("게시글 작성 실패", HttpStatus.NO_CONTENT);
@@ -34,6 +35,12 @@ public class BoardController {
 	@GetMapping("")
 	public ResponseEntity<List<Board>> boardList(String key, String word) throws Exception {
 		return new ResponseEntity<List<Board>>(boardService.selectBoard(key, word), HttpStatus.OK);
+	}
+	
+	/* R :: 익명 게시판 글 상세보기 */
+	@GetMapping("/detail")
+	public ResponseEntity<Board> detailBoard(int bNo) throws Exception {
+		return new ResponseEntity<Board>(boardService.selectDetailBoard(bNo), HttpStatus.OK);
 	}
 
 	/* R :: 익명 게시판 도움글 리스트 조회 */
@@ -50,7 +57,7 @@ public class BoardController {
 	
 	/* U :: 익명 게시판 글 수정 */
 	@PutMapping("/edit")
-	public ResponseEntity<String> updateBoard(Board board) throws Exception {
+	public ResponseEntity<String> updateBoard(@RequestBody Board board) throws Exception {
 		if(boardService.updateBoard(board))
 			return new ResponseEntity<String>("게시판 수정 성공", HttpStatus.OK);
 		return new ResponseEntity<String>("게시판 수저 실패", HttpStatus.NO_CONTENT);
@@ -62,6 +69,5 @@ public class BoardController {
 		if(boardService.deleteBoard(bUNo, bNo))
 			return new ResponseEntity<String>("게시판 삭제 성공", HttpStatus.OK);
 		return new ResponseEntity<String>("게시판 삭제 실패", HttpStatus.NO_CONTENT);
-		
 	}
 }
