@@ -29,6 +29,7 @@ public class BoardServiceImpl implements BoardService {
 	/* R :: 게시판 상세 조회 */
 	@Override
 	public Board selectDetailBoard(int bNo) throws Exception {
+		boardMapper.viewCntIncrease(bNo);
 		return boardMapper.selectDetailBoard(bNo);
 	}
 	/* R :: 도움글 리스트 조회 */

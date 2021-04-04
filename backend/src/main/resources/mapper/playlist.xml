@@ -29,10 +29,10 @@
 		 WHERE p_no = #{pNo}
 	</delete>
 	
-	<select id="selectPlaylistBelong" parameterType="music">
+	<select id="selectPlaylistBelong" parameterType="int" resultType="playlist">
 		SELECT *
 		  FROM playlist
-		 WHERE p_no = (select pm_p_no from playlist_music where pm_m_no = #{mNo})
+		 WHERE p_no in (select pm_p_no from playlist_music where pm_m_no = #{mNo}) and p_u_no=#{uNo}
 	</select>
 </mapper>
 
