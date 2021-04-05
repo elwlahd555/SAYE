@@ -190,4 +190,7 @@ export default {
   color: white;
   background-color: #f7c9cb;
 }
+tr.boardBody:hover {
+  background-color: #f7c9cb62;
+}
 </style>
