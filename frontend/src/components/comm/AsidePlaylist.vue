@@ -14,6 +14,13 @@
           </v-list-item-content>
 
           <v-list-item-action>
+            <v-btn icon @click="onClickDelt(item)">
+              <v-icon color="red accent-3">
+                mdi-minus
+              </v-icon>
+            </v-btn>
+          </v-list-item-action>
+          <v-list-item-action>
             <v-btn icon @click="handleClick(item)">
               <v-icon color="red darken-4" class="mr-2"> mdi-play </v-icon>
             </v-btn>
@@ -39,6 +46,9 @@ export default {
   },
 
   methods: {
+    onClickDelt(music) {
+      this.$store.dispatch("delMusicFromPlaylist", music);
+    },
     handleClick(music) {
       this.videoId = getYouTubeID(music.mUrl);
       this.$store.dispatch("setVideoId", this.videoId);
