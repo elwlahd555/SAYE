@@ -1,28 +1,27 @@
 <template>
-  <div align="center">
-    <v-container class="mt-3">
-      <v-row>
-        <v-col>
-          <h3>Anonymous Board</h3>
-        </v-col>
-      </v-row>
+  <v-container fluid>
+    <v-row class="boardTitle">
+      <v-col cols="5" align="center">
+        <p>익명 게시판</p>
+      </v-col>
+    </v-row>
 
+    <v-container class="my-5 pr-14">
       <!-- 버튼 -->
-      <v-row class="mb-1">
+      <v-row>
         <v-col class="text-left">
-          <v-btn outlined color="primary" :to="{ name: 'Board' }">목록</v-btn>
+          <v-btn outlined class="pinkBtn" :to="{ name: 'Board' }">목록</v-btn>
         </v-col>
         <v-col class="text-right">
           <v-btn
             outlined
             color="orange darken-3"
-            small
-            class="mr-2"
+            class="mr-2 pinkBtn"
             :to="{ name: 'BoardEdit' }"
           >
             글수정
           </v-btn>
-          <v-btn outlined color="error" small @click="BoardDelete"
+          <v-btn outlined color="error" class="pinkBtn" @click="BoardDelete"
             >글삭제</v-btn
           >
         </v-col>
@@ -30,12 +29,15 @@
 
       <!-- 게시글 상세 카드 -->
       <v-row class="mb-1">
-        <v-card class="mx-auto" color="#26c6da" dark width="700">
+        <v-card class="mx-auto" style="width: 100%" flat>
+          <v-card-subtitle>
+            <v-icon left> mdi-tag </v-icon>
+            <span> {{ board.bClass }} </span>
+          </v-card-subtitle>
           <v-card-title>
-            <v-icon large left> mdi-music </v-icon>
-            <span class="title font-weight-light"
-              >{{ board.bNo }} [{{ board.bClass }}] {{ board.bTitle }}</span
-            >
+            <v-icon large left> mdi-subtitles </v-icon>
+            <span>[ 제목 ] : </span>
+            <span class="title font-weight-light">{{ board.bTitle }}</span>
           </v-card-title>
 
           <v-card-text class="headline font-weight-bold">
@@ -43,13 +45,19 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-list-item class="grow">
+            <v-list-item>
               <v-list-item-content>
-                <v-list-item-title>{{ board.bWriter }}</v-list-item-title>
+                <v-list-item-title>
+                  <v-icon left> mdi-account </v-icon>
+                  {{ board.bWriter }}
+                </v-list-item-title>
               </v-list-item-content>
 
               <v-list-item-content>
-                <v-list-item-title> {{ board.bDate }}</v-list-item-title>
+                <v-list-item-title>
+                  <v-icon left> mdi-calendar </v-icon>
+                  {{ board.bDate }}
+                </v-list-item-title>
               </v-list-item-content>
 
               <v-row align="center" justify="end">
@@ -61,6 +69,8 @@
         </v-card>
       </v-row>
 
+      <v-divider class="my-10"></v-divider>
+      <p class="headline font-weight-bold">댓글</p>
       <comment-write />
       <comment-row
         v-for="(comment, index) in commentList"
@@ -68,7 +78,7 @@
         :comment="comment"
       />
     </v-container>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -77,9 +87,7 @@ import CommentWrite from "./comment/CommentWrite";
 import CommentRow from "./comment/CommentRow";
 
 const spring_URL = process.env.VUE_APP_SPRING_URL;
-// const config = {
-//   header: { "auth-token": window.localStorage.getItem("auth-token") }
-// };
+
 export default {
   name: "BoardDetail",
 
@@ -105,23 +113,12 @@ export default {
   },
 
   mounted() {
-    // let token = localStorage.getItem('auth-token');
-    // let decode = jwt_decode(token);
-    // this.user = decode.user;
-    // this.editBoard();... 이렇게하나?
     this.getCommentList();
     this.getBoardDetail();
   },
 
   methods: {
-    // BoardEdit() {
-    //     this.$router.replace({
-    //         name: 'board-edit',
-    //         params: { bNo: this.board.bNo }
-    //     });
-    // },
     getBoardDetail() {
-      //console.log(this.$route.params.bNo);
       axios
         .get(`${spring_URL}/board/detail?bNo=${this.$route.params.bNo}`)
         .then(res => {
@@ -160,4 +157,26 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.boardTitle {
+  background-color: #e91e63;
+  font-size: 2rem;
+  color: white;
+  font-family: "Do Hyeon", sans-serif;
+}
+
+.pinkBtn {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: -1px;
+  width: 70px;
+  border: 1px solid #f7c9cb;
+  background-color: rgba(0, 0, 0, 0);
+  color: #f7c9cb;
+  padding: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-family: "Nanum Pen Script", cursive;
+  font-size: 1.8rem;
+}
+</style>
