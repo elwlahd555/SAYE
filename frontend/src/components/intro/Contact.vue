@@ -1,17 +1,20 @@
 <template>
-  <v-card color="#3f3f3f" dark :loading="isUpdating">
-    <template v-slot:progress>
-      <v-progress-linear
-        absolute
-        color="green lighten-3"
-        height="4"
-        indeterminate
-      ></v-progress-linear>
-    </template>
+  <div style="background-color: #3f3f3f; width: 45vw">
+    <v-container fluid pa-0 pl-3 ma-0>
+      <v-row align="center" justify="center">
+        <v-card color="#3f3f3f" dark :loading="isUpdating">
+          <template v-slot:progress>
+            <v-progress-linear
+              absolute
+              color="green lighten-3"
+              height="4"
+              indeterminate
+            ></v-progress-linear>
+          </template>
 
-    <v-cae>
-      <v-row>
-        <!-- <v-col class="text-right" cols="12">
+          <v-cae>
+            <v-row>
+              <!-- <v-col class="text-right" cols="12">
           <v-menu bottom left transition="slide-y-transition">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">
@@ -30,57 +33,57 @@
             </v-list>
           </v-menu>
         </v-col> -->
-        <v-row class="pa-4" align="center" justify="center">
-          <v-col class="text-center">
-            <h1>
-              Contact Us
-            </h1>
-            <span class="grey--text text--lighten-1"
-              >We'd love to hear from you, please drop us a line if you've any
-              query</span
-            >
-          </v-col>
-        </v-row>
-      </v-row>
-    </v-cae>
+              <v-row class="pa-4" align="center" justify="center">
+                <v-col class="text-center">
+                  <h1>
+                    Contact Us
+                  </h1>
+                  <span class="grey--text text--lighten-1"
+                    >We'd love to hear from you, please drop us a line if you've
+                    any query</span
+                  >
+                </v-col>
+              </v-row>
+            </v-row>
+          </v-cae>
 
-    <v-spacer></v-spacer>
-    <v-form>
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <v-text-field
-              v-model="contact.name"
-              :disabled="isUpdating"
-              filled
-              color="blue-grey lighten-2"
-              label="Enter your Name"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              v-model="contact.email"
-              :disabled="isUpdating"
-              filled
-              color="blue-grey lighten-2"
-              label="Enter a valid email address"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-textarea
-              v-model="contact.msg"
-              :disabled="isUpdating"
-              filled
-              color="blue-grey lighten-2"
-              label="Enter message"
-            ></v-textarea>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
-    <v-divider></v-divider>
-    <v-card-actions>
-      <!-- <v-switch
+          <v-spacer></v-spacer>
+          <v-form>
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="contact.name"
+                    :disabled="isUpdating"
+                    filled
+                    color="blue-grey lighten-2"
+                    label="Enter your Name"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="contact.email"
+                    :disabled="isUpdating"
+                    filled
+                    color="blue-grey lighten-2"
+                    label="Enter a valid email address"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-textarea
+                    v-model="contact.msg"
+                    :disabled="isUpdating"
+                    filled
+                    color="blue-grey lighten-2"
+                    label="Enter message"
+                  ></v-textarea>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <!-- <v-switch
         v-model="autoUpdate"
         :disabled="isUpdating"
         class="mt-0"
@@ -88,20 +91,23 @@
         hide-details
         label="Auto Update"
       ></v-switch> -->
-      <v-spacer></v-spacer>
-      <v-btn
-        :loading="isUpdating"
-        color="green darken-3"
-        depressed
-        @click="isUpdating = true"
-      >
-        <v-icon left>
-          mdi-send
-        </v-icon>
-        Send Message
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+            <v-spacer></v-spacer>
+            <v-btn
+              :loading="isUpdating"
+              color="black darken-3"
+              depressed
+              @click="isUpdating = true"
+            >
+              <v-icon left>
+                mdi-send
+              </v-icon>
+              Send Message
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>

@@ -35,6 +35,9 @@ export const store = new Vuex.Store({
     },
     playType(state) {
       return state.playType;
+    },
+    playlist(state) {
+      return state.asidePlaylist;
     }
   },
   mutations: {
@@ -95,6 +98,14 @@ export const store = new Vuex.Store({
 
       // console.log(state.asidePlaylist);
     },
+    delMusicFromPlaylist(state, payload) {
+      const target = state.asidePlaylist.find(
+        ele => ele.mId == payload.music.mId
+      );
+      const idx = state.asidePlaylist.indexOf(target);
+      if (idx > -1) state.asidePlaylist.splice(idx, 1);
+      console.log(idx);
+    },
     /*=========================================================================================================== */
     SET_SPOTIFY_TOKEN(state, payload) {
       state.spotifyToken = payload.accessToken;
@@ -127,6 +138,9 @@ export const store = new Vuex.Store({
     },
     addToPlaylist({ commit }, music) {
       commit("addMusicToPlaylist", { music });
+    },
+    delMusicFromPlaylist({ commit }, music) {
+      commit("delMusicFromPlaylist", { music });
     },
     /*=========================================================================================================== */
     UPDATE_SPOTIFY_TOKEN({ commit }, accessToken) {

@@ -8,6 +8,7 @@
 
     <div align="center">
       <div id="btnGroup" align="center">
+        <button id="allBtn" @click="allBtn">전체</button>
         <button id="helpBtn" @click="helpBtn">도움글</button>
         <button id="sayBtn" @click="sayBtn">하소연</button>
       </div>
@@ -50,43 +51,54 @@ export default {
   name: "BoardList",
   data() {
     return {
-      boardList: [],
+      boardList: []
     };
   },
   mounted() {
     this.getBoardList();
   },
   methods: {
-    getBoardList: function () {
+    getBoardList: function() {
       axios
         .get(`${spring_URL}` + "/board")
-        .then((response) => {
+        .then(response => {
           this.boardList = response.data;
           // console.log(this.boardList);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
-    helpBtn: function () {
+    allBtn() {
+      axios
+        .get(`${spring_URL}` + "/board")
+        .then(response => {
+          this.boardList = response.data;
+          // console.log(this.boardList);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    helpBtn: function() {
       axios
         .get(`${spring_URL}` + "/board/helpList")
-        .then((response) => {
+        .then(response => {
           this.boardList = response.data;
           // console.log(this.boardList);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
-    sayBtn: function () {
+    sayBtn: function() {
       axios
         .get(`${spring_URL}` + "/board/sayList")
-        .then((response) => {
+        .then(response => {
           this.boardList = response.data;
           // console.log(this.boardList);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -94,15 +106,15 @@ export default {
       console.log(item.bNo + "의 글 보기");
       this.$router.replace({
         name: "BoardDetail",
-        params: { bNo: item.bNo },
+        params: { bNo: item.bNo }
       });
     },
     toWritePage() {
       this.$router.replace({
-        name: "BoardRegister",
+        name: "BoardRegister"
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -148,6 +160,11 @@ export default {
   color: white;
   background-color: #f7c9cb;
 }
+#allBtn {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: -1px;
+}
 #helpBtn {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -172,5 +189,8 @@ export default {
 #btnGroup button:hover {
   color: white;
   background-color: #f7c9cb;
+}
+tr.boardBody:hover {
+  background-color: #f7c9cb62;
 }
 </style>

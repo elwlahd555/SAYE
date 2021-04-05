@@ -49,25 +49,25 @@ public class YoutubeServiceImpl implements YoutubeService {
 	 * @param args command line args.
 	 * @throws IOException
 	 */
+	String keyarr[] = { 
+			"AIzaSyCMFu4lu9O7_3VZp6i5jK_aMtDO5yor4-Q",	//0
+			"AIzaSyDzZlEup7tbpw-uO9qhnZ4Wnw0X7RpOONw",	//2
+			"AIzaSyAfDT808_UJPcTbcwh829JSTtwjUqFFTe8",	//3
+			"AIzaSyA-LrKGyMG44jgu5kfjp3CbmsMedfI6eQM",	//4
+			"AIzaSyATgOWL72U2SjOy111YP65nzP2sLB4zKXs",	//youtube api
+			"AIzaSyBmK9-jEmCYXotNsa7NagyosJ-GdpPFAG8",	//music
+			"AIzaSyCsJKJqBYxsRjtSPIiagx964wIUZm7CDZg",	//saye
+			"AIzaSyBtRrPWEDBlfZyWJ-LYc-oGt5b6wlLrRv0",	//saye music
+			"AIzaSyBBIOQooUnpH2cQUAZkcNtbj36ytKoZltU",	//DB My First Project
+			"AIzaSyCjFy1QekD1oyKswUOTENpBUQDldlSdk3I",	//DB letmeet
+			"AIzaSyCNQXnos1sSPd4S0cRAd2XjNiVIWjnsUPU",	//DB FAQ-Bot
+			"AIzaSyC1CCGExB6cVzDTpPCRlKi-FGnhFoGFUaY",	//DB My Project
+			"AIzaSyA1-l1EvRjeO7jI8calsFNcUUFMu3C0-7w"	//DB FixOrder-BOT
+	};
 	@Override
 	public String selectUrlByTitle(String mTitle) {
 		String musicurl = "";
 		String queryTerm = mTitle;
-		String keyarr[] = { 
-				"AIzaSyCMFu4lu9O7_3VZp6i5jK_aMtDO5yor4-Q",	//0
-				"AIzaSyDzZlEup7tbpw-uO9qhnZ4Wnw0X7RpOONw",	//2
-				"AIzaSyAfDT808_UJPcTbcwh829JSTtwjUqFFTe8",	//3
-				"AIzaSyA-LrKGyMG44jgu5kfjp3CbmsMedfI6eQM",	//4
-				"AIzaSyATgOWL72U2SjOy111YP65nzP2sLB4zKXs",	//youtube api
-				"AIzaSyBmK9-jEmCYXotNsa7NagyosJ-GdpPFAG8",	//music
-				"AIzaSyCsJKJqBYxsRjtSPIiagx964wIUZm7CDZg",	//saye
-				"AIzaSyBtRrPWEDBlfZyWJ-LYc-oGt5b6wlLrRv0",	//saye music
-				"AIzaSyBBIOQooUnpH2cQUAZkcNtbj36ytKoZltU",	//DB My First Project
-				"AIzaSyCjFy1QekD1oyKswUOTENpBUQDldlSdk3I",	//DB letmeet
-				"AIzaSyCNQXnos1sSPd4S0cRAd2XjNiVIWjnsUPU",	//DB FAQ-Bot
-				"AIzaSyC1CCGExB6cVzDTpPCRlKi-FGnhFoGFUaY",	//DB My Project
-				"AIzaSyA1-l1EvRjeO7jI8calsFNcUUFMu3C0-7w"	//DB FixOrder-BOT
-				};
 //		int num = (int) (Math.random() * keyarr.length);
 		for (int i = 0; i < keyarr.length; i++) {
 			System.out.println("사용된 키값 : " + keyarr[i]);

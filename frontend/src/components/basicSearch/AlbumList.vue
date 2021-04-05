@@ -382,7 +382,9 @@ export default {
     onClickMyPlaylist(music) {
       axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then(list => {
         this.myPlaylist = list.data;
+
         this.selected = music;
+
         this.playlistDialog = true;
       });
     },

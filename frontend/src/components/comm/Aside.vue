@@ -51,11 +51,6 @@
           </p>
         </div>
       </div>
-      <!-- @mousedown="progressBarDown"
-        @mouseup="progressBarUp"
-        @mouseenter="progressBarEnter"
-        @mouseleave="progressBarLeave"
-        @mousemove="progressBarMove" -->
       <div id="player_control_progress_bar_vert" ref="playerProgressBar">
         <div
           id="player_control_progress_bar_vert_active"
@@ -102,6 +97,10 @@
                 :style="{ width: playerProgressBarWidth + '%' }"
               ></div>
             </div>
+
+            <v-icon id="player_control_prev_btn" @click="prev">
+              mdi-skip-backward
+            </v-icon>
             <v-icon
               id="player_control_play_btn"
               v-if="playerStatus === 'PLAYING'"
@@ -112,21 +111,20 @@
             <v-icon id="player_control_play_btn" v-else @click="play">
               mdi-play
             </v-icon>
-            <v-icon id="player_control_prev_btn" @click="prev">
-              mdi-skip-backward
-            </v-icon>
             <v-icon id="player_control_next_btn" @click="next">
               mdi-skip-forward
             </v-icon>
+
             <v-icon id="player_control_large_btn" @click="fullscreen">
               mdi-arrow-expand
             </v-icon>
-            <!-- <v-icon
+            <v-icon
               id="player_control_repeat_btn"
               v-if="playerRepeat"
               @click="repeat(false)"
+              color="error"
             >
-              mdi-repeat-off
+              mdi-repeat
             </v-icon>
             <v-icon id="player_control_repeat_btn" v-else @click="repeat(true)">
               mdi-repeat
@@ -134,33 +132,30 @@
             <v-icon
               id="player_control_shuffle_btn"
               v-if="playerShuffle"
-              @click="repeat(false)"
+              @click="shuffle(false)"
+              color="error"
             >
-              mdi-shuffle-disabled
+              mdi-shuffle-variant
             </v-icon>
             <v-icon
               id="player_control_shuffle_btn"
               v-else
-              @click="repeat(true)"
+              @click="shuffle(true)"
             >
               mdi-shuffle-variant
-            </v-icon> -->
+            </v-icon>
             <v-icon
-              class="player_control_volume_btn"
+              id="player_control_volume_btn"
               v-if="playerMute"
               @click="mute(false)"
             >
               mdi-volume-off
             </v-icon>
-            <v-icon
-              class="player_control_volume_btn"
-              v-else
-              @click="mute(true)"
-            >
+            <v-icon id="player_control_volume_btn" v-else @click="mute(true)">
               mdi-volume-high
             </v-icon>
             <div
-              class="player_control_volume_bar"
+              id="player_control_volume_bar"
               ref="playerVolumeBar"
               @mousedown="volumeBarDown"
               @mouseup="volumeBarUp"
@@ -169,7 +164,7 @@
               @mousemove="volumeBarMove"
             >
               <div
-                class="player_control_volume_bar_active"
+                id="player_control_volume_bar_active"
                 :style="{ width: playerVolumeBarsWidth + '%' }"
               ></div>
             </div>
@@ -227,7 +222,8 @@ export default {
       isVolumeBarDown: false,
       isVolumeBarHover: false,
       musicTitle: "",
-      musicTime: "0:00 / 0:00"
+      musicTime: "0:00 / 0:00",
+      original: null
     };
   },
   computed: {
@@ -235,11 +231,15 @@ export default {
       playMusic: "playMusic",
       asidePlaylist: "asidePlaylist",
       videoId: "videoId"
-    }),
-    playlist() {
+    })
+  },
+  watch: {
+    videoId(videoId) {
+      this.start(videoId);
+    },
+    playerShuffle(val) {
       let playlist = this.$store.getters.playlist.map(item => item);
-
-      if (this.playerShuffle) {
+      if (val) {
         let j, x, i;
         for (i = playlist.length; i; i -= 1) {
           j = Math.floor(Math.random() * i);
@@ -247,14 +247,10 @@ export default {
           playlist[i - 1] = playlist[j];
           playlist[j] = x;
         }
+        this.$store.state.asidePlaylist = playlist;
+      } else {
+        this.$store.state.asidePlaylist = this.original;
       }
-
-      return playlist;
-    }
-  },
-  watch: {
-    videoId(videoId) {
-      this.start(videoId);
     }
   },
   mounted() {
@@ -265,6 +261,9 @@ export default {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
+
+    // original
+    this.original = this.$store.getters.playlist.map(item => item);
   },
   methods: {
     onYouTubeIframeAPIReady: function() {
@@ -351,25 +350,31 @@ export default {
       this.playCount = 0;
 
       if (this.player === null) {
-        this.player = new this.YT.Player("player", {
-          playerVars: {
-            autoplay: 1,
-            controls: 0,
-            cc_load_policy: 0,
-            disablekb: 1,
-            iv_load_policy: 3,
-            loop: 1,
-            modestbranding: 1,
-            rel: 0,
-            showinfo: 0,
-            playsinline: 0
-          },
-          videoId: videoId,
-          events: {
-            onReady: this.onPlayerReady,
-            onStateChange: this.onPlayerStateChange
+        try {
+          this.player = new this.YT.Player("player", {
+            playerVars: {
+              autoplay: 1,
+              controls: 0,
+              cc_load_policy: 0,
+              disablekb: 1,
+              iv_load_policy: 3,
+              loop: 1,
+              modestbranding: 1,
+              rel: 0,
+              showinfo: 0,
+              playsinline: 0
+            },
+            videoId: videoId,
+            events: {
+              onReady: this.onPlayerReady,
+              onStateChange: this.onPlayerStateChange
+            }
+          });
+        } catch (err) {
+          if (err) {
+            this.$router.go(this.$router.currentRoute);
           }
-        });
+        }
       } else {
         try {
           this.player.loadVideoById(videoId, 0, "hd1080");
@@ -454,14 +459,12 @@ export default {
       if (this.player === null) {
         return;
       }
-      alert("죄송해여 아직 구현 중입니다ㅠ");
       this.playerRepeat = playerRepeat;
     },
     shuffle: function(playerShuffle) {
       if (this.player === null) {
         return;
       }
-      alert("죄송해여 아직 구현 중입니다ㅠ");
       this.playerShuffle = playerShuffle;
     },
     mute: function(playerMute) {
@@ -848,13 +851,13 @@ export default {
         cursor: pointer;
       }
       #player_control_play_btn {
-        margin-left: 5%;
+        margin-left: 14px;
         margin-top: 12px;
         height: 23px;
         cursor: pointer;
       }
       #player_control_prev_btn {
-        margin-left: 14px;
+        margin-left: 5%;
         margin-top: 12px;
         height: 23px;
         cursor: pointer;
@@ -884,33 +887,34 @@ export default {
         height: 23px;
         cursor: pointer;
       }
+      #player_control_volume_bar {
+        width: 100px;
+        height: 8px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 19px;
+      }
+      #player_control_volume_bar_active {
+        width: 100%;
+        height: 8px;
+        background-color: crimson;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      #player_control_volume_btn {
+        margin-right: 14px;
+        margin-left: 36px;
+        margin-top: 12px;
+        height: 23px;
+        cursor: pointer;
+      }
     }
   }
-  .player_control_volume_bar {
-    width: 150px;
-    height: 8px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 4px;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 19px;
-  }
-  .player_control_volume_bar_active {
-    width: 100%;
-    height: 8px;
-    background-color: crimson;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .player_control_volume_btn {
-    margin-right: 14px;
-    margin-left: 36px;
-    margin-top: 12px;
-    height: 23px;
-    cursor: pointer;
-  }
+
   #aside_container {
     & {
       position: relative;

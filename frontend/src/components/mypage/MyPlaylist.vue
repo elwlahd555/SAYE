@@ -15,15 +15,17 @@
 
       <v-list-item-group v-model="chosen" multiple>
         <v-list-item v-for="item in myPlaylist" :key="item.pNo">
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active" color="primary"></v-checkbox>
-            </v-list-item-action>
+          <v-list-item-action>
+            <v-checkbox
+              v-model="active"
+              :value="item.pNo"
+              color="primary"
+            ></v-checkbox>
+          </v-list-item-action>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item.pName }}</v-list-item-title>
-            </v-list-item-content>
-          </template>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.pName }}</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
       <v-list-item v-if="newItem">
@@ -54,6 +56,14 @@
         Cancel
       </v-btn>
     </v-card-actions>
+    <v-snackbar v-model="snackbar" :timeout="2000" :color="snackbarColor">
+      {{ snackbarText }}
+      <template v-slot:action="{ attrs }">
+        <v-btn dark text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -79,12 +89,47 @@ export default {
     playlist: [],
     chosen: [],
     inputName: "",
-    newItem: false
+    newItem: false,
+    active: [],
+    snackbar: false,
+    snackbarText: "",
+    snackbarColor: ""
   }),
   computed: {
     ...mapState({ uId: "uId", uName: "uName" }),
     idxOfpNo() {
       return this.myPlaylist.map(item => item.pNo);
+    }
+  },
+  mounted() {
+    axios
+      .get(
+        `${spring_URL}/playlist/belong?mNo=${this.selected.mNo}&uNo=${this.uId}`
+      )
+      .then(res => {
+        for (let data of res.data) {
+          if (this.idxOfpNo.includes(data.pNo)) {
+            this.active.push(data.pNo);
+          }
+        }
+        console.log(this.active);
+      });
+  },
+  watch: {
+    selected() {
+      this.active = [];
+      axios
+        .get(
+          `${spring_URL}/playlist/belong?mNo=${this.selected.mNo}&uNo=${this.uId}`
+        )
+        .then(res => {
+          for (let data of res.data) {
+            if (this.idxOfpNo.includes(data.pNo)) {
+              this.active.push(data.pNo);
+            }
+          }
+          console.log(this.active);
+        });
     }
   },
   methods: {
@@ -104,7 +149,9 @@ export default {
           )
           .then(res => {
             if (res.data == "플레이리스트 내 곡 추가 성공") {
-              console.log(this.selected, "플레이리스트 내 곡 추가 성공");
+              this.snackbar = true;
+              this.snackbarColor = "success";
+              this.snackbarText = `플레이리스트에 ${this.selected.mTitle} 추가 성공`;
             }
           })
           .catch(err => {

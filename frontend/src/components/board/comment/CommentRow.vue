@@ -51,44 +51,44 @@ export default {
   name: "commentrow",
 
   props: {
-    comment: { type: Object, require: true },
+    comment: { type: Object, require: true }
   },
 
   data() {
     return {
-      editStatus: false,
+      editStatus: false
     };
   },
 
   methods: {
-    editComment: function () {
+    editComment: function() {
       axios
         .put(`${spring_URL}` + "/board/comment/edit", this.comment)
-        .then((response) => {
+        .then(response => {
           console.log(response.data);
           this.$router.go(this.$router.currentRoute);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
-    deleteComment: function () {
+    deleteComment: function() {
       console.log(`${this.comment}`);
       if (confirm("정말로 댓글을 삭제하시겠습니까?")) {
         axios
           .delete(
             `${spring_URL}/board/comment/delete?cBNo=${this.comment.cBNo}&cNo=${this.comment.cNo}&cUNo=${this.comment.cUNo}`
           )
-          .then((response) => {
+          .then(response => {
             console.log(response);
             this.$router.go(this.$router.currentRoute);
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

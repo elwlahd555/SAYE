@@ -45,7 +45,7 @@
 import axios from "axios";
 const spring_URL = process.env.VUE_APP_SPRING_URL;
 const config = {
-  headers: { "auth-token": window.localStorage.getItem("auth-token") },
+  headers: { "auth-token": window.localStorage.getItem("auth-token") }
 };
 
 export default {
@@ -61,8 +61,8 @@ export default {
         bWriter: "",
         bDate: "",
         bUNo: 0,
-        bViewCnt: 0,
-      },
+        bViewCnt: 0
+      }
     };
   },
 
@@ -71,13 +71,13 @@ export default {
   },
 
   methods: {
-    getBoard: function () {
+    getBoard: function() {
       axios
         .get(`${spring_URL}/board?bNo=${this.bNo}`)
-        .then((response) => {
+        .then(response => {
           console.log(response.data);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -99,11 +99,11 @@ export default {
 
       axios
         .put(`${spring_URL}/board/edit?bNo=${this.bNo}`, this.form, config)
-        .then((response) => {
+        .then(response => {
           console.log(response.data);
           this.$router.push({ name: "board-list" });
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -113,10 +113,9 @@ export default {
       // this.form.cTitle="";
       // this.form.cContent="";
       this.$router.push({ name: "board-list" });
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

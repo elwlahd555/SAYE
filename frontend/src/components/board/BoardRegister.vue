@@ -64,7 +64,7 @@
       </v-btn>
       <v-btn outlined color="error" large @click="$router.push('/board')">
         <v-icon>mdi-file-undo</v-icon>
-        돌아가기
+        목록
       </v-btn>
     </v-row>
   </v-container>
