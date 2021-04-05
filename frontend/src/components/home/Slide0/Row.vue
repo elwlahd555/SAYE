@@ -76,3 +76,18 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
+
+#latest_music_title {
+  font-size: 2rem;
+  color: white;
+  font-family: "Do Hyeon", sans-serif;
+}
+#latest_music_subtitle {
+  color: white;
+  font-family: "Do Hyeon", sans-serif;
+}
+</style>

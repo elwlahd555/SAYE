@@ -22,16 +22,9 @@
           </v-tabs-items>
         </transition>
         <v-row justify="center">
-          <v-btn
-            color="white accent-2"
-            :to="{ name: 'HomePage' }"
-            rounded
-            large
-          >
-            <v-icon left>
-              mdi-star
-            </v-icon>
-            Start Now
+          <v-btn color="white accent-2" :to="{ name: 'HomePage' }" icon large>
+            <lottie :options="defaultOptions" style="width: 150px" />
+            <span>Start Now</span>
           </v-btn>
         </v-row>
       </v-container>
@@ -41,6 +34,8 @@
 
 <script>
 import gsap from "gsap";
+import Lottie from "@/components/Lottie.vue";
+import * as animationData from "@/assets/lottieFiles/music-rhythm.json";
 
 import Home from "@/components/intro/Home";
 import AboutUs from "@/components/intro/AboutUs";
@@ -52,7 +47,8 @@ export default {
     Home,
     AboutUs,
     Services,
-    Contact
+    Contact,
+    Lottie
   },
   data() {
     return {
@@ -63,7 +59,9 @@ export default {
         { tab: "About Us", content: "AboutUs" },
         { tab: "Our Services", content: "Services" },
         { tab: "Contact", content: "Contact" }
-      ]
+      ],
+      defaultOptions: { animationData: animationData.default },
+      animationSpeed: 1
     };
   },
   methods: {
