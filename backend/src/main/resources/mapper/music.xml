@@ -6,19 +6,22 @@
 
 	<!-- 인기도순위로 출력 -->
 	<select id="selectByPopularity" resultType="music">
-	select *
-	from music
-	where (not m_genre = "classical") and (not m_url = "") and (not m_genre =
-	"blues")
-	order by m_popularity desc
-	limit 20;
+		select *
+		from music
+		where (not m_genre = "classical") and (not m_url = "") and (not m_genre =
+		"blues") and(not m_url ="https://www.youtube.com/watch?v=") and( not
+		m_genre = "")
+		order by m_popularity desc
+		limit 20;
 	</select>
 
 	<!-- 발매일 순위로 출력 -->
 	<select id="selectByDate" resultType="music">
 		select *
 		from music
-        where (not m_genre = "classical") and (not m_url = "") and (not m_genre = "blues")
+		where (not m_genre = "classical") and (not m_url = "") and (not m_genre =
+		"blues") and(not m_url ="https://www.youtube.com/watch?v=") and( not
+		m_genre = "")
 		order by
 		m_date desc
 		limit 20;
@@ -36,7 +39,8 @@
 		select *
 		from music
 		where
-		m_no =#{mNo};
+		m_no
+		=#{mNo};
 	</select>
 	<!-- 가수로 검색 -->
 	<select id="selectByArtist" resultType="music">
@@ -83,29 +87,10 @@
 		m_url = #{mUrl}
 		WHERE m_no = #{mNo};
 	</update>
-<!--
-	<update id="update">
-		UPDATE music
-		SET
-		m_title = #{mTitle},
-		m_artist = #{mArtist},
-		m_genre = #{mGenre},
-		m_album = #{mAlbum},
-		m_preview = #{mPreview},
-		m_img = #{mImg},
-		m_popularity = #{mPopularity},
-		m_id = #{mId},
-		m_artist_id = #{mArtistId},
-		m_album_id = #{mAlbumId},
-		m_date = #{mDate}
-		WHERE m_no = #{mNo};
-	</update>
-	
-	<select id="temp" resultType="String">
-		select m_title
-		from music
-		where
-		m_no=#{i};
-	</select>
-	  -->
+	<!-- <update id="update"> UPDATE music SET m_title = #{mTitle}, m_artist 
+		= #{mArtist}, m_genre = #{mGenre}, m_album = #{mAlbum}, m_preview = #{mPreview}, 
+		m_img = #{mImg}, m_popularity = #{mPopularity}, m_id = #{mId}, m_artist_id 
+		= #{mArtistId}, m_album_id = #{mAlbumId}, m_date = #{mDate} WHERE m_no = 
+		#{mNo}; </update> <select id="temp" resultType="String"> select m_title from 
+		music where m_no=#{i}; </select> -->
 </mapper>
