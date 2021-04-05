@@ -98,7 +98,7 @@
               >
                 <v-list-item v-for="(item, i) in playlist" :key="i">
                   <v-list-item-icon>
-                    <v-icon>mdi-music</v-icon>
+                    <v-icon color="primary">mdi-music</v-icon>
                   </v-list-item-icon>
                   <v-list-item-avatar>
                     <v-avatar size="56">
@@ -115,9 +115,11 @@
                         mdi-play
                       </v-icon>
                     </v-btn>
-                    <v-btn icon @click="log">
+                  </v-list-item-action>
+                  <v-list-item-action>
+                    <v-btn icon @click="onClickDel(item)">
                       <v-icon color="red darken-4" class="mr-2">
-                        mdi-information
+                        mdi-trash-can-outline
                       </v-icon>
                     </v-btn>
                   </v-list-item-action>
@@ -239,6 +241,25 @@ export default {
       this.$store.dispatch("setVideoId", this.videoId);
 
       this.$store.dispatch("setPlayMusic", music);
+    },
+    onClickDel(music) {
+      console.log(
+        `${spring_URL}/delete?pmMNo=${music.mNo}&pmPNo=${this.playlistNo}`
+      );
+      axios
+        .delete(
+          `${spring_URL}/delete?pmMNo=${music.mNo}&pmPNo=${this.playlistNo}`
+        )
+        .then(res => {
+          if (res.data === "플레이리스트 내 음원 삭제 성공") {
+            axios.get(`${spring_URL}/?pNo=${this.playlistNo}`).then(res => {
+              this.playlist = res.data;
+            });
+            this.snackbar = true;
+            this.snackbarColor = "error";
+            this.snackbarText = `${music.mTitle} 삭제`;
+          }
+        });
     },
     log(evt) {
       if (evt.added) {
