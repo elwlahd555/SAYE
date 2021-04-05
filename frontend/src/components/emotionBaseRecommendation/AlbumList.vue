@@ -235,7 +235,7 @@
         </v-col>
       </v-row>
       <!-- Pagination -->
-      <v-row v-if="!isAlbumLoading && albums.length > 0">
+      <!-- <v-row v-if="!isAlbumLoading && albums.length > 0">
         <v-col cols="12" v-if="albums.length > 0">
           <hr />
           <v-pagination
@@ -246,7 +246,7 @@
           >
           </v-pagination>
         </v-col>
-      </v-row>
+      </v-row> -->
       <!-- No Bookmark message-->
       <template v-if="pageType === 'bookmarks' && albums.length === 0">
         <v-row>
