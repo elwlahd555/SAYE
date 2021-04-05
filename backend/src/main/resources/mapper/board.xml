@@ -27,12 +27,14 @@
 		SELECT *
 		  FROM board
 		 WHERE board.b_class = "도움글"
+		 ORDER BY b_no desc;
 	</select>
 
 	<select id="selectSayBoard" resultType="board">
 		SELECT *
 		  FROM board
 		 WHERE board.b_class = "하소연"
+		 ORDER BY b_no desc;
 	</select>
 	
 	<update id="updateBoard">
