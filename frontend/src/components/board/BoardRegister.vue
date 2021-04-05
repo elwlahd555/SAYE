@@ -72,8 +72,8 @@
 
 <script>
 import axios from "axios";
-// const spring_URL = process.env.VUE_APP_SPRING_URL;
-const temp = "http://localhost:8000/saye";
+const spring_URL = process.env.VUE_APP_SPRING_URL;
+
 export default {
   name: "BoardRegister",
 
@@ -86,23 +86,23 @@ export default {
         uNo: 0,
         uPassword: "string",
         uProvider: "string",
-        uSalt: "string",
+        uSalt: "string"
       },
       board: {
         bWriter: "",
         bContent: "",
         bDate: "",
         bUNo: 0,
-        bViewCnt: 0,
+        bViewCnt: 0
       },
       form: {
         bUNo: this.$store.state.uId,
         bClass: "",
         bTitle: "",
         bWriter: "anonymouse",
-        bContent: "",
+        bContent: ""
       },
-      category: ["하소연", "도움글"],
+      category: ["하소연", "도움글"]
     };
   },
 
@@ -132,12 +132,12 @@ export default {
           .then(() => {
             this.$router.push({ name: "BoardList" });
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

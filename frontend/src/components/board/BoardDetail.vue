@@ -85,7 +85,7 @@ export default {
 
   components: {
     CommentWrite,
-    CommentRow,
+    CommentRow
   },
 
   data() {
@@ -98,9 +98,9 @@ export default {
         bWriter: "",
         bDate: "",
         bUNo: 0,
-        bViewCnt: 0,
+        bViewCnt: 0
       },
-      commentList: [],
+      commentList: []
     };
   },
 
@@ -121,42 +121,42 @@ export default {
     //     });
     // },
     getBoardDetail() {
-      console.log(this.$route.params.bNo);
+      //console.log(this.$route.params.bNo);
       axios
         .get(`${spring_URL}/board/detail?bNo=${this.$route.params.bNo}`)
-        .then((res) => {
+        .then(res => {
           this.board = res.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
-    BoardDelete: function () {
-      console.log(this.board.bNo + "번호의 글을 삭제합니다");
+    BoardDelete: function() {
+      //console.log(this.board.bNo + "번호의 글을 삭제합니다");
       if (confirm("정말로 삭제하시겠습니까?")) {
         axios
           .get(`${spring_URL}` + "/board/comment")
-          .then((response) => {
+          .then(response => {
             this.commentList = response.data;
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
       }
     },
 
-    getCommentList: function () {
-      console.log(this.board.bNo + "번호 글의 댓글리스트를 불러옵니다.");
+    getCommentList: function() {
+      //console.log(this.board.bNo + "번호 글의 댓글리스트를 불러옵니다.");
       axios
         .get(`${spring_URL}/board/comment?cBNo=${this.$route.params.bNo}`)
-        .then((res) => {
+        .then(res => {
           this.commentList = res.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
