@@ -23,7 +23,7 @@
 		  FROM music
 		 WHERE m_no = (SELECT lm_m_no
 		 				 FROM like_music
-		 				WHERE lm_u_no = 8
+		 				WHERE lm_u_no = #{uNo}
 		 				LIMIT 1);
 	</select>
 
