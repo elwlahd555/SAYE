@@ -14,7 +14,7 @@
       >
         <v-list-item v-for="item in bookmarkAlbums" :key="item.mId">
           <v-list-item-icon>
-            <v-icon>mdi-music</v-icon>
+            <v-icon color="error">mdi-heart</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title> {{ item.mTitle }}</v-list-item-title>
