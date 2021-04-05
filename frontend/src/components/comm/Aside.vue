@@ -239,6 +239,7 @@ export default {
     },
     playerShuffle(val) {
       let playlist = this.$store.getters.playlist.map(item => item);
+      this.original = playlist;
       if (val) {
         let j, x, i;
         for (i = playlist.length; i; i -= 1) {
