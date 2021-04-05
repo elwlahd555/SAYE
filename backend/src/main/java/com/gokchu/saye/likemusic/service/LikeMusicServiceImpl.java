@@ -27,6 +27,12 @@ public class LikeMusicServiceImpl implements LikeMusicService {
 		return likeMusicMapper.selectLikeMusic(uNo);
 	}
 	
+	/* R :: 유저의 관심 음원과 유사한 음악들 분석 위한 음원1개 추출 */
+	@Override
+	public Music selectOneLikeMusic(int uNo) throws Exception {
+		return likeMusicMapper.selectOneLikeMusic(uNo);
+	}
+	
 	/* D :: 관심 음원 삭제 */
 	@Override
 	public boolean deleteLikeMusic(LikeMusic likeMusic) throws Exception {

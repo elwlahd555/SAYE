@@ -12,6 +12,9 @@ public interface LikeMusicService {
 
 	/* R :: 관심 음원 조회 */
 	List<Music> selectLikeMusic(int uNo) throws Exception;
+	
+	/* R :: 유저의 관심 음원과 유사한 음악들 분석 위한 음원1개 추출 */
+	Music selectOneLikeMusic(int uNo) throws Exception;
 
 	/* D :: 관심 음원 삭제 */
 	boolean deleteLikeMusic(LikeMusic likeMusic) throws Exception;
