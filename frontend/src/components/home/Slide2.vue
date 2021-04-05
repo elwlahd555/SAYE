@@ -30,7 +30,6 @@ export default {
       text: '',
       sentences: null,
       scY: 0,
-      uNo: '',
       django: {
         emotion: '',
         music: null,
@@ -49,11 +48,14 @@ export default {
         })
         .then((res) => {
           // console.log(res.data);
-          this.uNo = this.$store.state.uNo;
           this.django.emotion = res.data.Result[0][1];
           this.django.requestCnt = 4;
           axios
-            .post(`${spring_URL}/likemusic/likeone`, this.uNo)
+            .post(`${spring_URL}/likemusic/likeone`, this.$store.state.uId, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
             .then((music) => {
               this.django.music = music.data;
               console.log(this.django);
@@ -66,6 +68,9 @@ export default {
               this.$router.push({
                 path: 'EmotionMusic',
               });
+            })
+            .catch((error) => {
+              console.log(error + '안됨');
             });
         })
         .catch((error) => {
