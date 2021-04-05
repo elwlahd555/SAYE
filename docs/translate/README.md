@@ -4,17 +4,17 @@
 
 # Sing About Your Emotion (SAYE) 🎶🎶🎶
 
-| 😘 SAYE :: Sing About Your Emotion, 당신의 감정을 노래하다. 자세한 기획 개요는 [여기서](./docs/assets/README.md) 보실 수 있습니다.
+| 😘 SAYE :: Sing About Your Emotion. You can see more details about our project [here](./docs/assets/README.md)!
 
 
 <div align="center">
   <br>
-  <a href="https://j4d106.p.ssafy.io/"><img src="./docs/assets/saye.png" alt="SAYE" width="200"></a>
+  <a href="https://j4d106.p.ssafy.io/"><img src="../assets/saye.png" alt="SAYE" width="200"></a>
 </div>
 
   <p align="center">
-    <a href="./">한국어</a> •
-    <a href="./docs/assets/translate/README.md">English</a> 
+    <a href="../../../">Korean</a> •
+    <a href="./">English</a> 
   </p>
 
 ---
@@ -57,7 +57,7 @@
   <a href="">References</a>
 </p>
 
-![screenshot](./docs/assets/demo/0_introPage.gif)
+![screenshot](../assets/demo/0_introPage.gif)
 
 ## Key Features
 
@@ -126,7 +126,13 @@ This software uses the following open source packages:
 
 ## Support
 
-__좋아요와 구독하기 잊지마세요ㅋㅋ__
+<a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+<p>Or</p> 
+
+<a href="https://www.patreon.com/amitmerchant">
+	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
 
 ## References
 
