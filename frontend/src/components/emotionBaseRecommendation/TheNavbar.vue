@@ -11,7 +11,9 @@
           class="d-flex align-self-center"
           @click="onClickTitle"
         >
-          <div class="headline white--text font-weight-black">감정 기반 음악 추천</div>
+          <div class="headline white--text font-weight-black">
+            감정 기반 음악 추천
+          </div>
         </v-col>
         <v-spacer></v-spacer>
         <v-col class="text-right">
