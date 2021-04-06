@@ -34,6 +34,8 @@ public interface MusicService {
 
 	List<Music> selectBymCnt();
 
+	List<Music> selectByrandGenre(String mGenre);
+
 //	String temp(int i);
 //
 //	void update(int i, String artist);

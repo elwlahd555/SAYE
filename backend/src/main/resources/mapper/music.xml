@@ -84,6 +84,14 @@
 		m_emotion like "%"#{mEmotion}"%"
 		limit 20;
 	</select>
+	<!-- 감정으로 랜덤검색 -->
+	<select id="selectByrandGenre" resultType="music">
+		select *
+		from music
+		where (not m_url = "")  and(not m_url ="https://www.youtube.com/watch?v=") and (m_genre like "%"#{mGenre}"%")
+		order by rand()
+		limit 20;
+	</select>
 
 	<select id="artist" resultType="String">
 		select m_artist
