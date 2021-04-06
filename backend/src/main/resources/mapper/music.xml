@@ -87,6 +87,12 @@
 		m_url = #{mUrl}
 		WHERE m_no = #{mNo};
 	</update>
+	
+	<update id="updateCnt">
+	update music
+	set m_cnt=m_cnt+1
+		 where m_no=#{mNo};
+	</update>
 	<!-- <update id="update"> UPDATE music SET m_title = #{mTitle}, m_artist 
 		= #{mArtist}, m_genre = #{mGenre}, m_album = #{mAlbum}, m_preview = #{mPreview}, 
 		m_img = #{mImg}, m_popularity = #{mPopularity}, m_id = #{mId}, m_artist_id 
