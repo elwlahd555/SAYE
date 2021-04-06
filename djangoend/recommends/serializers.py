@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import RCD
+from .models import Rcd
 
-class RCDListSerializer(serializers.ModelSerializer):
+class RcdListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RCD
+        model = Rcd
+        fields='__all__'
