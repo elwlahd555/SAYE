@@ -106,14 +106,6 @@
 export default {
   name: "TheNavbar",
   props: {
-    showRecentSearchBox: {
-      type: Boolean,
-      required: true
-    },
-    recentSearch: {
-      type: Array,
-      required: true
-    },
     pageType: {
       type: String,
       required: true
@@ -137,9 +129,6 @@ export default {
     }
   },
   methods: {
-    onClickToggleRecentSearchBox() {
-      this.$emit("clickToggleRecentSearchBox");
-    },
     onClickShowBookmarks() {
       this.$emit("clickShowBookmarks");
     },

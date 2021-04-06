@@ -163,12 +163,10 @@ export default {
 #allBtn {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  margin-right: -1px;
 }
 #helpBtn {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
   margin-right: -1px;
+  margin-left: -0.8px;
 }
 #sayBtn {
   border-top-right-radius: 5px;

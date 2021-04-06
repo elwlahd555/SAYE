@@ -27,11 +27,11 @@
       <!-- Album List -->
       <transition name="list" mode="out-in">
         <v-row
-          v-if="!isAlbumLoading && displayedAlbums.length > 0"
+          v-if="!isAlbumLoading && albums.length > 0"
           :key="pageType"
         >
           <v-col
-            v-for="album in displayedAlbums"
+            v-for="album in albums"
             :key="album.mId"
             :cols="colSize"
           >
@@ -235,7 +235,7 @@
         </v-col>
       </v-row>
       <!-- Pagination -->
-      <v-row v-if="!isAlbumLoading && albums.length > 0">
+      <!-- <v-row v-if="!isAlbumLoading && albums.length > 0">
         <v-col cols="12" v-if="albums.length > 0">
           <hr />
           <v-pagination
@@ -246,7 +246,7 @@
           >
           </v-pagination>
         </v-col>
-      </v-row>
+      </v-row> -->
       <!-- No Bookmark message-->
       <template v-if="pageType === 'bookmarks' && albums.length === 0">
         <v-row>
@@ -339,9 +339,6 @@ export default {
     }
   },
   computed: {
-    displayedAlbums() {
-      return this.paginate(this.albums);
-    },
     colSize() {
       return this.settings.panelType === "card" ? "3" : "12";
     },
@@ -357,13 +354,6 @@ export default {
     }
   },
   methods: {
-    paginate(albums) {
-      let current = this.current;
-      let perPage = this.settings.perPage;
-      let from = current * perPage - perPage;
-      let to = current * perPage;
-      return albums.slice(from, to);
-    },
     onClickUpdateSettings() {
       const settingValue =
         this.settings.panelType === "card" ? "media" : "card";

@@ -99,7 +99,7 @@ export default {
         bUNo: this.$store.state.uId,
         bClass: "",
         bTitle: "",
-        bWriter: "anonymouse",
+        bWriter: "anonymous",
         bContent: ""
       },
       category: ["하소연", "도움글"]

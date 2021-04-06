@@ -29,7 +29,8 @@ export default {
       query: "",
       text: "",
       sentences: null,
-      scY: 0
+      scY: 0,
+      emotion: ""
     };
   },
   methods: {
@@ -43,9 +44,12 @@ export default {
         })
         .then(res => {
           // console.log(res.data);
-          console.log(res.data.Result[0][1]);
+          this.emotion = res.data.Result[0][1];
           this.$router.push({
-            path: "EmotionMusic"
+            name: "EmotionMusic",
+            params: {
+              emotion: this.emotion
+            }
           });
         })
         .catch(error => {

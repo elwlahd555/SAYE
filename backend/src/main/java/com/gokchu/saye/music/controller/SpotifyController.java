@@ -107,7 +107,7 @@ public class SpotifyController {
 //			track=trackPaging.getItems()[0];
 			System.out.println("트랙 크기 : " + trackPaging.getItems().length);
 			System.out.println(trackPaging.getItems()[0].toString());
-
+			ArrayList<Music> youtube=new ArrayList<Music>();
 			for (Track t : trackPaging.getItems()) {
 
 				System.out.println("가수 : " + t.getArtists()[0].getName());
@@ -162,25 +162,39 @@ public class SpotifyController {
 					Music m=spotifyService.selectByMId(t.getId());
 					music.setmUrl(m.getmUrl());
 					music.setmNo(m.getmNo());
-					if(music.getmUrl().equals("https://www.youtube.com/watch?v=")) {
-						music.setmUrl("https://www.youtube.com/watch?v="+youtubeService.selectUrlByTitle(t.getName()+" "+artist.getName()));
-						spotifyService.updateMurlByMid(music.getmNo(),music.getmUrl());
-					}
-				}else {
-					String musicurl="https://www.youtube.com/watch?v="+youtubeService.selectUrlByTitle(t.getName()+" "+artist.getName());
-					System.out.println("뮤직 url : "+musicurl);
-					music.setmUrl(musicurl);
-					spotifyService.insertMusic(music);
-					Music m=spotifyService.selectByMId(t.getId());
-					music.setmNo(m.getmNo());
-				}
-				
-				if(!music.getmUrl().equals("https://www.youtube.com/watch?v=")) {
 					musics.add(music);
+//					if(music.getmUrl().equals("https://www.youtube.com/watch?v=")) {
+//						music.setmUrl("https://www.youtube.com/watch?v="+youtubeService.selectUrlByTitle(t.getName()+" "+artist.getName()));
+//						spotifyService.updateMurlByMid(music.getmNo(),music.getmUrl());
+//					}
+				}else {
+					
+//					String musicurl="https://www.youtube.com/watch?v="+youtubeService.selectUrlByTitle(t.getName()+" "+artist.getName());
+//					System.out.println("뮤직 url : "+musicurl);
+//					music.setmUrl(musicurl);
+//					spotifyService.insertMusic(music);
+//					Music m=spotifyService.selectByMId(t.getId());
+//					music.setmNo(m.getmNo());
+					if(youtube.size()>=10) {
+						break;
+					}
+					System.out.println("youtube api 사용");
+					System.out.println("-----------------------------------------------------------------------------------");
+					music.setmUrl(t.getName()+" "+artist.getName());
+					youtube.add(music);
 				}
+//				if(!music.getmUrl().equals("https://www.youtube.com/watch?v=")) {
+//					musics.add(music);
+//				}
 				
 				System.out.println("리스트에 들어간 뮤직 : "+music.toString());
 
+			}
+			ArrayList<Music>result=youtubeService.selectUrlByTitle(youtube);
+			for (Music m : result) {
+				spotifyService.insertMusic(m);
+				m.setmNo(spotifyService.selectByMId(m.getmId()).getmNo());
+				musics.add(m);
 			}
 			System.out.println("리스트 크기 : "+musics.size());
 		} catch (IOException | SpotifyWebApiException | ParseException e) {

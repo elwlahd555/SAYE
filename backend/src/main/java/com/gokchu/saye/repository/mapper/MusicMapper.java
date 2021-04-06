@@ -36,6 +36,12 @@ public interface MusicMapper {
 
 	void updateMurlByNo(int mNo, String mUrl);
 
+	void updateCnt(int mNo);
+
+	List<Music> selectBymCnt();
+
+	List<Music> selectByrandGenre(String mGenre);
+
 
 
 }
