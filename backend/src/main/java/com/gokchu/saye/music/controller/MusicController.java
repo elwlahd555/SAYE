@@ -83,7 +83,7 @@ public class MusicController {
 			mGenre="dance";
 			break;
 		case "슬픔":
-			mGenre="contry";
+			mGenre="country";
 			break;
 		case "기대":
 			mGenre="pop";
