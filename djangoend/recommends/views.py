@@ -19,7 +19,7 @@ def recommend_music(request):
     musicId = request.GET['musicId']
     num = request.GET['requestCnt']
 
-    df, labels = getByPandas(emotion)
+    df, labels = getByPandas(emotion,musicId)
     df = scale_data(df,labels)
 
 
@@ -29,8 +29,8 @@ def recommend_music(request):
     return Response(serializer.data)
 
 
-def getByPandas(emotion):
-    query="select distinct atd.* from audio_transition_data atd inner join music m on m.m_id = atd.id where m.m_emotion = {e};".format(e="'"+emotion+"'")
+def getByPandas(emotion,musicId):
+    query="select distinct atd.* from audio_transition_data atd inner join music m on m.m_id = atd.id where m.m_emotion = {e} OR m.m_id = {id};".format(e="'"+emotion+"'",id="'"+musicId+"'")
     df = pd.read_sql(query, connection)
     df = df.drop(columns=['a_no','artist','title','genre','url']).set_index(['id'])
     labels = list(df.index)

@@ -26,7 +26,7 @@ SECRET_KEY = '*k+setdp1$86s95sb(d)b2#v4#hd=ez(oivk7_1*^_bzys4yw9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["j4d106.p.ssafy.io"]
+ALLOWED_HOSTS = ["j4d106.p.ssafy.io",'localhost','127.0.0.1',]
 
 
 # Application definition
@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ["j4d106.p.ssafy.io"]
 INSTALLED_APPS = [
     'recommends',
 
+    'corsheaders',
     'django_extensions',
     'django_seed',
     
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
