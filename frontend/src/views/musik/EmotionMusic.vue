@@ -89,7 +89,7 @@ export default {
   props: {
     emotion: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   data() {
@@ -143,7 +143,10 @@ export default {
       })
       .then(music => {
         this.django.music = music.data.mId;
-        console.log(this.django);
+        console.log(
+          `${django_URL}?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`
+        );
+
         axios
           .get(
             `${django_URL}?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`

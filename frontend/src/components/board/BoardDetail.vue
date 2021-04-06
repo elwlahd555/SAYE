@@ -69,12 +69,10 @@
         </v-card>
       </v-row>
       <div>
-        <br>
+        <br />
         <h2>추천 음악</h2>
         <h3>게시물의 감정에 따라 추천하는 음악 목록입니다.</h3>
-        <Row
-          :musicList="recommendMusic"
-        />
+        <Row :musicList="recommendMusic" />
       </div>
       <v-divider class="my-10"></v-divider>
       <p class="headline font-weight-bold">댓글</p>
@@ -92,7 +90,7 @@
 import axios from "axios";
 import CommentWrite from "./comment/CommentWrite";
 import CommentRow from "./comment/CommentRow";
-import Row from "@/components/home/Slide0/Row.vue"
+import Row from "@/components/home/Slide0/Row.vue";
 
 const spring_URL = process.env.VUE_APP_SPRING_URL;
 
@@ -119,7 +117,7 @@ export default {
       },
       commentList: [],
       recommendMusic: [],
-      emotion: ''
+      emotion: ""
     };
   },
 
@@ -175,13 +173,13 @@ export default {
         .then(res => {
           // console.log(res.data);
           this.emotion = res.data.Result[0][1];
-          console.log(this.emotion)
+          console.log(this.emotion);
           axios
             .get(`${spring_URL}/music/randGenre?mEmotion=${this.emotion}`)
             .then(result => {
               console.log(result.data);
               this.recommendMusic = result.data;
-            })
+            });
         })
         .catch(error => {
           console.log(this.query);
