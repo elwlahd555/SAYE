@@ -175,7 +175,7 @@ public class SpotifyController {
 //					spotifyService.insertMusic(music);
 //					Music m=spotifyService.selectByMId(t.getId());
 //					music.setmNo(m.getmNo());
-					if(youtube.size()>=20) {
+					if(youtube.size()>=10) {
 						break;
 					}
 					System.out.println("youtube api 사용");
