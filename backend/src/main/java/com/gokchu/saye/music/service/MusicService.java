@@ -30,6 +30,10 @@ public interface MusicService {
 
 	void updateMurlByNo(int mNo, String mUrl);
 
+	void updateCnt(int mNo);
+
+	List<Music> selectBymCnt();
+
 //	String temp(int i);
 //
 //	void update(int i, String artist);

@@ -85,6 +85,16 @@ public class MusicServiceImpl implements MusicService {
 		musicMapper.updateMurlByNo(mNo,mUrl);
 		
 	}
+	@Override
+	public void updateCnt(int mNo) {
+		// TODO Auto-generated method stub
+		musicMapper.updateCnt(mNo);
+	}
+	@Override
+	public List<Music> selectBymCnt() {
+		// TODO Auto-generated method stub
+		return musicMapper.selectBymCnt();
+	}
 
 
 
