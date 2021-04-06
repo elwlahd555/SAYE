@@ -44,33 +44,13 @@ export default {
         })
         .then(res => {
           // console.log(res.data);
-          this.django.emotion = res.data.Result[0][1];
-          this.django.requestCnt = 4;
-          axios
-            .post(`${spring_URL}/likemusic/likeone`, this.$store.state.uId, {
-              headers: {
-                "Content-Type": "application/json"
-              }
-            })
-            .then(music => {
-              this.django.music = music.data.mId;
-              // console.log(this.django);
-              axios
-                .get(
-                  `${django_URL}/recommend?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`
-                )
-                .then(albums => {
-                  console.log("response 성공");
-
-                  console.log(albums.data);
-                });
-              this.$router.push({
-                path: "EmotionMusic"
-              });
-            })
-            .catch(error => {
-              console.log(error + "안됨");
-            });
+          this.emotion = res.data.Result[0][1];
+          this.$router.push({
+            name: "EmotionMusic",
+            params: {
+              emotion: this.emotion
+            }
+          });
         })
         .catch(error => {
           console.log(this.query);
