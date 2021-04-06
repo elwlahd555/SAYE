@@ -19,19 +19,18 @@ def recommend_music(request):
     musicId = request.GET['musicId']
     num = request.GET['requestCnt']
 
-    df, labels = getByPandas(emotion,musicId)
+    df, labels = getByPandas(emotion)
     df = scale_data(df,labels)
+
 
     df = df[musicId].sort_values(ascending=False).iloc[1:1+int(num)]
     rcds = Rcd.objects.filter(m_id__in=df.index.to_list())
     serializer = RcdListSerializer(rcds, many=True)
-    print(serializer.data)
     return Response(serializer.data)
 
 
-def getByPandas(emotion,musicId):
-    
-    query="select distinct atd.* from audio_transition_data atd inner join music m on m.m_id = atd.id where m.m_emotion = {e} OR m.m_id= {id};".format(e="'"+emotion+"'",id="'"+musicId+"'")
+def getByPandas(emotion):
+    query="select distinct atd.* from audio_transition_data atd inner join music m on m.m_id = atd.id where m.m_emotion = {e};".format(e="'"+emotion+"'")
     df = pd.read_sql(query, connection)
     df = df.drop(columns=['a_no','artist','title','genre','url']).set_index(['id'])
     labels = list(df.index)
