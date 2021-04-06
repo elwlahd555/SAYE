@@ -340,6 +340,7 @@ export default {
   },
   computed: {
     displayedAlbums() {
+      console.log('display', this.albums)
       return this.paginate(this.albums);
     },
     colSize() {

@@ -106,7 +106,8 @@ export default {
         emotion: "",
         music: "",
         requestCnt: ""
-      }
+      },
+      albums: []
     };
   },
   components: {
@@ -116,7 +117,7 @@ export default {
   computed: {
     ...mapGetters(albumStore, {
       recentSearch: "GET_RECENT_SEARCH",
-      albums: "GET_ALBUMS",
+      //albums: "GET_ALBUMS",
       albumTracks: "GET_ALBUM_TRACKS",
       bookmarkAlbums: "BOOKMARK_ALBUMS",
       pageType: "PAGE_TYPE",
