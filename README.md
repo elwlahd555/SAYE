@@ -217,11 +217,11 @@ For more information, please refer to the Contributing section.
 
 ## 👥 SAYE Family
 
-- [TOAST UI Calendar](https://github.com/nhn/tui.calendar)
-- [TOAST UI Chart](https://github.com/nhn/tui.chart)
-- [TOAST UI Grid](https://github.com/nhn/tui.grid)
-- [TOAST UI Image Editor](https://github.com/nhn/tui.image-editor)
-- [TOAST UI Components](https://github.com/nhn)
+- [김지현](https://github.com/)
+- [김동빈](https://github.com/)
+- [김태진](https://github.com/)
+- [김호빈](https://github.com/)
+- [김연정](https://github.com/)
 
 
 ## 🚀 References

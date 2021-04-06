@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from 'axios';
 import createPersistedState from "vuex-persistedstate";
 
 import albumStore from "./modules/albumStore";
@@ -131,7 +132,7 @@ export const store = new Vuex.Store({
     },
     setPlayMusic({ commit }, music) {
       // play cnt 증가
-      axios.get(`${process.env.VUE_APP_SPRING_URL}/music/cnt?mNo=${music.mNo}`)
+      axios.get(`${process.env.VUE_APP_SPRING_URL}/music/cnt?mNo=${music.mNo}`);
       commit("setPlayMusic", { music });
       commit("addMusicToPlaylist", { music });
     },
