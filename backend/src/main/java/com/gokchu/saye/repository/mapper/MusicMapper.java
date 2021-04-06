@@ -40,6 +40,8 @@ public interface MusicMapper {
 
 	List<Music> selectBymCnt();
 
+	List<Music> selectByrandGenre(String mGenre);
+
 
 
 }

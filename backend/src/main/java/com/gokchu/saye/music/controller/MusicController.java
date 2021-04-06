@@ -73,13 +73,47 @@ public class MusicController {
 		musics=musicService.selectByEmotion(mEmotion);
 		return musics;
 	}
+	//감정으로 랜덤검색
+	@GetMapping("randGenre")
+	public List<Music> selectByrandGenre(String mEmotion){
+		List<Music>musics=new ArrayList<Music>();
+		String mGenre="dance";
+		switch (mEmotion) {
+		case "기쁨":
+			mGenre="dance";
+			break;
+		case "슬픔":
+			mGenre="contry";
+			break;
+		case "기대":
+			mGenre="pop";
+			break;
+		case "신뢰":
+			mGenre="electro";
+			break;
+		case "놀라움":
+			mGenre="modern";
+			break;
+		case "혐오":
+			mGenre="metal";
+			break;
+		case "공포":
+			mGenre="rock";
+			break;
+		case "분노":
+			mGenre="rock";
+			break;
+		}
+		musics=musicService.selectByrandGenre(mGenre);
+		return musics;
+	}
 	
 	
 	//DATA SET CONTROLLER
 	@GetMapping("DATA SET CONTROLLER")
 	public void updateMurl(){
 		ArrayList<Music> youtube=new ArrayList<Music>();
-		for (int i = 7255; i < 7285; i++) {
+		for (int i = 5000; i < 5125; i++) {
 			Music music=musicService.selectByNo(i);
 			if(music.getmUrl().equals("https://www.youtube.com/watch?v=")||music.getmUrl().equals("")) {
 				music.setmUrl(music.getmTitle()+" "+music.getmArtist());

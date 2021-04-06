@@ -95,6 +95,11 @@ public class MusicServiceImpl implements MusicService {
 		// TODO Auto-generated method stub
 		return musicMapper.selectBymCnt();
 	}
+	@Override
+	public List<Music> selectByrandGenre(String mGenre) {
+		// TODO Auto-generated method stub
+		return musicMapper.selectByrandGenre(mGenre);
+	}
 
 
 
