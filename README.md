@@ -43,8 +43,9 @@
       <img src="https://img.shields.io/badge/Jenkins-2.263.4-%236DB33F?color=red&style=plastic&logo=Jenkins">
   </a>
   <!--<a href="https://www.paypal.me/AmitMerchant">-->
+  <a href="">
     <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
-  <!--</a>-->
+  </a>
 </p>
 
 <p align="center">
@@ -56,46 +57,20 @@
 
 ## 🚩 Table of Contents
 
-- [Packages](#-packages)
-- [Why TOAST UI Editor?](#-why-toast-ui-editor)
+
+- [What's SAYE?](#-whats-saye)
 - [Features](#-features)
 - [Examples](#-examples)
 - [Browser Support](#-browser-support)
+- [Packages](#-packages)
 - [Pull Request Steps](#-pull-request-steps)
 - [Contributing](#-contributing)
 - [TOAST UI Family](#-toast-ui-family)
-- [Used By](#-used-by)
+- [References](#-references)
 - [License](#-license)
 
 
-## 📦 Packages
-
-### TOAST UI Editor
-
-| Name | Description |
-| --- | --- |
-| [`@toast-ui/editor`](https://github.com/nhn/tui.editor/tree/master/apps/editor) | Plain JavaScript component |
-
-### TOAST UI Editor's Wrappers
-
-| Name | Description |
-| --- | --- |
-| [`@toast-ui/jquery-editor`](https://github.com/nhn/tui.editor/tree/master/apps/jquery-editor) | [jQuery](https://jquery.com/) wrapper component |
-| [`@toast-ui/react-editor`](https://github.com/nhn/tui.editor/tree/master/apps/react-editor) | [React](https://reactjs.org/) wrapper component |
-| [`@toast-ui/vue-editor`](https://github.com/nhn/tui.editor/tree/master/apps/vue-editor) | [Vue](https://vuejs.org/) wrapper component |
-
-### TOAST UI Editor's Plugins
-
-| Name | Description |
-| --- | --- |
-| [`@toast-ui/editor-plugin-chart`](https://github.com/nhn/tui.editor/tree/master/plugins/chart) | Plugin to render chart |
-| [`@toast-ui/editor-plugin-code-syntax-highlight`](https://github.com/nhn/tui.editor/tree/master/plugins/code-syntax-highlight) | Plugin to highlight code syntax |
-| [`@toast-ui/editor-plugin-color-syntax`](https://github.com/nhn/tui.editor/tree/master/plugins/color-syntax) | Plugin to color editing text |
-| [`@toast-ui/editor-plugin-table-merged-cell`](https://github.com/nhn/tui.editor/tree/master/plugins/table-merged-cell) | Plugin to merge table columns |
-| [`@toast-ui/editor-plugin-uml`](https://github.com/nhn/tui.editor/tree/master/plugins/uml) | Plugin to render UML |
-
-
-## 🤖 Why TOAST UI Editor?
+## 🤖 What's SAYE?
 
 TOAST UI Editor provides **Markdown mode** and **WYSIWYG mode**. Depending on the type of use you want like production of *Markdown* or maybe to just edit the *Markdown*. The TOAST UI Editor can be helpful for both the usage. It offers **Markdown mode** and **WYSIWYG mode**, which can be switched any point in time.
 
@@ -166,6 +141,35 @@ Here are more [examples](https://nhn.github.io/tui.editor/latest/tutorial-exampl
 | Yes | 10+ | Yes | Yes | Yes |
 
 
+
+## 📦 Packages (M)
+
+### Frontend
+
+| Name | Description |
+| --- | --- |
+| [`@toast-ui/editor`](https://github.com/nhn/tui.editor/tree/master/apps/editor) | Plain JavaScript component |
+
+### Backend
+
+| Name | Description |
+| --- | --- |
+| [`@toast-ui/jquery-editor`](https://github.com/nhn/tui.editor/tree/master/apps/jquery-editor) | [jQuery](https://jquery.com/) wrapper component |
+| [`@toast-ui/react-editor`](https://github.com/nhn/tui.editor/tree/master/apps/react-editor) | [React](https://reactjs.org/) wrapper component |
+| [`@toast-ui/vue-editor`](https://github.com/nhn/tui.editor/tree/master/apps/vue-editor) | [Vue](https://vuejs.org/) wrapper component |
+
+### SAYE UI Editor's Plugins
+
+| Name | Description |
+| --- | --- |
+| [`@toast-ui/editor-plugin-chart`](https://github.com/nhn/tui.editor/tree/master/plugins/chart) | Plugin to render chart |
+| [`@toast-ui/editor-plugin-code-syntax-highlight`](https://github.com/nhn/tui.editor/tree/master/plugins/code-syntax-highlight) | Plugin to highlight code syntax |
+| [`@toast-ui/editor-plugin-color-syntax`](https://github.com/nhn/tui.editor/tree/master/plugins/color-syntax) | Plugin to color editing text |
+| [`@toast-ui/editor-plugin-table-merged-cell`](https://github.com/nhn/tui.editor/tree/master/plugins/table-merged-cell) | Plugin to merge table columns |
+| [`@toast-ui/editor-plugin-uml`](https://github.com/nhn/tui.editor/tree/master/plugins/uml) | Plugin to render UML |
+
+
+
 ## 🔧 Pull Request Steps
 
 TOAST UI products are open source, so you can create a pull request(PR) after you fix issues. Run npm scripts and develop yourself with the following process.
@@ -206,15 +210,12 @@ Before creating a PR, test and check for any errors. If there are no errors, the
 
 For more information, please refer to the Contributing section.
 
-## 💬 Contributing
+## 💬 Documents
 
-* [Code of Conduct](https://github.com/nhn/tui.editor/blob/master/CODE_OF_CONDUCT.md)
-* [Contributing Guideline](https://github.com/nhn/tui.editor/blob/master/CONTRIBUTING.md)
-* [Commit Convention](https://github.com/nhn/tui.editor/blob/master/docs/COMMIT_MESSAGE_CONVENTION.md)
-* [Issue Guidelines](https://github.com/nhn/tui.editor/tree/master/.github/ISSUE_TEMPLATE)
+* [SAYE - Notion](https://www.notion.so/oct14jh/SAYE-Sing-About-Your-Emotion-301b283ab8ca4fb7b49647eb99e98a20)
 
 
-## 🍞 TOAST UI Family
+## 👥 SAYE Family
 
 - [TOAST UI Calendar](https://github.com/nhn/tui.calendar)
 - [TOAST UI Chart](https://github.com/nhn/tui.chart)
@@ -223,12 +224,12 @@ For more information, please refer to the Contributing section.
 - [TOAST UI Components](https://github.com/nhn)
 
 
-## 🚀 Used By
+## 🚀 References
 
-* [TOAST Dooray! - Collaboration Service (Project, Messenger, Mail, Calendar, Drive, Wiki, Contacts)](https://dooray.com)
-* [UNOTES - Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=ryanmcalister.Unotes)
+- [Markdownify - README.md](https://github.com/amitmerchant1990/electron-markdownify#related)
+- [TOAST UI Editor - README.md](https://github.com/nhn/tui.editor#readme)
 
 
 ## 📜 License
 
-This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob/master/LICENSE) © [NHN](https://github.com/nhn).
+This software is licensed under the [MIT](.docs/LICENSE) © [SSAFY](https://www.ssafy.com/ksp/jsp/swp/swpMain.jsp).
