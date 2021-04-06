@@ -15,7 +15,6 @@ import SpeechToText from "@/components/stt/SpeechToText.vue";
 
 const axios = require("axios");
 const spring_URL = process.env.VUE_APP_SPRING_URL;
-const django_URL = process.env.VUE_APP_DJANGO_URL;
 
 export default {
   components: {
@@ -31,11 +30,7 @@ export default {
       text: "",
       sentences: null,
       scY: 0,
-      django: {
-        emotion: "",
-        music: "",
-        requestCnt: ""
-      }
+      emotion: ""
     };
   },
   methods: {
