@@ -59,80 +59,188 @@
 
 ![screenshot](../assets/demo/0_introPage.gif)
 
-## Key Features
 
-* LivePreview - Make changes, See changes
-  - Instantly see what your Markdown documents look like in HTML as you create them.
-* Sync Scrolling
-  - While you type, LivePreview will automatically scroll to the current location you're editing.
-* GitHub Flavored Markdown  
-* Syntax highlighting
-* [KaTeX](https://khan.github.io/KaTeX/) Support
-* Dark/Light mode
-* Toolbar for basic Markdown formatting
-* Supports multiple cursors
-* Save the Markdown preview as PDF
-* Emoji support in preview :tada:
-* App will keep alive in tray for quick usage
-* Full screen mode
-  - Write distraction free.
-* Cross platform
-  - Windows, macOS and Linux ready.
+## 🚩 Table of Contents
 
-## How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+- [What's SAYE?](#-whats-saye)
+- [Features](#-features)
+- [Examples](#-examples)
+- [Browser Support](#-browser-support)
+- [Packages](#-packages)
+- [Pull Request Steps](#-pull-request-steps)
+- [Contributing](#-contributing)
+- [TOAST UI Family](#-toast-ui-family)
+- [Used By](#-used-by)
+- [License](#-license)
 
-```bash
-# Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
 
-# Go into the repository
-$ cd electron-markdownify
+## 🤖 What's SAYE?
 
-# Install dependencies
+TOAST UI Editor provides **Markdown mode** and **WYSIWYG mode**. Depending on the type of use you want like production of *Markdown* or maybe to just edit the *Markdown*. The TOAST UI Editor can be helpful for both the usage. It offers **Markdown mode** and **WYSIWYG mode**, which can be switched any point in time.
+
+### Productive Markdown Mode
+
+![markdown](https://user-images.githubusercontent.com/18183560/84381972-d3c62600-ac24-11ea-99e2-9640b0a2bfe8.png)
+
+**CommonMark + GFM Specifications**
+
+Today *CommonMark* is the de-facto *Markdown* standard. *GFM (GitHub Flavored Markdown)* is another popular specification based on *CommonMark* - maintained by *GitHub*, which is the *Markdown* mostly used. TOAST UI Editor follows both [*CommonMark*](http://commonmark.org/) and [*GFM*](https://github.github.com/gfm/) specifications. Write documents with ease using productive tools provided by TOAST UI Editor and you can easily open the produced document wherever the specifications are supported.
+
+* **Live Preview** : Edit Markdown while keeping an eye on the rendered HTML. Your edits will be applied immediately.
+* **Scroll Sync** : Synchronous scrolling between Markdown and Preview. You don't need to scroll through each one separately.
+* **Auto Indent** : The cursor will always be where you want it to be.
+* **Syntax Highlight** : You can check broken Markdown syntax immediately.
+
+### Easy WYSIWYG Mode
+
+![wysiwyg](https://user-images.githubusercontent.com/18183560/84381978-d88ada00-ac24-11ea-8655-3208cb46a8ae.png)
+
+* **Table** : Through the context menu of the table, you can add or delete columns or rows of the table, and you can also arrange text in cells.
+* **Code Block Editor** : The code block area can be edited through the layer popup editor.
+
+### Usability Common UI
+
+![UI](https://user-images.githubusercontent.com/18183560/84381975-d6c11680-ac24-11ea-9816-9cf2aecbdf06.gif)
+
+* **Toolbar** : Through the toolbar, you can style or add elements to the document you are editing.
+* **Copy and Paste** : Paste anything from browser, screenshot, excel, powerpoint, etc.
+
+### Use of Various Extended Functions - Plugins
+
+![plugin](https://user-images.githubusercontent.com/18183560/84381966-cf9a0880-ac24-11ea-9bb4-1e8a8ca186de.png)
+
+CommonMark and GFM are great, but we often need more abstraction. The TOAST UI Editor comes with powerful **Plugins** in compliance with the Markdown syntax.
+
+**Five basic plugins** are provided as follows, and can be downloaded and used with npm.
+
+* [**`chart`**](https://github.com/nhn/tui.editor/tree/master/plugins/chart) : A code block marked as a 'chart' will render [TOAST UI Chart](https://github.com/nhn/tui.chart).
+* [**`code-syntax-highlight`**](https://github.com/nhn/tui.editor/tree/master/plugins/code-syntax-highlight) : Highlight the code block area corresponding to the language provided by [highlight.js](https://highlightjs.org/).
+* [**`color-syntax`**](https://github.com/nhn/tui.editor/tree/master/plugins/color-syntax) : 
+Using [TOAST UI ColorPicker](https://github.com/nhn/tui.color-picker), you can change the color of the editing text with the GUI.
+* [**`table-merged-cell`**](https://github.com/nhn/tui.editor/tree/master/plugins/table-merged-cell) : 
+You can merge columns of the table header and body area.
+* [**`uml`**](https://github.com/nhn/tui.editor/tree/master/plugins/uml) : A code block marked as an 'uml' will render [UML diagrams](http://plantuml.com/screenshot).
+
+## 🎨 Features
+
+* [**Viewer**](https://github.com/nhn/tui.editor/tree/master/apps/editor/docs/viewer.md) : Supports a mode to display only markdown data without an editing area.
+* [**Internationalization (i18n)**](https://github.com/nhn/tui.editor/tree/master/apps/editor/docs/i18n.md) : Supports English, Dutch, Korean, Japanese, Chinese, Spanish, German, Russian, French, Ukrainian, Turkish, Finnish, Czech, Arabic, Polish, Galician, Swedish, Italian, Norwegian, Croatian, Portuguese + language and you can extend.
+
+## 🐾 Examples
+
+* [Basic](https://nhn.github.io/tui.editor/latest/tutorial-example01-editor-basic)
+* [Viewer](https://nhn.github.io/tui.editor/latest/tutorial-example04-viewer)
+* [Using All Plugins](https://nhn.github.io/tui.editor/latest/tutorial-example15-editor-with-all-plugins)
+* [Creating the User's Plugin](https://nhn.github.io/tui.editor/latest/tutorial-example17-creating-plugin)
+* [Customizing the Toobar Buttons](https://nhn.github.io/tui.editor/latest/tutorial-example19-customizing-toolbar-buttons)
+* [Internationalization (i18n)](https://nhn.github.io/tui.editor/latest/tutorial-example20-i18n)
+
+Here are more [examples](https://nhn.github.io/tui.editor/latest/tutorial-example01-editor-basic) and play with TOAST UI Editor!
+
+
+## 🌏 Browser Support
+
+| <img src="https://user-images.githubusercontent.com/1215767/34348387-a2e64588-ea4d-11e7-8267-a43365103afe.png" alt="Chrome" width="16px" height="16px" /> Chrome | <img src="https://user-images.githubusercontent.com/1215767/34348590-250b3ca2-ea4f-11e7-9efb-da953359321f.png" alt="IE" width="16px" height="16px" /> Internet Explorer | <img src="https://user-images.githubusercontent.com/1215767/34348380-93e77ae8-ea4d-11e7-8696-9a989ddbbbf5.png" alt="Edge" width="16px" height="16px" /> Edge | <img src="https://user-images.githubusercontent.com/1215767/34348394-a981f892-ea4d-11e7-9156-d128d58386b9.png" alt="Safari" width="16px" height="16px" /> Safari | <img src="https://user-images.githubusercontent.com/1215767/34348383-9e7ed492-ea4d-11e7-910c-03b39d52f496.png" alt="Firefox" width="16px" height="16px" /> Firefox |
+| :---------: | :---------: | :---------: | :---------: | :---------: |
+| Yes | 10+ | Yes | Yes | Yes |
+
+
+
+## 📦 Packages (M)
+
+### Frontend
+
+| Name | Description |
+| --- | --- |
+| [`@toast-ui/editor`](https://github.com/nhn/tui.editor/tree/master/apps/editor) | Plain JavaScript component |
+
+### Backend
+
+| Name | Description |
+| --- | --- |
+| [`@toast-ui/jquery-editor`](https://github.com/nhn/tui.editor/tree/master/apps/jquery-editor) | [jQuery](https://jquery.com/) wrapper component |
+| [`@toast-ui/react-editor`](https://github.com/nhn/tui.editor/tree/master/apps/react-editor) | [React](https://reactjs.org/) wrapper component |
+| [`@toast-ui/vue-editor`](https://github.com/nhn/tui.editor/tree/master/apps/vue-editor) | [Vue](https://vuejs.org/) wrapper component |
+
+### SAYE UI Editor's Plugins
+
+| Name | Description |
+| --- | --- |
+| [`@toast-ui/editor-plugin-chart`](https://github.com/nhn/tui.editor/tree/master/plugins/chart) | Plugin to render chart |
+| [`@toast-ui/editor-plugin-code-syntax-highlight`](https://github.com/nhn/tui.editor/tree/master/plugins/code-syntax-highlight) | Plugin to highlight code syntax |
+| [`@toast-ui/editor-plugin-color-syntax`](https://github.com/nhn/tui.editor/tree/master/plugins/color-syntax) | Plugin to color editing text |
+| [`@toast-ui/editor-plugin-table-merged-cell`](https://github.com/nhn/tui.editor/tree/master/plugins/table-merged-cell) | Plugin to merge table columns |
+| [`@toast-ui/editor-plugin-uml`](https://github.com/nhn/tui.editor/tree/master/plugins/uml) | Plugin to render UML |
+
+
+
+## 🔧 Pull Request Steps
+
+TOAST UI products are open source, so you can create a pull request(PR) after you fix issues. Run npm scripts and develop yourself with the following process.
+
+### Setup
+
+Fork `master` branch into your personal repository. Clone it to local computer. Install node modules. Before starting development, you should check to see if there are any errors.
+
+```sh
+$ git clone https://github.com/{your-personal-repo}/tui.editor.git
+$ cd [project-name]
 $ npm install
-
-# Run the app
-$ npm start
+$ npm run setup:libs
+$ cd ./apps/editor
+$ npm install
+$ npm run test
 ```
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+### Develop
+
+You can see your code is reflected as soon as you saving the codes by running a server. Don't miss adding test cases and then make green rights.
+
+#### Run webpack-dev-server
+
+``` sh
+$ npm run serve
+```
+
+#### Run karma
+
+``` sh
+$ npm run test
+```
+
+### Pull Request
+
+Before creating a PR, test and check for any errors. If there are no errors, then commit and push.
+
+For more information, please refer to the Contributing section.
+
+## 💬 Contributing
+
+* [Code of Conduct](https://github.com/nhn/tui.editor/blob/master/CODE_OF_CONDUCT.md)
+* [Contributing Guideline](https://github.com/nhn/tui.editor/blob/master/CONTRIBUTING.md)
+* [Commit Convention](https://github.com/nhn/tui.editor/blob/master/docs/COMMIT_MESSAGE_CONVENTION.md)
+* [Issue Guidelines](https://github.com/nhn/tui.editor/tree/master/.github/ISSUE_TEMPLATE)
 
 
-## Download
+## 🍞 TOAST UI Family
 
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of Markdownify for Windows, macOS and Linux.
+- [TOAST UI Calendar](https://github.com/nhn/tui.calendar)
+- [TOAST UI Chart](https://github.com/nhn/tui.chart)
+- [TOAST UI Grid](https://github.com/nhn/tui.grid)
+- [TOAST UI Image Editor](https://github.com/nhn/tui.image-editor)
+- [TOAST UI Components](https://github.com/nhn)
 
-## Emailware
 
-Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <bullredeyes@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
+## 🚀 Used By
 
-## Credits
+* [TOAST Dooray! - Collaboration Service (Project, Messenger, Mail, Calendar, Drive, Wiki, Contacts)](https://dooray.com)
+* [UNOTES - Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=ryanmcalister.Unotes)
 
-This software uses the following open source packages:
 
-- [Electron](http://electron.atom.io/)
-- [Node.js](https://nodejs.org/)
-- [Marked - a markdown parser](https://github.com/chjj/marked)
-- [showdown](http://showdownjs.github.io/showdown/)
-- [CodeMirror](http://codemirror.net/)
-- Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
-- [highlight.js](https://highlightjs.org/)
+## 📜 License
 
-## Related
-
-[markdownify-web](https://github.com/amitmerchant1990/markdownify-web) - Web version of Markdownify
-
-## Support
-
-<a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-
-<p>Or</p> 
-
-<a href="https://www.patreon.com/amitmerchant">
-	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
+This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob/master/LICENSE) © [NHN](https://github.com/nhn).
 
 ## References
 

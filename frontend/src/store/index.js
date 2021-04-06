@@ -130,6 +130,8 @@ export const store = new Vuex.Store({
       commit("setVideoId", { videoId });
     },
     setPlayMusic({ commit }, music) {
+      // play cnt 증가
+      axios.get(`${process.env.VUE_APP_SPRING_URL}/music/cnt?mNo=${music.mNo}`)
       commit("setPlayMusic", { music });
       commit("addMusicToPlaylist", { music });
     },
