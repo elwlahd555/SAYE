@@ -89,7 +89,7 @@ export default {
   props: {
     emotion: {
       type: String,
-      default: ""
+      default: ''
     }
   },
   data() {
@@ -143,18 +143,20 @@ export default {
       })
       .then(music => {
         this.django.music = music.data.mId;
-        console.log(
-          `${django_URL}?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`
-        );
+        console.log(`${django_URL}?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`);
 
         axios
-          .get(
-            `${django_URL}?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`
+          .get(   
+            // `${django_URL}?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`
+            `https://j4d106.p.ssafy.io/recommend/?emotion=%EA%B8%B0%EC%81%A8&musicId=3U5JVgI2x4rDyHGObzJfNf&requestCnt=4`
           )
           .then(albums => {
             console.log(albums);
             this.albums = albums;
-          });
+          })
+          .catch(error => {
+            console.log(error + "안됨");
+      });
       })
       .catch(error => {
         console.log(error + "안됨");
