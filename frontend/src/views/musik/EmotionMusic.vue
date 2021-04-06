@@ -146,7 +146,7 @@ export default {
         console.log(this.django);
         axios
           .get(
-            `${django_URL}/recommend?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`
+            `${django_URL}?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`
           )
           .then(albums => {
             console.log(albums);
