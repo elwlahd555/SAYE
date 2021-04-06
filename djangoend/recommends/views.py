@@ -11,32 +11,21 @@ from sklearn.metrics.pairwise import cosine_similarity
 from .models import Rcd
 from .serializers import RcdListSerializer
 
-
-# class ViewParams(View):
-#     def get(self, request):
-#         emotion = request.GET.get('emotion', None)
-#         music_id = request.GET.get('music_id', None)
-#         num = request.GET.get('requestCnt', 4)
-#         return emotion, music_id, num
-
 # Create your views here.
 @api_view(['GET'])
 def recommend_music(request):
+    # emotion, music_id, requestCnt
     emotion= request.GET['emotion']
-    music_id = request.GET['music_id']
+    musicId = request.GET['musicId']
     num = request.GET['requestCnt']
-    print(emotion+" "+music_id+" "+num)
 
     df, labels = getByPandas(emotion)
     df = scale_data(df,labels)
 
-    # emotion, music_id, requestCnt
-    df = df[music_id].sort_values(ascending=False).iloc[1:1+int(num)]
+
+    df = df[musicId].sort_values(ascending=False).iloc[1:1+int(num)]
     rcds = Rcd.objects.filter(m_id__in=df.index.to_list())
-    for rcd in rcds:
-        print(rcd)
     serializer = RcdListSerializer(rcds, many=True)
-    print(serializer.data)
     return Response(serializer.data)
 
 
