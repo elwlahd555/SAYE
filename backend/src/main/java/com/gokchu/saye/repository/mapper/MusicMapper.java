@@ -38,6 +38,8 @@ public interface MusicMapper {
 
 	void updateCnt(int mNo);
 
+	List<Music> selectBymCnt();
+
 
 
 }

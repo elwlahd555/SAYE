@@ -25,7 +25,7 @@ public class MusicController {
 	@GetMapping("popularity")
 	public List<Music> selectByPopularity(){
 		List<Music>musics=new ArrayList<Music>();
-		musics=musicService.selectByPopularity();
+		musics=musicService.selectBymCnt();
 		return musics;
 	}
 	

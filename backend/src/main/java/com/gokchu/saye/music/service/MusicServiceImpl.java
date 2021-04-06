@@ -90,6 +90,11 @@ public class MusicServiceImpl implements MusicService {
 		// TODO Auto-generated method stub
 		musicMapper.updateCnt(mNo);
 	}
+	@Override
+	public List<Music> selectBymCnt() {
+		// TODO Auto-generated method stub
+		return musicMapper.selectBymCnt();
+	}
 
 
 

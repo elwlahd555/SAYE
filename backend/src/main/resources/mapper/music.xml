@@ -14,6 +14,16 @@
 		order by m_popularity desc
 		limit 20;
 	</select>
+	<!-- 인기도순위로 출력 -->
+	<select id="selectBymCnt" resultType="music">
+		select *
+		from music
+		where (not m_genre = "classical") and (not m_url = "") and (not m_genre =
+		"blues") and(not m_url ="https://www.youtube.com/watch?v=") and( not
+		m_genre = "")
+		order by m_cnt desc
+		limit 20;
+	</select>
 
 	<!-- 발매일 순위로 출력 -->
 	<select id="selectByDate" resultType="music">
