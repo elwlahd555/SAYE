@@ -15,6 +15,7 @@ import SpeechToText from "@/components/stt/SpeechToText.vue";
 
 const axios = require("axios");
 const spring_URL = process.env.VUE_APP_SPRING_URL;
+const django_URL = process.env.VUE_APP_DJANGO_URL;
 
 export default {
   components: {
@@ -58,13 +59,11 @@ export default {
             })
             .then(music => {
               this.django.music = music.data.mId;
-              console.log(this.django);
-              // 음악분석으로 넘긴다.
-              // axios.post(`${spring_URL}/emotion/analysis`, this.query, {
-              //   headers: {
-              //     'Content-Type': 'application/json',
-              //   },
-              // });
+              // console.log(this.django);
+              axios.get(`${django_URL}/recommend?emotion=${this.django.emotion}&music_id=${this.django.music}&requestCnt=${this.django.requestCnt}`)
+              .then(albums => {
+                console.log(albums);
+              })
               this.$router.push({
                 path: "EmotionMusic"
               });
