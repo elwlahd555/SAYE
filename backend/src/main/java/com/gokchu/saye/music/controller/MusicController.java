@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gokchu.saye.music.service.MusicService;
 import com.gokchu.saye.music.service.YoutubeService;
 import com.gokchu.saye.repository.dto.Music;
+import com.kenai.jffi.Array;
 
 @RestController
 @RequestMapping("/music")
@@ -77,14 +78,19 @@ public class MusicController {
 	//DATA SET CONTROLLER
 	@GetMapping("DATA SET CONTROLLER")
 	public void updateMurl(){
+		ArrayList<Music> youtube=new ArrayList<Music>();
 		for (int i = 7255; i < 7285; i++) {
 			Music music=musicService.selectByNo(i);
-			String musicurl="";
 			if(music.getmUrl().equals("https://www.youtube.com/watch?v=")||music.getmUrl().equals("")) {
-				musicurl="https://www.youtube.com/watch?v="+youtubeService.selectUrlByTitle(music.getmTitle()+" "+music.getmArtist());
-				musicService.updateMurlByNo(music.getmNo(),musicurl);
+				music.setmUrl(music.getmTitle()+" "+music.getmArtist());
+				youtube.add(music);
 			}
-		System.out.println("뮤직 url : "+musicurl);
+		}
+		ArrayList<Music>result= youtubeService.selectUrlByTitle(youtube);
+		for (Music music : result) {
+			musicService.updateMurlByNo(music.getmNo(),music.getmUrl());
+			System.out.println(music.getmTitle());
+			
 		}
 	}
 	
