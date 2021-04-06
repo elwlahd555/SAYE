@@ -60,7 +60,7 @@ export default {
             .then(music => {
               this.django.music = music.data.mId;
               // console.log(this.django);
-              axios.get(`${django_URL}/recommend?emotion=${this.django.emotion}&music_id=${this.django.music}&requestCnt=${this.django.requestCnt}`)
+              axios.get(`${django_URL}/recommend?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`)
               .then(albums => {
                 console.log(albums);
               })
