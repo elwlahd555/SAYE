@@ -21,7 +21,7 @@
         @clickAlbumName="getAlbumTracks"
         :clickBookmarkAlbum="bookmarkAlbum"
         :isInBookmark="isInBookmark"
-        :albums="pageType === 'search' ? albums : bookmarkAlbums"
+        :albums="albums"
         :pageType="pageType"
         :isAlbumLoading="isAlbumLoading"
         :searchFailed="searchFailed"
@@ -150,6 +150,7 @@ export default {
           )
           .then(albums => {
             console.log(albums);
+            this.albums = albums;
           });
       })
       .catch(error => {
