@@ -8,25 +8,40 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from sklearn.metrics.pairwise import cosine_similarity
 
-from .models import RCD
-# from .serializers import RecommendSerializer
+from .models import Rcd
+from .serializers import RcdListSerializer
 
+
+# class ViewParams(View):
+#     def get(self, request):
+#         emotion = request.GET.get('emotion', None)
+#         music_id = request.GET.get('music_id', None)
+#         num = request.GET.get('requestCnt', 4)
+#         return emotion, music_id, num
 
 # Create your views here.
 @api_view(['GET'])
-def recommend_music(request,emotion):
-    df, labels = getByPandas()
+def recommend_music(request):
+    emotion= request.GET['emotion']
+    music_id = request.GET['music_id']
+    num = request.GET['requestCnt']
+    print(emotion+" "+music_id+" "+num)
+
+    df, labels = getByPandas(emotion)
     df = scale_data(df,labels)
-    df = df['63xdwScd1Ai1GigAwQxE8y'].sort_values(ascending=False).iloc[1:]
-    print(df.head(10))
-    
-    arr = []
-    rcds = RCD.objects.filter(m_emotion=emotion)
-    return Response('')
+
+    # emotion, music_id, requestCnt
+    df = df[music_id].sort_values(ascending=False).iloc[1:1+int(num)]
+    rcds = Rcd.objects.filter(m_id__in=df.index.to_list())
+    for rcd in rcds:
+        print(rcd)
+    serializer = RcdListSerializer(rcds, many=True)
+    print(serializer.data)
+    return Response(serializer.data)
 
 
-def getByPandas():
-    query="SELECT * FROM audio_transition_data"
+def getByPandas(emotion):
+    query="select distinct atd.* from audio_transition_data atd inner join music m on m.m_id = atd.id where m.m_emotion = {e};".format(e="'"+emotion+"'")
     df = pd.read_sql(query, connection)
     df = df.drop(columns=['a_no','artist','title','genre','url']).set_index(['id'])
     labels = list(df.index)
