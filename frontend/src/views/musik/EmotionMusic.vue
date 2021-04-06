@@ -99,7 +99,7 @@ export default {
   },
   components: {
     TheNavbar,
-    AlbumList,
+    AlbumList
   },
   computed: {
     ...mapGetters(albumStore, {

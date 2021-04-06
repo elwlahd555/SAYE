@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import SpeechToText from '@/components/stt/SpeechToText.vue';
+import SpeechToText from "@/components/stt/SpeechToText.vue";
 
-const axios = require('axios');
+const axios = require("axios");
 const spring_URL = process.env.VUE_APP_SPRING_URL;
 
 export default {
   components: {
-    SpeechToText,
+    SpeechToText
   },
   updated() {
     this.query = this.sentences; // 감정분석 쿼리에 말한 sentences를 대입
@@ -26,15 +26,15 @@ export default {
   },
   data() {
     return {
-      query: '',
-      text: '',
+      query: "",
+      text: "",
       sentences: null,
       scY: 0,
       django: {
-        emotion: '',
-        music: null,
-        requestCnt: '',
-      },
+        emotion: "",
+        music: "",
+        requestCnt: ""
+      }
     };
   },
   methods: {
@@ -43,21 +43,21 @@ export default {
       axios
         .post(`${spring_URL}/emotion/analysis`, this.query, {
           headers: {
-            'Content-Type': 'application/json',
-          },
+            "Content-Type": "application/json"
+          }
         })
-        .then((res) => {
+        .then(res => {
           // console.log(res.data);
           this.django.emotion = res.data.Result[0][1];
           this.django.requestCnt = 4;
           axios
             .post(`${spring_URL}/likemusic/likeone`, this.$store.state.uId, {
               headers: {
-                'Content-Type': 'application/json',
-              },
+                "Content-Type": "application/json"
+              }
             })
-            .then((music) => {
-              this.django.music = music.data;
+            .then(music => {
+              this.django.music = music.data.mId;
               console.log(this.django);
               // 음악분석으로 넘긴다.
               // axios.post(`${spring_URL}/emotion/analysis`, this.query, {
@@ -66,16 +66,16 @@ export default {
               //   },
               // });
               this.$router.push({
-                path: 'EmotionMusic',
+                path: "EmotionMusic"
               });
             })
-            .catch((error) => {
-              console.log(error + '안됨');
+            .catch(error => {
+              console.log(error + "안됨");
             });
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(this.query);
-          console.log(error + '안됨');
+          console.log(error + "안됨");
         });
     },
     /**
@@ -87,8 +87,8 @@ export default {
       // console.log("sentences", sentences);
       this.query = sentences;
       this.testEmotion();
-    },
-  },
+    }
+  }
 };
 </script>
 

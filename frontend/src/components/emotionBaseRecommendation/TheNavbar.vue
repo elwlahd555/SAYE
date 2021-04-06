@@ -104,44 +104,44 @@
 
 <script>
 export default {
-  name: 'TheNavbar',
+  name: "TheNavbar",
   props: {
     pageType: {
       type: String,
-      required: true,
+      required: true
     },
     bookmarkAlbums: {
       type: Array,
-      required: true,
+      required: true
     },
     settings: {
       type: Object,
-      required: true,
+      required: true
     },
     isMobile: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     latestBookmarkAlbums() {
       return this.bookmarkAlbums.slice(0, 5);
-    },
+    }
   },
   methods: {
     onClickShowBookmarks() {
-      this.$emit('clickShowBookmarks');
+      this.$emit("clickShowBookmarks");
     },
     onClickSettings() {
-      this.$emit('clickSettings');
+      this.$emit("clickSettings");
     },
     onClickTitle() {
-      this.$emit('clickTitle');
+      this.$emit("clickTitle");
     },
     onClickAlbumName(albumId) {
-      this.$emit('clickAlbumName', albumId);
-    },
-  },
+      this.$emit("clickAlbumName", albumId);
+    }
+  }
 };
 </script>
 
