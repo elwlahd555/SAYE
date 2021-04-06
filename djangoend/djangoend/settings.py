@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_extensions',
     'django_seed',
+    'rest_framework',
     
     'django.contrib.admin',
     'django.contrib.auth',
