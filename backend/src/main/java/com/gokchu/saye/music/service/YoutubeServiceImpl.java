@@ -70,6 +70,9 @@ public class YoutubeServiceImpl implements YoutubeService {
 		ArrayList<Music> result = new ArrayList<Music>();
 		int i = 0;
 		for (int j = 0; j < temp.size(); j++) {
+			if(i==keyarr.length) {
+				break;
+			}
 			System.out.println("사용된 키값 : " + keyarr[i]);
 			try {
 
