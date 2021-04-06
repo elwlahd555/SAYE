@@ -81,10 +81,17 @@ import TheNavbar from "@/components/emotionBaseRecommendation/TheNavbar";
 import AlbumList from "@/components/emotionBaseRecommendation/AlbumList";
 
 const spring_URL = process.env.VUE_APP_SPRING_URL;
+const django_URL = process.env.VUE_APP_DJANGO_URL;
 const albumStore = "albumStore";
 
 export default {
   name: "app",
+  props: {
+    emotion: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       //initialSearchQuery: "",
@@ -94,7 +101,12 @@ export default {
       showNavbar: true,
       snackbar: false,
       snackbarText: "",
-      snackbarColor: ""
+      snackbarColor: "",
+      django: {
+        emotion: "",
+        music: "",
+        requestCnt: ""
+      }
     };
   },
   components: {
@@ -119,6 +131,30 @@ export default {
     isMobile() {
       return this.$mq === "mobile";
     }
+  },
+  mounted() {
+    this.django.requestCnt = 4;
+    this.django.emotion = this.$route.params.emotion;
+    axios
+      .post(`${spring_URL}/likemusic/likeone`, this.$store.state.uId, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(music => {
+        this.django.music = music.data.mId;
+        console.log(this.django);
+        axios
+          .get(
+            `${django_URL}/recommend?emotion=${this.django.emotion}&musicId=${this.django.music}&requestCnt=${this.django.requestCnt}`
+          )
+          .then(albums => {
+            console.log(albums);
+          });
+      })
+      .catch(error => {
+        console.log(error + "안됨");
+      });
   },
   created() {
     this.$store.dispatch(albumStore + "/GET_SETTINGS");
