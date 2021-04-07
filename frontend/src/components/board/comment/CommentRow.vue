@@ -3,17 +3,19 @@
     <v-col>
       <v-card border-variant="info" class="mv-2">
         <template>
-          <v-row class="m-1">
-            <v-col class="text-left ml-2"
-              ><h6>{{ comment.cWriter }}</h6></v-col
-            >
-            <v-col class="text-left ml-4"
-              ><strong>{{ comment.cContent }}</strong></v-col
-            >
-            <v-col class="text-right mr-1"
-              ><h6>{{ comment.cDate }}</h6></v-col
-            >
-            <v-col class="text-right mr-3">
+          <v-row class="m-2">
+            <v-col cols="2" class="text-left ml-2">
+              <v-icon left>mdi-account</v-icon>
+              <span>{{ comment.cWriter }}</span>
+            </v-col>
+            <v-col cols="3" class="text-left ml-4">
+              <strong>{{ comment.cContent }}</strong>
+            </v-col>
+            <v-col cols="3" class="text-right mr-1">
+              <v-icon left>mdi-calendar</v-icon>
+              <span class="overline">{{ comment.cDate }}</span>
+            </v-col>
+            <v-col v-if="comment.cUNo === uId" cols="3" class="text-right mr-3">
               <v-btn
                 outlined
                 color="orange"
@@ -51,44 +53,45 @@ export default {
   name: "commentrow",
 
   props: {
-    comment: { type: Object, require: true }
+    comment: { type: Object, require: true },
   },
 
   data() {
     return {
-      editStatus: false
+      editStatus: false,
+      uId: this.$store.state.uId,
     };
   },
 
   methods: {
-    editComment: function() {
+    editComment: function () {
       axios
         .put(`${spring_URL}` + "/board/comment/edit", this.comment)
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           this.$router.go(this.$router.currentRoute);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
-    deleteComment: function() {
+    deleteComment: function () {
       console.log(`${this.comment}`);
       if (confirm("정말로 댓글을 삭제하시겠습니까?")) {
         axios
           .delete(
             `${spring_URL}/board/comment/delete?cBNo=${this.comment.cBNo}&cNo=${this.comment.cNo}&cUNo=${this.comment.cUNo}`
           )
-          .then(response => {
+          .then((response) => {
             console.log(response);
             this.$router.go(this.$router.currentRoute);
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
