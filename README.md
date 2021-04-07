@@ -124,7 +124,7 @@
 ## 🐾 Architecture
 
 ### Entity Relationship Diagram
-![ER Diagram](.docs/../docs/assets/Diagram/SAYE_ERD.png)
+![ER Diagram](./docs/assets/Diagram/SAYE_ERD.png)
 
 
 ### Sequence Diagrams
@@ -218,11 +218,7 @@ CREATE SCHEMA `saye`;
 
 -  필요한 테이블 생성
 
-```
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-```
+[Database Tables](.docs/DBTable.sql)
 
 3. [**Backend**] application.properties 설정
 
@@ -337,6 +333,8 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 ## 💬 Documents
 
 * [SAYE - Notion](https://www.notion.so/oct14jh/SAYE-Sing-About-Your-Emotion-301b283ab8ca4fb7b49647eb99e98a20)
+* [발표자료 - 기획](./docs/presentation/SAYE_기획발표.pptx)
+* [발표자료 - 중간점검](./docs/presentation/SAYE_중간발표.pptx)
 
 
 ## 👥 Contributer
