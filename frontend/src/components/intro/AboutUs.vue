@@ -14,7 +14,7 @@
               <hr />
               <hr color="orange" />
               <h4>
-                Dong-bin, KIM :: #Backend #NLP API #STT API
+                Dong-bin, KIM :: #Fullstack #Sentiment Analysis #STT
               </h4>
               <hr />
               <hr color="orange" />
