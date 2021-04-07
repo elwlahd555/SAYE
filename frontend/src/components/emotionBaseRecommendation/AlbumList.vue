@@ -26,21 +26,14 @@
       </v-row>
       <!-- Album List -->
       <transition name="list" mode="out-in">
-        <v-row
-          v-if="!isAlbumLoading && albums.length > 0"
-          :key="pageType"
-        >
-          <v-col
-            v-for="album in albums"
-            :key="album.mId"
-            :cols="colSize"
-          >
+        <v-row v-if="!isAlbumLoading && albums.length > 0" :key="pageType">
+          <v-col v-for="album in albums" :key="album.m_id" :cols="colSize">
             <!-- Card Panel  -->
             <v-card v-if="settings.panelType === 'card'">
               <v-img
-                :src="album.mImg"
+                :src="album.m_img"
                 lazy-src="https://picsum.photos/id/11/100/60"
-                :alt="album.mImg"
+                :alt="album.m_img"
                 max-height="200"
               >
                 <template v-slot:placeholder>
@@ -57,11 +50,11 @@
                 </template>
               </v-img>
               <v-card-title class="pt-1">
-                <a v-if="album.mId" @click="onClickAlbumName(album.mId)">
+                <a v-if="album.m_id" @click="onClickAlbumName(album.m_id)">
                   <span
                     class="d-inline-block text-truncate"
                     style="max-width: 200px"
-                    >{{ album.mTitle }}</span
+                    >{{ album.m_title }}</span
                   >
                 </a>
               </v-card-title>
@@ -70,7 +63,7 @@
                   class="d-inline-block text-truncate "
                   style="max-width: 200px"
                 >
-                  {{ album.mAlbum }}
+                  {{ album.m_album }}
                 </span>
               </v-card-subtitle>
               <v-card-subtitle class="py-0">
@@ -78,7 +71,7 @@
                   class="d-inline-block text-truncate"
                   style="max-width: 200px"
                 >
-                  {{ album.mArtist }}
+                  {{ album.m_artist }}
                 </span>
               </v-card-subtitle>
               <v-card-text>
@@ -86,7 +79,7 @@
                   class="d-inline-block text-truncate"
                   style="max-width: 200px"
                 >
-                  {{ album.mGenre }}
+                  {{ album.m_genre }}
                 </span>
               </v-card-text>
 
@@ -103,7 +96,7 @@
                       @click="clickBookmarkAlbum(album)"
                     >
                       {{ settings.bookmarkIcon
-                      }}{{ isInBookmark(album.mId) ? "" : "-outline" }}
+                      }}{{ isInBookmark(album.m_id) ? '' : '-outline' }}
                     </v-icon>
                   </template>
                   <span>북마크 추가/제거</span>
@@ -152,18 +145,18 @@
               <v-list two-line>
                 <v-list-item>
                   <v-img
-                    :src="album.mImg"
-                    :alt="album.mAlbum"
+                    :src="album.m_img"
+                    :alt="album.m_album"
                     style="border-radius: 50%; 
                             max-height: 100px;
                             max-width: 100px;"
                   />
 
                   <v-list-item-content class="ml-12">
-                    <v-list-item-title>{{ album.mTitle }}</v-list-item-title>
+                    <v-list-item-title>{{ album.m_title }}</v-list-item-title>
 
                     <v-list-item-subtitle>
-                      {{ album.mAlbum }}
+                      {{ album.m_album }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
 
@@ -179,7 +172,7 @@
                             @click="clickBookmarkAlbum(album)"
                           >
                             {{ settings.bookmarkIcon
-                            }}{{ isInBookmark(album.mId) ? "" : "-outline" }}
+                            }}{{ isInBookmark(album.m_id) ? '' : '-outline' }}
                           </v-icon>
                         </template>
                         <span>북마크 추가/제거</span>
@@ -278,113 +271,114 @@
 </template>
 
 <script>
-import getYouTubeID from "get-youtube-id";
+import getYouTubeID from 'get-youtube-id';
 
-import MyPlaylist from "@/components/mypage/MyPlaylist";
-import axios from "axios";
+import MyPlaylist from '@/components/mypage/MyPlaylist';
+import axios from 'axios';
 
 const spring_URL = process.env.VUE_APP_SPRING_URL;
 
 export default {
-  name: "AlbumList",
+  name: 'AlbumList',
   components: {
-    MyPlaylist
+    MyPlaylist,
   },
   data() {
     return {
       current: 1,
-      size: "",
-      panelIcon: "mdi-grid",
+      size: '',
+      panelIcon: 'mdi-grid',
       playlistDialog: false,
       selected: [],
-      myPlaylist: []
+      myPlaylist: [],
     };
   },
   props: {
     albums: {
       type: Array,
-      required: true
+      required: true,
     },
     pageType: {
       type: String,
-      required: true
+      required: true,
     },
     isAlbumLoading: {
       type: Boolean,
-      required: true
+      required: true,
     },
     searchFailed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     bookmarkAlbums: {
       type: Array,
-      required: true
+      required: true,
     },
     settings: {
       type: Object,
-      required: true
+      required: true,
     },
     isMobile: {
       type: Boolean,
-      required: true
+      required: true,
     },
     clickBookmarkAlbum: {
       type: Function,
-      required: true
+      required: true,
     },
     isInBookmark: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     colSize() {
-      return this.settings.panelType === "card" ? "3" : "12";
+      return this.settings.panelType === 'card' ? '3' : '12';
     },
     uNo() {
       return this.$store.state.uId;
-    }
+    },
   },
   watch: {
     albums(val, oldVal) {
       if (val !== oldVal) {
         this.current = 1;
       }
-    }
+    },
   },
   methods: {
     onClickUpdateSettings() {
       const settingValue =
-        this.settings.panelType === "card" ? "media" : "card";
+        this.settings.panelType === 'card' ? 'media' : 'card';
       this.panelIcon =
-        this.panelIcon === "mdi-grid" ? "mdi-format-list-text" : "mdi-grid";
-      this.$emit("clickUpdateSettings", "panelType", settingValue);
+        this.panelIcon === 'mdi-grid' ? 'mdi-format-list-text' : 'mdi-grid';
+      this.$emit('clickUpdateSettings', 'panelType', settingValue);
     },
     onClickAlbumName(albumId) {
-      this.$emit("clickAlbumName", albumId);
+      this.$emit('clickAlbumName', albumId);
     },
     onClickMyPlaylist(music) {
-      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then(list => {
+      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then((list) => {
         this.myPlaylist = list.data;
         this.selected = music;
         this.playlistDialog = true;
       });
     },
     handleClick(music) {
-      let videoId = getYouTubeID(music.mUrl);
+      let videoId = getYouTubeID(music.m_url);
+      console.log(music);
       if (!videoId) {
-        console.log("nothing...");
-        const url = `https://www.youtube.com/results?search_query=${music.mArtist} - ${music.mTitle}`;
+        console.log('nothing...');
+        const url = `https://www.youtube.com/results?search_query=${music.m_artist} - ${music.m_title}`;
         const strWindowFeatures =
-          "location=yes,height=800,width=600,scrollbars=yes,status=yes";
-        window.open(url, "_blank", strWindowFeatures);
+          'location=yes,height=800,width=600,scrollbars=yes,status=yes';
+        window.open(url, '_blank', strWindowFeatures);
       } else {
-        this.$store.dispatch("setVideoId", videoId);
-        this.$store.dispatch("setPlayMusic", music);
-        this.$store.dispatch("addToPlaylist", music);
+        this.$store.dispatch('setVideoId', videoId);
+        this.$store.dispatch('setPlayMusic', music);
+        this.$store.dispatch('addToPlaylist', music);
       }
-    }
-  }
+    },
+  },
 };
 </script>
