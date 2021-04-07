@@ -88,7 +88,7 @@
                     @click="onClickAlbumName(album.mId)"
                   >
                     <v-list-item-avatar tile size="80">
-                      <img :src="album.mImg" alt="앨범 이미지"/>
+                      <img :src="album.mImg" alt="앨범 이미지" />
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <div class="overline mb-4">
@@ -106,7 +106,6 @@
                   </v-list-item>
                   <v-list-item
                     class="has-text-centered"
-                    v-if="bookmarkAlbums.length > 5"
                     @click="onClickShowBookmarks"
                     >View All
                   </v-list-item>
@@ -136,33 +135,33 @@ export default {
   props: {
     showRecentSearchBox: {
       type: Boolean,
-      required: true
+      required: true,
     },
     recentSearch: {
       type: Array,
-      required: true
+      required: true,
     },
     pageType: {
       type: String,
-      required: true
+      required: true,
     },
     bookmarkAlbums: {
       type: Array,
-      required: true
+      required: true,
     },
     settings: {
       type: Object,
-      required: true
+      required: true,
     },
     isMobile: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     latestBookmarkAlbums() {
       return this.bookmarkAlbums.slice(0, 5);
-    }
+    },
   },
   methods: {
     onClickToggleRecentSearchBox() {
@@ -179,8 +178,8 @@ export default {
     },
     onClickAlbumName(albumId) {
       this.$emit("clickAlbumName", albumId);
-    }
-  }
+    },
+  },
 };
 </script>
 

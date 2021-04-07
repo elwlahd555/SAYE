@@ -1,18 +1,20 @@
 <template>
   <article
     id="panel-1"
-    class="panel full-screen white-3"
-    style="background-color: #00bcd4"
+    class="panel full-screen"
+    style="background-color: #baced1"
   >
     <v-container fill-height>
       <v-row justify="center">
         <div class="searchBox">
           <input
             class="searchInput"
+            :style="pauseInput"
             type="text"
             name=""
             :placeholder="text"
             v-model="keyword"
+            @click="clickInput"
             @keyup.enter="enterSearch"
           />
           <!-- btn Color : #d1ebd9-->
@@ -38,25 +40,30 @@ export default {
   data() {
     return {
       text: "음악을 검색 (버튼 클릭!) ==>",
-      keyword: ""
+      keyword: "",
+      pauseInput: "",
     };
   },
   methods: {
     enterSearch() {
       const payload = {
         settingName: "initialSearchQuery",
-        settingValue: this.keyword
+        settingValue: this.keyword,
       };
       this.$store.dispatch("albumStore/UPDATE_SETTINGS", payload);
 
       this.$router.push({
-        name: "BasicSearch"
+        name: "BasicSearch",
       });
     },
     setQuery() {
       this.$store.state.albumStore.settings.initialSearchQuery = this.keyword;
-    }
-  }
+    },
+    clickInput() {
+      this.pauseInput = "width: 440px; padding: 0 6px;";
+      console.log(this.pauseInput);
+    },
+  },
 };
 </script>
 

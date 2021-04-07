@@ -11,8 +11,8 @@
         :clone="cloneMusic"
       >
         <v-list-item v-for="item in bookmarkAlbums" :key="item.mId">
-          <v-list-item-icon>
-            <v-icon @click="delBookmark(item)" color="error">mdi-heart</v-icon>
+          <v-list-item-icon @click="delBookmark(item)">
+            <v-icon color="error">mdi-heart</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title> {{ item.mTitle }}</v-list-item-title>

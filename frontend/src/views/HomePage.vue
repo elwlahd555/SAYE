@@ -7,7 +7,7 @@
         <Slide0 />
 
         <section id="panels">
-          <div id="panels-container" style="width: 300%;">
+          <div id="panels-container" style="width: 300%">
             <Slide1 />
             <Slide2 />
             <Slide3 />
@@ -35,9 +35,9 @@ export default {
     Slide0,
     Slide1,
     Slide2,
-    Slide3
+    Slide3,
   },
-  mounted: function() {
+  mounted: function () {
     this.scrollAnimation();
   },
   methods: {
@@ -45,8 +45,8 @@ export default {
       /* Main navigation */
       const panelsSection = document.querySelector("#panels");
       const panelsContainer = document.querySelector("#panels-container");
-      document.querySelectorAll(".anchor").forEach(anchor => {
-        anchor.addEventListener("click", function(e) {
+      document.querySelectorAll(".anchor").forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
           e.preventDefault();
 
           const targetElem = document.querySelector(
@@ -62,17 +62,17 @@ export default {
             gsap.to(window, {
               scrollTo: {
                 y: containerOffset,
-                autoKill: false
+                autoKill: false,
               },
-              duration: 1
+              duration: 1,
             });
           } else {
             gsap.to(window, {
               scrollTo: {
                 y: targetElem,
-                autoKill: false
+                autoKill: false,
               },
-              duration: 1
+              duration: 1,
             });
           }
         });
@@ -90,13 +90,13 @@ export default {
           scrub: 1,
           snap: {
             snapTo: 1 / (panels.length - 1),
-            duration: { min: 0.1, max: 0.1 }
+            duration: { min: 0.1, max: 0.1 },
           },
-          end: () => "+=" + (panelsContainer.offsetWidth - innerWidth)
-        }
+          end: () => "+=" + (panelsContainer.offsetWidth - innerWidth),
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -135,7 +135,7 @@ export default {
   display: flex;
   color: #333;
   text-align: left;
-  border-right: 1px solid #f00;
+  border-right: 1px solid #ddd;
 }
 #panels #panels-container .panel img {
   max-width: 100%;
