@@ -13,7 +13,7 @@
           <article class="media media-modal">
             <figure class="media-left">
               <p class="image">
-                <img v-if="albumInfo.mImg" :src="albumInfo.mImg" />
+                <img v-if="albumInfo.mImg" :src="albumInfo.mImg" alt="album Img"/>
               </p>
             </figure>
             <div class="media-content">
@@ -41,7 +41,7 @@
                       position="is-top"
                       :active="!isMobile"
                     >
-                      <i class="fab fa-itunes-note"></i>
+                      <em class="fab fa-itunes-note"></em>
                     </b-tooltip>
                   </a>
                   <a class="level-item">
@@ -55,7 +55,7 @@
                       position="is-top"
                       :active="!isMobile"
                     >
-                      <i
+                      <em
                         @click="clickBookmarkAlbum(albumInfo)"
                         class="fas bookmarkIcon"
                         :class="[
@@ -66,7 +66,7 @@
                           },
                           settings.bookmarkIcon
                         ]"
-                      ></i>
+                      ></em>
                     </b-tooltip>
                   </a>
                   <a
@@ -83,7 +83,7 @@
                       position="is-top"
                       :active="!isMobile"
                     >
-                      <i class="fab fa-youtube"></i>
+                      <em class="fab fa-youtube"></em>
                     </b-tooltip>
                   </a>
                 </div>
@@ -111,7 +111,7 @@
                     position="is-top"
                     :active="!isMobile"
                   >
-                    <i class="fab fa-itunes-note"></i>
+                    <em class="fab fa-itunes-note"></em>
                   </b-tooltip>
                 </a>
               </b-table-column>
@@ -134,7 +134,7 @@
                     position="is-top"
                     :active="!isMobile"
                   >
-                    <i class="fab fa-youtube"></i>
+                    <em class="fab fa-youtube"></em>
                   </b-tooltip>
                 </a>
               </b-table-column>

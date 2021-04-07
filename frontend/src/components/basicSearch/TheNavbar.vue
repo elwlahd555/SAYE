@@ -88,7 +88,7 @@
                     @click="onClickAlbumName(album.mId)"
                   >
                     <v-list-item-avatar tile size="80">
-                      <img :src="album.mImg" />
+                      <img :src="album.mImg" alt="앨범 이미지"/>
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <div class="overline mb-4">

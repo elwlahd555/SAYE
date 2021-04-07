@@ -342,9 +342,9 @@ Docker와 Jenkins를 이용해 CI/CD 구축하였습니다:
 - [김지현](https://github.com/)
 - [김동빈](https://github.com/)
 - [김태진](https://github.com/)
-- [김호빈](https://github.com/)
 - [김연정](https://github.com/)
-
+- [임호빈](https://github.com/)
+- [장민호](https://github.com/)
 
 ## 🚀 References
 
