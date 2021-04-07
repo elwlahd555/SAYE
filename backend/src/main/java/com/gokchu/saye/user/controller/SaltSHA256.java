@@ -42,7 +42,7 @@ public class SaltSHA256 {
 	
 	/* SALT 값 => 비밀번호와 salt를 조합해 암호화 시킴 */
 	public static String generateSalt() {
-		//Random random = new Random();
+		Random random = new Random();
 		
 		byte[] salt = new byte[8];
 		random.nextBytes(salt);
