@@ -62,7 +62,7 @@
                 </template>
               </v-img>
               <v-card-title class="pt-1">
-                <a v-if="album.mId" @click="onClickAlbumName(album.mId)">
+                <a v-if="album.mId" @click="handleClick(album)">
                   <span
                     class="d-inline-block text-truncate"
                     style="max-width: 200px"
@@ -147,7 +147,7 @@
                         mdi-youtube
                       </v-icon>
                     </template>
-                    <span>유튜브 검색</span>
+                    <span>노래 듣기</span>
                   </v-tooltip>
                 </span>
               </v-card-actions>

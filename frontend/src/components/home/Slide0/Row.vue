@@ -12,6 +12,7 @@
       show-arrows
       dark
       style="width: 90%"
+      :style="arrowColor"
     >
       <v-slide-item
         v-for="(music, idx) in musicList"
@@ -59,11 +60,20 @@ export default {
     model: null,
     videoId: "",
     playerVars: {
-      autoplay: 1
+      autoplay: 1,
     },
 
-    temp: null
+    temp: null,
   }),
+  computed: {
+    arrowColor() {
+      console.log(this.title);
+      if (this.title == "") {
+        return "background-color:black; padding-top:50px";
+      }
+      return "";
+    },
+  },
   methods: {
     handleClick(music) {
       this.videoId = getYouTubeID(music.mUrl);
@@ -72,8 +82,8 @@ export default {
       this.$store.dispatch("addToPlaylist", music);
       //console.log("music title", music);
       //console.log(this.$store.state.asidePlaylist);
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -236,6 +236,7 @@ export default {
   watch: {
     videoId(videoId) {
       this.start(videoId);
+      this.playerShow = true;
     },
     playerShuffle(val) {
       let playlist = this.$store.getters.playlist.map(item => item);
