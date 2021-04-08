@@ -8,28 +8,31 @@
 	<select id="selectByPopularity" resultType="music">
 		select *
 		from music
-		where (not m_genre = "classical") and (not m_url = "") and (not m_genre =
-		"blues") and(not m_url ="https://www.youtube.com/watch?v=") and( not
+		where (not m_genre = "classical") and (not m_url = "") and (not
+		m_genre =
+		"blues") and(not m_url ="https://www.youtube.com/watch?v=")
+		and( not
 		m_genre = "")
 		order by m_popularity desc
 		limit 20;
 	</select>
-	<!-- 인기도순위로 출력 -->
+	<!-- 실행순위로 출력 -->
 	<select id="selectBymCnt" resultType="music">
 		select *
 		from music
-		where (not m_genre = "classical") and (not m_url = "") and (not m_genre =
+		where
+		(not m_genre = "classical") and (not m_url = "") and (not m_genre =
 		"blues") and(not m_url ="https://www.youtube.com/watch?v=") and( not
 		m_genre = "")
 		order by m_cnt desc
 		limit 20;
 	</select>
-
 	<!-- 발매일 순위로 출력 -->
 	<select id="selectByDate" resultType="music">
 		select *
 		from music
-		where (not m_genre = "classical") and (not m_url = "") and (not m_genre =
+		where
+		(not m_genre = "classical") and (not m_url = "") and (not m_genre =
 		"blues") and(not m_url ="https://www.youtube.com/watch?v=") and( not
 		m_genre = "")
 		order by
@@ -88,33 +91,31 @@
 	<select id="selectByrandGenre" resultType="music">
 		select *
 		from music
-		where (not m_url = "")  and(not m_url ="https://www.youtube.com/watch?v=") and (m_genre like "%"#{mGenre}"%")
+		where (not m_url = "") and(not m_url
+		="https://www.youtube.com/watch?v=") and (m_genre like
+		"%"#{mGenre}"%")
 		order by rand()
 		limit 20;
 	</select>
-
+	<!-- 가수 ID로 가수 검색 -->
 	<select id="artist" resultType="String">
 		select m_artist
 		from music
 		where
 		m_no=#{i};
 	</select>
+	'
+	<!-- youtube url update -->
 	<update id="updateMurlByNo">
 		UPDATE music
 		SET
 		m_url = #{mUrl}
 		WHERE m_no = #{mNo};
 	</update>
-	
+	<!-- youtube 실행 횟수 update -->
 	<update id="updateCnt">
-	update music
-	set m_cnt=m_cnt+1
-		 where m_no=#{mNo};
+		update music
+		set m_cnt=m_cnt+1
+		where m_no=#{mNo};
 	</update>
-	<!-- <update id="update"> UPDATE music SET m_title = #{mTitle}, m_artist 
-		= #{mArtist}, m_genre = #{mGenre}, m_album = #{mAlbum}, m_preview = #{mPreview}, 
-		m_img = #{mImg}, m_popularity = #{mPopularity}, m_id = #{mId}, m_artist_id 
-		= #{mArtistId}, m_album_id = #{mAlbumId}, m_date = #{mDate} WHERE m_no = 
-		#{mNo}; </update> <select id="temp" resultType="String"> select m_title from 
-		music where m_no=#{i}; </select> -->
 </mapper>
