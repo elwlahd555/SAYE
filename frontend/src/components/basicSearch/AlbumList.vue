@@ -62,7 +62,7 @@
                 </template>
               </v-img>
               <v-card-title class="pt-1">
-                <a v-if="album.mId" @click="onClickAlbumName(album.mId)">
+                <a v-if="album.mId" @click="handleClick(album)">
                   <span
                     class="d-inline-block text-truncate"
                     style="max-width: 200px"
@@ -72,7 +72,7 @@
               </v-card-title>
               <v-card-subtitle class="py-0">
                 <span
-                  class="d-inline-block text-truncate "
+                  class="d-inline-block text-truncate"
                   style="max-width: 200px"
                 >
                   {{ album.mAlbum }}
@@ -133,7 +133,8 @@
                 </v-tooltip>
 
                 <v-spacer v-if="settings.youtubeLink === 'true'"></v-spacer>
-                <span v-if="settings.youtubeLink === 'true'">
+                <!-- <span v-if="settings.youtubeLink === 'true'"> -->
+                <span v-if="checkYoutube(album)">
                   <!-- 유튜브 -->
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -147,7 +148,7 @@
                         mdi-youtube
                       </v-icon>
                     </template>
-                    <span>유튜브 검색</span>
+                    <span>노래 듣기</span>
                   </v-tooltip>
                 </span>
               </v-card-actions>
@@ -159,9 +160,11 @@
                   <v-img
                     :src="album.mImg"
                     :alt="album.mAlbum"
-                    style="border-radius: 50%; 
-                            max-height: 100px;
-                            max-width: 100px;"
+                    style="
+                      border-radius: 50%;
+                      max-height: 100px;
+                      max-width: 100px;
+                    "
                   />
 
                   <v-list-item-content class="ml-12">
@@ -230,14 +233,27 @@
 
       <!-- Loading animation -->
       <v-row class="is-mobile" v-if="isAlbumLoading">
-        <v-col class="loading">
-          <v-progress-circular
+        <v-row justify="center" align="center" class="loading">
+          <!-- <v-progress-circular
             :is-full-page="false"
             :active.sync="isAlbumLoading"
             :can-cancel="false"
             indeterminate
-          ></v-progress-circular>
-        </v-col>
+          ></v-progress-circular> -->
+          <lottie :options="defaultOptions" />
+        </v-row>
+
+        <v-row justify="center" align="center">
+          <span class="title font-weight-bold">
+            로딩 중... && 크롤링 중...</span
+          >
+        </v-row>
+        <v-row justify="center" align="center">
+          <span class="title font-weight-bold">
+            <span class="light-green--text">Spotify API</span>와
+            <span class="red--text">Youtube</span>를 연동하는 중입니다</span
+          >
+        </v-row>
       </v-row>
       <!-- Pagination -->
       <v-row v-if="!isAlbumLoading && albums.length > 0">
@@ -284,6 +300,8 @@
 
 <script>
 import getYouTubeID from "get-youtube-id";
+import Lottie from "@/components/Lottie.vue";
+import * as animationData from "@/assets/lottieFiles/spinning-disk.json";
 
 import MyPlaylist from "@/components/mypage/MyPlaylist";
 import axios from "axios";
@@ -293,7 +311,8 @@ const spring_URL = process.env.VUE_APP_SPRING_URL;
 export default {
   name: "AlbumList",
   components: {
-    MyPlaylist
+    MyPlaylist,
+    Lottie,
   },
   data() {
     return {
@@ -302,46 +321,48 @@ export default {
       panelIcon: "mdi-grid",
       playlistDialog: false,
       selected: [],
-      myPlaylist: []
+      myPlaylist: [],
+      defaultOptions: { animationData: animationData.default },
+      animationSpeed: 1,
     };
   },
   props: {
     albums: {
       type: Array,
-      required: true
+      required: true,
     },
     pageType: {
       type: String,
-      required: true
+      required: true,
     },
     isAlbumLoading: {
       type: Boolean,
-      required: true
+      required: true,
     },
     searchFailed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     bookmarkAlbums: {
       type: Array,
-      required: true
+      required: true,
     },
     settings: {
       type: Object,
-      required: true
+      required: true,
     },
     isMobile: {
       type: Boolean,
-      required: true
+      required: true,
     },
     clickBookmarkAlbum: {
       type: Function,
-      required: true
+      required: true,
     },
     isInBookmark: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     displayedAlbums() {
@@ -352,14 +373,14 @@ export default {
     },
     uNo() {
       return this.$store.state.uId;
-    }
+    },
   },
   watch: {
     albums(val, oldVal) {
       if (val !== oldVal) {
         this.current = 1;
       }
-    }
+    },
   },
   methods: {
     paginate(albums) {
@@ -380,7 +401,7 @@ export default {
       this.$emit("clickAlbumName", albumId);
     },
     onClickMyPlaylist(music) {
-      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then(list => {
+      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then((list) => {
         this.myPlaylist = list.data;
 
         this.selected = music;
@@ -401,7 +422,16 @@ export default {
         this.$store.dispatch("setPlayMusic", music);
         this.$store.dispatch("addToPlaylist", music);
       }
-    }
-  }
+    },
+    checkYoutube(music) {
+      let videoId = getYouTubeID(music.mUrl);
+
+      if (!videoId) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
 };
 </script>

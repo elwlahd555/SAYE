@@ -13,10 +13,11 @@
         <button id="sayBtn" @click="sayBtn">하소연</button>
       </div>
       <table style="width: 70%" align="center" id="tableBoard">
+        <caption>Board List Information</caption>
         <tr class="boardHeader">
-          <th style="width: 10%">글번호</th>
-          <th style="width: 50%">제목</th>
-          <th style="width: 10%">조회수</th>
+          <th id="bNo" style="width: 10%">글번호</th>
+          <th id="bTitle" style="width: 50%">제목</th>
+          <th id="bView" style="width: 10%">조회수</th>
         </tr>
         <tr
           class="boardBody"

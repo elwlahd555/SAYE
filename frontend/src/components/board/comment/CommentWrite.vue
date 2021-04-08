@@ -7,14 +7,11 @@
             v-model="form.cContent"
             :append-outer-icon="form.cContent ? 'mdi-send' : 'mdi-alert-circle'"
             :prepend-icon="icon"
-            hide-details="auto"
             filled
             clear-icon="mdi-close-circle"
             clearable
             label="Message 입력 후 오른쪽 아이콘을 클릭해주세요"
-            type="text"
             @click:append-outer="commentWrite"
-            @keyup.enter="enterWrite"
             @click:prepend="changeIcon"
             @click:clear="clearMessage"
           ></v-text-field>
@@ -29,9 +26,7 @@ import axios from "axios";
 import { mapState } from "vuex";
 const spring_URL = process.env.VUE_APP_SPRING_URL;
 
-var rand = Math.random()
-  .toString(36)
-  .substr(2, 11);
+var rand = Math.random().toString(36).substr(2, 11);
 
 export default {
   name: "commentwrite",
@@ -42,7 +37,7 @@ export default {
         cBNo: this.$route.params.bNo,
         cContent: "",
         cUNo: this.$store.state.uId,
-        cWriter: rand
+        cWriter: rand,
       },
       marker: true,
       iconIndex: 0,
@@ -54,32 +49,32 @@ export default {
         "mdi-emoticon-happy",
         "mdi-emoticon-neutral",
         "mdi-emoticon-sad",
-        "mdi-emoticon-tongue"
-      ]
+        "mdi-emoticon-tongue",
+      ],
     };
   },
 
   computed: {
     ...mapState({
-      uNo: "uId"
+      uNo: "uId",
     }),
     icon() {
       return this.icons[this.iconIndex];
-    }
+    },
   },
   methods: {
-    commentWrite: function() {
+    commentWrite: function () {
       console.log(this.form);
       axios
         .post(`${spring_URL}/board/comment/add`, this.form)
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           this.$emit("commentRefresh");
           this.resetIcon();
           this.clearMessage();
           this.$router.go(this.$router.currentRoute);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -96,8 +91,8 @@ export default {
       this.iconIndex === this.icons.length - 1
         ? (this.iconIndex = 0)
         : this.iconIndex++;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,5 +1,9 @@
 <template>
-  <article id="panel-2" class="panel full-screen orange">
+  <article
+    id="panel-2"
+    class="panel full-screen"
+    style="background-color: #ffe3b0"
+  >
     <v-container fill-height fluid>
       <v-row align="center" justify="center">
         <v-col>
@@ -18,7 +22,7 @@ const spring_URL = process.env.VUE_APP_SPRING_URL;
 
 export default {
   components: {
-    SpeechToText
+    SpeechToText,
   },
   updated() {
     this.query = this.sentences; // 감정분석 쿼리에 말한 sentences를 대입
@@ -30,7 +34,7 @@ export default {
       text: "",
       sentences: null,
       scY: 0,
-      emotion: ""
+      emotion: "",
     };
   },
   methods: {
@@ -39,20 +43,20 @@ export default {
       axios
         .post(`${spring_URL}/emotion/analysis`, this.query, {
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         })
-        .then(res => {
+        .then((res) => {
           // console.log(res.data);
           this.emotion = res.data.Result[0][1];
           this.$router.push({
             name: "EmotionMusic",
             params: {
-              emotion: this.emotion
-            }
+              emotion: this.emotion,
+            },
           });
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(this.query);
           console.log(error + "안됨");
         });
@@ -66,8 +70,8 @@ export default {
       // console.log("sentences", sentences);
       this.query = sentences;
       this.testEmotion();
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,8 +1,8 @@
 <template>
   <article
     id="panel-3"
-    class="panel full-screen pink"
-    style="background-color: #f7c9cb"
+    class="panel full-screen"
+    style="background-color: #f2d3d4"
   >
     <v-container fill-height>
       <v-row justify="center">

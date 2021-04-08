@@ -14,7 +14,7 @@
               <hr />
               <hr color="orange" />
               <h4>
-                Dong-bin, KIM :: #Backend #NLP API #STT API
+                Dong-bin, KIM :: #Fullstack #Sentiment Analysis #STT
               </h4>
               <hr />
               <hr color="orange" />
@@ -39,6 +39,7 @@
             </div>
             <a
               href="https://www.notion.so/oct14jh/SAYE-Sing-About-Your-Emotion-301b283ab8ca4fb7b49647eb99e98a20"
+              rel="noopener noreferrer"
               target="_blank"
               >Saye's Dev Workplace</a
             >

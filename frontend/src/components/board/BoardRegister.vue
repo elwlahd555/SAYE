@@ -8,8 +8,9 @@
 
     <v-row align="center" justify="center" class="mt-10">
       <table align="center" style="width: 70%">
+        <caption>Board Information</caption>
         <tr class="lineBoard">
-          <th align="center">분류</th>
+          <th id="classfication" align="center">분류</th>
           <td>
             <v-select
               v-model="form.bClass"
@@ -25,6 +26,7 @@
         </tr>
         <tr class="lineBoard">
           <th
+          id="writer"
             align="center"
             label-for="bTitle"
             description="게시글의 작성자익명을 입력하세요."
@@ -41,7 +43,7 @@
           </td>
         </tr>
         <tr class="lineBoard">
-          <th algin="center">내용</th>
+          <th id="content" algin="center">내용</th>
           <td>
             <v-textarea
               v-model="form.bContent"

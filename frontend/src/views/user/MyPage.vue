@@ -5,7 +5,10 @@
     </v-col>
 
     <v-col cols="12">
-      <Bookmark :bookmarkAlbums="bookmarkAlbums" />
+      <Bookmark
+        :bookmarkAlbums="bookmarkAlbums"
+        @updateBookmark="getBookmark"
+      />
     </v-col>
   </v-container>
 </template>
@@ -21,20 +24,24 @@ const albumStore = "albumStore";
 export default {
   components: {
     PlaylistTreeview,
-    Bookmark
+    Bookmark,
   },
   computed: {
     ...mapGetters(albumStore, {
-      bookmarkAlbums: "BOOKMARK_ALBUMS"
-    })
+      bookmarkAlbums: "BOOKMARK_ALBUMS",
+    }),
   },
   created() {
-    this.$store.dispatch(
-      albumStore + "/GET_BOOKMARK_ALBUMS",
-      this.$store.state.uId
-    );
+    this.getBookmark();
   },
   data: () => ({}),
-  methods: {}
+  methods: {
+    getBookmark() {
+      this.$store.dispatch(
+        albumStore + "/GET_BOOKMARK_ALBUMS",
+        this.$store.state.uId
+      );
+    },
+  },
 };
 </script>

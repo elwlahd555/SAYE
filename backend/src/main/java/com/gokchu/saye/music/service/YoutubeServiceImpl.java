@@ -114,7 +114,8 @@ public class YoutubeServiceImpl implements YoutubeService {
 				System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
 				break;
 			} catch (Throwable t) {
-				t.printStackTrace();
+				// Use a logger to log this exception
+				//t.printStackTrace();
 				break;
 			}
 
