@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gokchu.saye.music.service.MusicService;
 import com.gokchu.saye.music.service.YoutubeService;
 import com.gokchu.saye.repository.dto.Music;
-import com.kenai.jffi.Array;
 
 @RestController
 @RequestMapping("/music")
@@ -25,7 +24,7 @@ public class MusicController {
 	// 인기도 순서로 출력
 	@GetMapping("popularity")
 	public List<Music> selectByPopularity() {
-		List<Music> musics = new ArrayList<Music>();
+		List<Music> musics = new ArrayList<>();
 		musics = musicService.selectBymCnt();
 		return musics;
 	}
@@ -33,7 +32,7 @@ public class MusicController {
 	// 발매일 순서로 출력
 	@GetMapping("date")
 	public List<Music> selectByDate() {
-		List<Music> musics = new ArrayList<Music>();
+		List<Music> musics = new ArrayList<>();
 		musics = musicService.selectByDate();
 		return musics;
 	}
@@ -41,7 +40,7 @@ public class MusicController {
 	// 제목으로 검색
 	@GetMapping("title")
 	public List<Music> selectByTitle(String mTitle) {
-		List<Music> musics = new ArrayList<Music>();
+		List<Music> musics = new ArrayList<>();
 		musics = musicService.selectByTitle(mTitle);
 		return musics;
 	}
@@ -49,7 +48,7 @@ public class MusicController {
 	// 가수로 검색
 	@GetMapping("artist")
 	public List<Music> selectByArtist(String mArtist) {
-		List<Music> musics = new ArrayList<Music>();
+		List<Music> musics = new ArrayList<>();
 		musics = musicService.selectByArtist(mArtist);
 		return musics;
 	}
@@ -57,7 +56,7 @@ public class MusicController {
 	// 앨범으로 검색
 	@GetMapping("album")
 	public List<Music> selectByAlbum(String mAlbum) {
-		List<Music> musics = new ArrayList<Music>();
+		List<Music> musics = new ArrayList<>();
 		musics = musicService.selectByAlbum(mAlbum);
 		return musics;
 	}
@@ -65,7 +64,7 @@ public class MusicController {
 	// 장르로 검색
 	@GetMapping("genre")
 	public List<Music> selectByGenre(String mGenre) {
-		List<Music> musics = new ArrayList<Music>();
+		List<Music> musics = new ArrayList<>();
 		musics = musicService.selectByGenre(mGenre);
 		return musics;
 	}
@@ -73,7 +72,7 @@ public class MusicController {
 	// 감정으로 검색
 	@GetMapping("emotion")
 	public List<Music> selectByEmotion(String mEmotion) {
-		List<Music> musics = new ArrayList<Music>();
+		List<Music> musics = new ArrayList<>();
 		musics = musicService.selectByEmotion(mEmotion);
 		return musics;
 	}
@@ -81,7 +80,7 @@ public class MusicController {
 	// 감정으로 랜덤검색
 	@GetMapping("randGenre")
 	public List<Music> selectByrandGenre(String mEmotion) {
-		List<Music> musics = new ArrayList<Music>();
+		List<Music> musics = new ArrayList<>();
 		String mGenre = "dance";
 		switch (mEmotion) {
 		case "기쁨":
@@ -116,7 +115,7 @@ public class MusicController {
 	// DATA SET CONTROLLER
 	@GetMapping("DATA SET CONTROLLER")
 	public void updateMurl() {
-		ArrayList<Music> youtube = new ArrayList<Music>();
+		ArrayList<Music> youtube = new ArrayList<>();
 		for (int i = 5000; i < 5125; i++) {
 			Music music = musicService.selectByNo(i);
 			if (music.getmUrl().equals("https://www.youtube.com/watch?v=") || music.getmUrl().equals("")) {

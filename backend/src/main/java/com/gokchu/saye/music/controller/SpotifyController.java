@@ -47,12 +47,8 @@ public class SpotifyController {
 		ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
 		try {
 			final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
-			// Set access token for further "spotifyApi" object usage
-			System.out.println(clientCredentials.getAccessToken());
 			spotifyApi.setAccessToken(clientCredentials.getAccessToken());
-			System.out.println("Expires in: " + clientCredentials.getExpiresIn());
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
 	}
 
@@ -64,17 +60,11 @@ public class SpotifyController {
 		ArtistSimplified artist = null;
 		try {
 			final Paging<Track> trackPaging = searchTracksRequest.execute();
-			System.out.println("트랙 크기 : " + trackPaging.getItems().length);
-			System.out.println(trackPaging.getItems()[0].toString());
 			for (Track t : trackPaging.getItems()) {
-				System.out.println("제목 : " + t.getName());
-				System.out.println("가수 : " + t.getArtists()[0].getName());
 				artist = t.getArtists()[0];
 				preview = t.getPreviewUrl();
-				System.out.println(preview);
 			}
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
 		return artist;
 	}
@@ -88,17 +78,11 @@ public class SpotifyController {
 		List<Music> musics = new ArrayList<Music>();
 		try {
 			final Paging<Track> trackPaging = searchTracksRequest.execute();
-			System.out.println("트랙 크기 : " + trackPaging.getItems().length);
-			System.out.println(trackPaging.getItems()[0].toString());
 			ArrayList<Music> youtube = new ArrayList<Music>();
 			for (Track t : trackPaging.getItems()) {
-
-				System.out.println("가수 : " + t.getArtists()[0].getName());
 				artist = getArtist_Sync(t.getArtists()[0].getId());
-				System.out.println(preview);
 				Music music = new Music();
 				// 제목
-				System.out.println("제목 : " + t.getName());
 				music.setmTitle(t.getName());
 				// 장르
 				String genres = "";
@@ -146,14 +130,9 @@ public class SpotifyController {
 					if (youtube.size() >= 10) {
 						break;
 					}
-					System.out.println("youtube api 사용");
-					System.out.println(
-							"-----------------------------------------------------------------------------------");
 					music.setmUrl(t.getName() + " " + artist.getName());
 					youtube.add(music);
 				}
-				System.out.println("리스트에 들어간 뮤직 : " + music.toString());
-
 			}
 			ArrayList<Music> result = youtubeService.selectUrlByTitle(youtube);
 			for (Music m : result) {
@@ -161,9 +140,7 @@ public class SpotifyController {
 				m.setmNo(spotifyService.selectByMId(m.getmId()).getmNo());
 				musics.add(m);
 			}
-			System.out.println("리스트 크기 : " + musics.size());
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
 		return musics;
 	}
@@ -176,13 +153,7 @@ public class SpotifyController {
 		Artist artist = null;
 		try {
 			artist = getArtistRequest.execute();
-			System.out.println(artist.toString());
-			for (String s : artist.getGenres()) {
-				System.out.println(s);
-			}
-			System.out.println("Name: " + artist.getName());
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
 		return artist;
 	}
@@ -191,11 +162,7 @@ public class SpotifyController {
 	@GetMapping("/genre")
 	public List<Music> getRecommendations_Sync(String genre) {
 		GetRecommendationsRequest getRecommendationsRequest = spotifyApi.getRecommendations().limit(10)
-				.market(CountryCode.KR)
-//	          .max_popularity(50)
-				.min_popularity(50)
-//	          .seed_genres("k-pop")
-				.seed_genres(genre).build();
+				.market(CountryCode.KR).min_popularity(50).seed_genres(genre).build();
 		Track track = null;
 		Artist artist = null;
 		List<Music> musics = new ArrayList<Music>();
@@ -250,16 +217,10 @@ public class SpotifyController {
 					if (Integer.parseInt(date) >= 2010) {
 						spotifyService.insertMusic(music);
 						musics.add(music);
-
-						System.out.println("제목 : " + recommendations.getTracks()[i].getName() + " 가수 : "
-								+ recommendations.getTracks()[i].getArtists()[0].getName() + " 미리듣기 : "
-								+ recommendations.getTracks()[i].getPreviewUrl() + " 인기도: " + track.getPopularity());
-
 					}
 				}
 			}
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
 		return musics;
 	}
@@ -272,10 +233,7 @@ public class SpotifyController {
 		Track track = null;
 		try {
 			track = getTrackRequest.execute();
-
-			System.out.println("Name: " + track.getName());
 		} catch (IOException | SpotifyWebApiException | ParseException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
 		return track;
 	}
