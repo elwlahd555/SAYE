@@ -41,19 +41,19 @@ export default {
     return {
       text: "음악을 검색 (버튼 클릭!) ==>",
       keyword: "",
-      pauseInput: "",
+      pauseInput: ""
     };
   },
   methods: {
     enterSearch() {
       const payload = {
         settingName: "initialSearchQuery",
-        settingValue: this.keyword,
+        settingValue: this.keyword
       };
       this.$store.dispatch("albumStore/UPDATE_SETTINGS", payload);
 
       this.$router.push({
-        name: "BasicSearch",
+        name: "BasicSearch"
       });
     },
     setQuery() {
@@ -62,8 +62,8 @@ export default {
     clickInput() {
       this.pauseInput = "width: 440px; padding: 0 6px;";
       console.log(this.pauseInput);
-    },
-  },
+    }
+  }
 };
 </script>
 

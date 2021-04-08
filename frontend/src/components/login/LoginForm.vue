@@ -53,7 +53,6 @@ export default {
   },
   methods: {
     loginsubmit() {
-      // 아이디, 비번 다 기입했는지 확인
       if (!this.$refs.form.validate()) {
         Swal.fire({
           icon: "warning",
@@ -76,7 +75,6 @@ export default {
                 confirmButtonColor: "#f8bb86"
               });
             } else {
-              // context.commit('SET_USER_AUTH_DATA', res.data)
               localStorage.setItem("auth-token", token);
               // axios default 헤더에 현재 token 적재
               axios.defaults.headers.common[

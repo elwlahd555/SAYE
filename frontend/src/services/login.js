@@ -24,7 +24,6 @@ const getKakaoToken = async code => {
       queryString,
       { headers: kakaoHeader }
     );
-    console.log("카카오 토큰", queryString);
     return result;
   } catch (e) {
     return e;
@@ -42,7 +41,6 @@ const getKakaoUserInfo = async () => {
       console.log(error);
     }
   });
-  // console.log('카카오 계정 정보', data);
   return data;
 };
 

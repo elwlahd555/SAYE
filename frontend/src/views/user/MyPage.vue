@@ -24,12 +24,12 @@ const albumStore = "albumStore";
 export default {
   components: {
     PlaylistTreeview,
-    Bookmark,
+    Bookmark
   },
   computed: {
     ...mapGetters(albumStore, {
-      bookmarkAlbums: "BOOKMARK_ALBUMS",
-    }),
+      bookmarkAlbums: "BOOKMARK_ALBUMS"
+    })
   },
   created() {
     this.getBookmark();
@@ -41,7 +41,7 @@ export default {
         albumStore + "/GET_BOOKMARK_ALBUMS",
         this.$store.state.uId
       );
-    },
-  },
+    }
+  }
 };
 </script>

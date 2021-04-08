@@ -312,7 +312,7 @@ export default {
   name: "AlbumList",
   components: {
     MyPlaylist,
-    Lottie,
+    Lottie
   },
   data() {
     return {
@@ -323,46 +323,46 @@ export default {
       selected: [],
       myPlaylist: [],
       defaultOptions: { animationData: animationData.default },
-      animationSpeed: 1,
+      animationSpeed: 1
     };
   },
   props: {
     albums: {
       type: Array,
-      required: true,
+      required: true
     },
     pageType: {
       type: String,
-      required: true,
+      required: true
     },
     isAlbumLoading: {
       type: Boolean,
-      required: true,
+      required: true
     },
     searchFailed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     bookmarkAlbums: {
       type: Array,
-      required: true,
+      required: true
     },
     settings: {
       type: Object,
-      required: true,
+      required: true
     },
     isMobile: {
       type: Boolean,
-      required: true,
+      required: true
     },
     clickBookmarkAlbum: {
       type: Function,
-      required: true,
+      required: true
     },
     isInBookmark: {
       type: Function,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     displayedAlbums() {
@@ -373,14 +373,14 @@ export default {
     },
     uNo() {
       return this.$store.state.uId;
-    },
+    }
   },
   watch: {
     albums(val, oldVal) {
       if (val !== oldVal) {
         this.current = 1;
       }
-    },
+    }
   },
   methods: {
     paginate(albums) {
@@ -401,7 +401,7 @@ export default {
       this.$emit("clickAlbumName", albumId);
     },
     onClickMyPlaylist(music) {
-      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then((list) => {
+      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then(list => {
         this.myPlaylist = list.data;
 
         this.selected = music;
@@ -431,7 +431,7 @@ export default {
       } else {
         return false;
       }
-    },
-  },
+    }
+  }
 };
 </script>

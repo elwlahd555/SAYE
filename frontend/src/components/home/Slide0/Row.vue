@@ -60,10 +60,10 @@ export default {
     model: null,
     videoId: "",
     playerVars: {
-      autoplay: 1,
+      autoplay: 1
     },
 
-    temp: null,
+    temp: null
   }),
   computed: {
     arrowColor() {
@@ -72,7 +72,7 @@ export default {
         return "background-color:black; padding-top:50px";
       }
       return "";
-    },
+    }
   },
   methods: {
     handleClick(music) {
@@ -82,8 +82,8 @@ export default {
       this.$store.dispatch("addToPlaylist", music);
       //console.log("music title", music);
       //console.log(this.$store.state.asidePlaylist);
-    },
-  },
+    }
+  }
 };
 </script>
 

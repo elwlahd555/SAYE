@@ -33,18 +33,18 @@ const spring_URL = process.env.VUE_APP_SPRING_URL;
 
 export default {
   components: {
-    draggable,
+    draggable
   },
   props: {
     bookmarkAlbums: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       selectedItem1: 1,
-      uId: this.$store.state.uId,
+      uId: this.$store.state.uId
     };
   },
   methods: {
@@ -60,20 +60,20 @@ export default {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
         if (result.isConfirmed) {
           axios
             .delete(
               `${spring_URL}/likemusic/delete?lmMNo=${bookmark.mNo}&lmUNo=${this.uId}`
             )
-            .then((res) => {
+            .then(res => {
               Swal.fire("Deleted!", res.data, "success");
               this.$emit("updateBookmark");
             });
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>

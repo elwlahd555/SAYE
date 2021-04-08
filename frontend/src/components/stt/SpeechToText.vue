@@ -76,22 +76,16 @@ export default {
       recognition.stop();
       this.toggle = false;
       if (typeof this.sentences == "string") {
-        // console.log(typeof this.sentences)
-        // console.log("스트링")
         this.$emit("speechend", {
           sentences: this.sentences,
           text: this.sentences
         });
       } else {
-        // console.log(typeof this.sentences)
-        // console.log("스트링아님")
         this.$emit("speechend", {
           sentences: this.sentences,
           text: this.sentences.join(". ")
         });
       }
-      // console.log(this.text);
-      // console.log(this.sentences);
     },
     startSpeechRecognition() {
       if (!recognition) {
