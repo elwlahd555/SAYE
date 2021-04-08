@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gokchu.saye.music.service.MusicService;
 import com.gokchu.saye.music.service.YoutubeService;
 import com.gokchu.saye.repository.dto.Music;
-import com.kenai.jffi.Array;
 
 @RestController
 @RequestMapping("/music")
