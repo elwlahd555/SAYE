@@ -40,9 +40,9 @@ public class LikeMusicController {
 	/* R :: 유저의 관심 음원과 유사한 음악들 분석 위한 음원1개 추출 */
 	@PostMapping("/likemusic/likeone")
 	public ResponseEntity<Music> selectOneLikeMusic(@RequestBody int uNo) throws Exception {
-		if (likeMusicService.selectOneLikeMusic(uNo).getmCnt() == 0) {
+		if (likeMusicService.selectOneLikeMusic(uNo).getmCnt() == 0)
 			return new ResponseEntity<Music>(likeMusicService.selectRandomMusic(uNo), HttpStatus.OK);
-		} else
+		else
 			return new ResponseEntity<Music>(likeMusicService.selectOneLikeMusic(uNo), HttpStatus.OK);
 	}
 
