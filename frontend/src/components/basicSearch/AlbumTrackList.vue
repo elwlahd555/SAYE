@@ -13,7 +13,11 @@
           <article class="media media-modal">
             <figure class="media-left">
               <p class="image">
-                <img v-if="albumInfo.mImg" :src="albumInfo.mImg" alt="album Img"/>
+                <img
+                  v-if="albumInfo.mImg"
+                  :src="albumInfo.mImg"
+                  alt="album Img"
+                />
               </p>
             </figure>
             <div class="media-content">

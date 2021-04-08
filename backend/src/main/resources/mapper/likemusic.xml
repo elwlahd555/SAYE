@@ -14,7 +14,7 @@
 	<select id="selectLikeMusic" parameterType="int" resultType="music">
 		SELECT *
 		  FROM music
-		 WHERE m_no in (select lm_m_no from like_music where lm_u_no = #{lmUNo});
+		 WHERE m_no in (select lm_m_no from like_music where lm_u_no = #{lmUNo})
 	</select>
 	
 	<!-- R :: 유저의 관심 음원과 유사한 음악들 분석 위한 음원1개 추출 -->
@@ -24,7 +24,14 @@
 		 WHERE m_no = (SELECT lm_m_no
 		 				 FROM like_music
 		 				WHERE lm_u_no = #{uNo}
-		 				LIMIT 1);
+		 				LIMIT 1)
+	</select>
+	
+	<!-- R :: 콜드스타트 위한 랜덤 음원 1개 추출 -->
+	<select id="selectRandomMusic" resultType="music">
+		SELECT *
+		  FROM audio_transition_data
+		ORDER BY rand() LIMIT 1
 	</select>
 
 	<delete id="deleteLikeMusic">

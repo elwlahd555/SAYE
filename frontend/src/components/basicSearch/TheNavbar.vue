@@ -135,33 +135,33 @@ export default {
   props: {
     showRecentSearchBox: {
       type: Boolean,
-      required: true,
+      required: true
     },
     recentSearch: {
       type: Array,
-      required: true,
+      required: true
     },
     pageType: {
       type: String,
-      required: true,
+      required: true
     },
     bookmarkAlbums: {
       type: Array,
-      required: true,
+      required: true
     },
     settings: {
       type: Object,
-      required: true,
+      required: true
     },
     isMobile: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     latestBookmarkAlbums() {
       return this.bookmarkAlbums.slice(0, 5);
-    },
+    }
   },
   methods: {
     onClickToggleRecentSearchBox() {
@@ -178,8 +178,8 @@ export default {
     },
     onClickAlbumName(albumId) {
       this.$emit("clickAlbumName", albumId);
-    },
-  },
+    }
+  }
 };
 </script>
 

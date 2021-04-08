@@ -113,7 +113,7 @@ export default {
   components: {
     CommentWrite,
     CommentRow,
-    Row,
+    Row
   },
 
   data() {
@@ -126,12 +126,12 @@ export default {
         bWriter: "",
         bDate: "",
         bUNo: 0,
-        bViewCnt: 0,
+        bViewCnt: 0
       },
       commentList: [],
       recommendMusic: [],
       emotion: "",
-      uId: this.$store.state.uId,
+      uId: this.$store.state.uId
     };
   },
 
@@ -144,35 +144,35 @@ export default {
     getBoardDetail() {
       axios
         .get(`${spring_URL}/board/detail?bNo=${this.$route.params.bNo}`)
-        .then((res) => {
+        .then(res => {
           this.board = res.data;
           this.testEmotion();
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
-    BoardDelete: function () {
+    BoardDelete: function() {
       //console.log(this.board.bNo + "번호의 글을 삭제합니다");
       if (confirm("정말로 삭제하시겠습니까?")) {
         axios
           .get(`${spring_URL}` + "/board/comment")
-          .then((response) => {
+          .then(response => {
             this.commentList = response.data;
           })
-          .catch((error) => {
+          .catch(error => {
             console.log(error);
           });
       }
     },
-    getCommentList: function () {
+    getCommentList: function() {
       //console.log(this.board.bNo + "번호 글의 댓글리스트를 불러옵니다.");
       axios
         .get(`${spring_URL}/board/comment?cBNo=${this.$route.params.bNo}`)
-        .then((res) => {
+        .then(res => {
           this.commentList = res.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     },
@@ -181,26 +181,26 @@ export default {
       axios
         .post(`${spring_URL}/emotion/analysis`, this.board.bContent, {
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         })
-        .then((res) => {
+        .then(res => {
           // console.log(res.data);
           this.emotion = res.data.Result[0][1];
           console.log(this.emotion);
           axios
             .get(`${spring_URL}/music/randGenre?mEmotion=${this.emotion}`)
-            .then((result) => {
+            .then(result => {
               console.log(result.data);
               this.recommendMusic = result.data;
             });
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(this.query);
           console.log(error + "안됨");
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

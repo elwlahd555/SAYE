@@ -13,7 +13,9 @@
         <button id="sayBtn" @click="sayBtn">하소연</button>
       </div>
       <table style="width: 70%" align="center" id="tableBoard">
-        <caption>Board List Information</caption>
+        <caption>
+          Board List Information
+        </caption>
         <tr class="boardHeader">
           <th id="bNo" style="width: 10%">글번호</th>
           <th id="bTitle" style="width: 50%">제목</th>

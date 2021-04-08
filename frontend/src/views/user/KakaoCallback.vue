@@ -49,15 +49,12 @@ export default {
     },
     async setUserInfo() {
       let user_data = await getKakaoUserInfo();
-      // console.log(user_data)
-      // 여기에 백으로 계정 정보 넘겨주면 된다.
       this.user.uId = user_data.kakao_account.email + "_" + user_data.id;
       this.user.uPassword = "kakaoPassword";
       this.user.uNickname = user_data.properties.nickname;
       axios
         .post(`${spring_URL}/auth/kakao/callback`, this.user)
         .then(res => {
-          // console.log(res);
           let token = res.data["auth-token"];
           if (token === undefined) {
             Swal.fire({
@@ -75,7 +72,6 @@ export default {
               imageHeight: 200,
               padding: "3em"
             });
-            // context.commit('SET_USER_AUTH_DATA', res.data)
             localStorage.setItem("auth-token", token);
             // axios default 헤더에 현재 token 적재
             axios.defaults.headers.common[
@@ -97,7 +93,6 @@ export default {
     },
     submit() {
       if (this.$refs.form.validate()) {
-        // sprin url 받기
         axios
           .post(`${spring_URL}/auth/kakao/callback`, this.user)
           .then(() => {

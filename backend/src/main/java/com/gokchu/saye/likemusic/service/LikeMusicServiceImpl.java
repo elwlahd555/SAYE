@@ -33,9 +33,16 @@ public class LikeMusicServiceImpl implements LikeMusicService {
 		return likeMusicMapper.selectOneLikeMusic(uNo);
 	}
 	
+	/* R :: 콜드스타트 위한 랜덤 음원 1개 추출 */
+	@Override
+	public Music selectRandomMusic() throws Exception {
+		return likeMusicMapper.selectRandomMusic();
+	}
+	
 	/* D :: 관심 음원 삭제 */
 	@Override
 	public boolean deleteLikeMusic(LikeMusic likeMusic) throws Exception {
 		return likeMusicMapper.deleteLikeMusic(likeMusic);
 	}
+
 }
