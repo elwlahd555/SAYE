@@ -124,7 +124,7 @@
 ## 🐾 Architecture
 
 ### Entity Relationship Diagram
-![ER Diagram](.docs/../docs/assets/Diagram/SAYE_ERD.png)
+![ER Diagram](./docs/assets/Diagram/SAYE_ERD.png)
 
 
 ### Sequence Diagrams
