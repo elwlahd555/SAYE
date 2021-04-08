@@ -63,6 +63,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			"AIzaSyA1-l1EvRjeO7jI8calsFNcUUFMu3C0-7w" // DB FixOrder-BOT
 	};
 
+	// youtube url 가져오기
 	@Override
 	public ArrayList<Music> selectUrlByTitle(ArrayList<Music> temp) {
 		String musicurl = "";
@@ -70,7 +71,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 		ArrayList<Music> result = new ArrayList<Music>();
 		int i = 0;
 		for (int j = 0; j < temp.size(); j++) {
-			if(i==keyarr.length) {
+			if (i == keyarr.length) {
 				break;
 			}
 			System.out.println("사용된 키값 : " + keyarr[i]);
@@ -115,39 +116,11 @@ public class YoutubeServiceImpl implements YoutubeService {
 				break;
 			} catch (Throwable t) {
 				// Use a logger to log this exception
-				//t.printStackTrace();
+				// t.printStackTrace();
 				break;
 			}
 
 		}
 		return result;
 	}
-
-//	private static String prettyPrint(Iterator<SearchResult> iteratorSearchResults, String query) {
-//
-//		System.out.println("\n=============================================================");
-//		System.out.println("   First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + query + "\".");
-//		System.out.println("=============================================================\n");
-//
-//		String musicurl = "";
-//		if (!iteratorSearchResults.hasNext()) {
-//			System.out.println(" There aren't any results for your query.");
-//		}
-//
-//		while (iteratorSearchResults.hasNext()) {
-//
-//			SearchResult singleVideo = iteratorSearchResults.next();
-//			ResourceId rId = singleVideo.getId();
-//			if (rId.getKind().equals("youtube#video")) {
-//				Thumbnail thumbnail = (Thumbnail) singleVideo.getSnippet().getThumbnails().get("default");
-//				musicurl = rId.getVideoId();
-//				System.out.println(" Video Id" + musicurl);
-//				System.out.println(" Title: " + singleVideo.getSnippet().getTitle());
-//				System.out.println(" Thumbnail: " + thumbnail.getUrl());
-//				System.out.println("\n-------------------------------------------------------------\n");
-//			}
-//		}
-//		return musicurl;
-//	}
-
 }
