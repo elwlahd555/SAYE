@@ -41,7 +41,7 @@ public class LikeMusicController {
 	@PostMapping("/likemusic/likeone")
 	public ResponseEntity<Music> selectOneLikeMusic(@RequestBody int uNo) throws Exception {
 		if (likeMusicService.selectOneLikeMusic(uNo).getmCnt() == 0)
-			return new ResponseEntity<Music>(likeMusicService.selectRandomMusic(uNo), HttpStatus.OK);
+			return new ResponseEntity<Music>(likeMusicService.selectRandomMusic(), HttpStatus.OK);
 		else
 			return new ResponseEntity<Music>(likeMusicService.selectOneLikeMusic(uNo), HttpStatus.OK);
 	}

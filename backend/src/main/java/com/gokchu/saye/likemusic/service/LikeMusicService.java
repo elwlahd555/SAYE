@@ -17,7 +17,7 @@ public interface LikeMusicService {
 	Music selectOneLikeMusic(int uNo) throws Exception;
 
 	/* R :: 콜드스타트 위한 랜덤 음원 1개 추출 */
-	Music selectRandomMusic(int uNo) throws Exception;
+	Music selectRandomMusic() throws Exception;
 	
 	/* D :: 관심 음원 삭제 */
 	boolean deleteLikeMusic(LikeMusic likeMusic) throws Exception;
