@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gokchu.saye.repository.mapper.MusicMapper">
+
+	<!-- 인기도순위로 출력 -->
+	<select id="selectByPopularity" resultType="music">
+		select *
+		from music
+		where (not m_genre = "classical") and (not m_url = "") and (not
+		m_genre =
+		"blues") and(not m_url ="https://www.youtube.com/watch?v=")
+		and( not
+		m_genre = "")
+		order by m_popularity desc
+		limit 20;
+	</select>
+	<!-- 실행순위로 출력 -->
+	<select id="selectBymCnt" resultType="music">
+		select *
+		from music
+		where
+		(not m_genre = "classical") and (not m_url = "") and (not m_genre =
+		"blues") and(not m_url ="https://www.youtube.com/watch?v=") and( not
+		m_genre = "")
+		order by m_cnt desc
+		limit 20;
+	</select>
+	<!-- 발매일 순위로 출력 -->
+	<select id="selectByDate" resultType="music">
+		select *
+		from music
+		where
+		(not m_genre = "classical") and (not m_url = "") and (not m_genre =
+		"blues") and(not m_url ="https://www.youtube.com/watch?v=") and( not
+		m_genre = "")
+		order by
+		m_date desc
+		limit 20;
+	</select>
+	<!-- 제목으로 검색 -->
+	<select id="selectByTitle" resultType="music">
+		select *
+		from music
+		where
+		m_title like "%"#{mTitle}"%"
+		limit 20;
+	</select>
+	<!-- 번호로 검색 -->
+	<select id="selectByNo" resultType="music">
+		select *
+		from music
+		where
+		m_no
+		=#{mNo};
+	</select>
+	<!-- 가수로 검색 -->
+	<select id="selectByArtist" resultType="music">
+		select *
+		from music
+		where
+		m_artist like "%"#{mArtist}"%"
+		limit 20;
+	</select>
+	<!-- 엘범으로 검색 -->
+	<select id="selectByAlbum" resultType="music">
+		select *
+		from music
+		where
+		m_album like "%"#{mAlbum}"%"
+		limit 20;
+	</select>
+	<!-- 장르로 검색 -->
+	<select id="selectByGenre" resultType="music">
+		select *
+		from music
+		where
+		m_genre like "%"#{mGenre}"%"
+		limit 20;
+	</select>
+	<!-- 감정으로 검색 -->
+	<select id="selectByEmotion" resultType="music">
+		select *
+		from music
+		where
+		m_emotion like "%"#{mEmotion}"%"
+		limit 20;
+	</select>
+	<!-- 감정으로 랜덤검색 -->
+	<select id="selectByrandGenre" resultType="music">
+		select *
+		from music
+		where (not m_url = "") and(not m_url
+		="https://www.youtube.com/watch?v=") and (m_genre like
+		"%"#{mGenre}"%")
+		order by rand()
+		limit 20;
+	</select>
+	<!-- 가수 ID로 가수 검색 -->
+	<select id="artist" resultType="String">
+		select m_artist
+		from music
+		where
+		m_no=#{i};
+	</select>
+	<!-- youtube url update -->
+	<update id="updateMurlByNo">
+		UPDATE music
+		SET
+		m_url = #{mUrl}
+		WHERE m_no = #{mNo};
+	</update>
+	<!-- youtube 실행 횟수 update -->
+	<update id="updateCnt">
+		update music
+		set m_cnt=m_cnt+1
+		where m_no=#{mNo};
+	</update>
+</mapper>
