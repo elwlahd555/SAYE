@@ -104,7 +104,6 @@
 		where
 		m_no=#{i};
 	</select>
-	'
 	<!-- youtube url update -->
 	<update id="updateMurlByNo">
 		UPDATE music
