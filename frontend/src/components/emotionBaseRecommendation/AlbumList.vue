@@ -96,7 +96,7 @@
                       @click="clickBookmarkAlbum(album)"
                     >
                       {{ settings.bookmarkIcon
-                      }}{{ isInBookmark(album.m_id) ? "" : "-outline" }}
+                      }}{{ isInBookmark(album.m_id) ? '' : '-outline' }}
                     </v-icon>
                   </template>
                   <span>북마크 추가/제거</span>
@@ -172,7 +172,7 @@
                             @click="clickBookmarkAlbum(album)"
                           >
                             {{ settings.bookmarkIcon
-                            }}{{ isInBookmark(album.m_id) ? "" : "-outline" }}
+                            }}{{ isInBookmark(album.m_id) ? '' : '-outline' }}
                           </v-icon>
                         </template>
                         <span>북마크 추가/제거</span>
@@ -271,93 +271,110 @@
 </template>
 
 <script>
-import getYouTubeID from "get-youtube-id";
+import getYouTubeID from 'get-youtube-id';
 
-import MyPlaylist from "@/components/mypage/MyPlaylist";
-import axios from "axios";
+import MyPlaylist from '@/components/mypage/MyPlaylist';
+import axios from 'axios';
 
 const spring_URL = process.env.VUE_APP_SPRING_URL;
 
 export default {
-  name: "AlbumList",
+  name: 'AlbumList',
   components: {
-    MyPlaylist
+    MyPlaylist,
   },
   data() {
     return {
       current: 1,
-      size: "",
-      panelIcon: "mdi-grid",
+      size: '',
+      panelIcon: 'mdi-grid',
       playlistDialog: false,
       selected: [],
-      myPlaylist: []
+      myPlaylist: [],
     };
   },
   props: {
     albums: {
       type: Array,
-      required: true
+      required: true,
     },
     pageType: {
       type: String,
-      required: true
+      required: true,
     },
     isAlbumLoading: {
       type: Boolean,
-      required: true
+      required: true,
     },
     searchFailed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     bookmarkAlbums: {
       type: Array,
-      required: true
+      required: true,
     },
     settings: {
       type: Object,
-      required: true
+      required: true,
     },
     isMobile: {
       type: Boolean,
-      required: true
+      required: true,
     },
     clickBookmarkAlbum: {
       type: Function,
-      required: true
+      required: true,
     },
     isInBookmark: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     colSize() {
-      return this.settings.panelType === "card" ? "3" : "12";
+      return this.settings.panelType === 'card' ? '3' : '12';
     },
     uNo() {
       return this.$store.state.uId;
-    }
+    },
   },
   watch: {
     albums(val, oldVal) {
       if (val !== oldVal) {
         this.current = 1;
       }
-    }
+    },
   },
   methods: {
     onClickUpdateSettings() {
       const settingValue =
-        this.settings.panelType === "card" ? "media" : "card";
+        this.settings.panelType === 'card' ? 'media' : 'card';
       this.panelIcon =
-        this.panelIcon === "mdi-grid" ? "mdi-format-list-text" : "mdi-grid";
-      this.$emit("clickUpdateSettings", "panelType", settingValue);
+        this.panelIcon === 'mdi-grid' ? 'mdi-format-list-text' : 'mdi-grid';
+      this.$emit('clickUpdateSettings', 'panelType', settingValue);
     },
     onClickMyPlaylist(music) {
-      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then(list => {
+      const musicSend = {
+        mNo: music.m_no,
+        mTitle: music.m_title,
+        mGenre: music.m_genre,
+        mArtist: music.m_artist,
+        mAlbum: music.m_album,
+        mPreview: music.m_preview,
+        mImg: music.m_img,
+        mPopularity: music.m_popularity,
+        mId: music.m_id,
+        mArtistId: music.m_artist_id,
+        mAlbumId: music.m_album_id,
+        mCnt: music.m_cnt,
+        mEmotion: music.m_emotion,
+        mDate: music.m_date,
+        mUrl: music.m_url,
+      };
+      axios.get(`${spring_URL}/playlist?uNo=${this.uNo}`).then((list) => {
         this.myPlaylist = list.data;
-        this.selected = music;
+        this.selected = musicSend;
         this.playlistDialog = true;
       });
     },
@@ -377,7 +394,7 @@ export default {
         mCnt: music.m_cnt,
         mEmotion: music.m_emotion,
         mDate: music.m_date,
-        mUrl: music.m_url
+        mUrl: music.m_url,
       };
 
       let videoId = getYouTubeID(music.m_url);
@@ -386,14 +403,14 @@ export default {
         // console.log('nothing...');
         const url = `https://www.youtube.com/results?search_query=${music.m_artist} - ${music.m_title}`;
         const strWindowFeatures =
-          "location=yes,height=800,width=600,scrollbars=yes,status=yes";
-        window.open(url, "_blank", strWindowFeatures);
+          'location=yes,height=800,width=600,scrollbars=yes,status=yes';
+        window.open(url, '_blank', strWindowFeatures);
       } else {
-        this.$store.dispatch("setVideoId", videoId);
-        this.$store.dispatch("setPlayMusic", musicSend);
-        this.$store.dispatch("addToPlaylist", musicSend);
+        this.$store.dispatch('setVideoId', videoId);
+        this.$store.dispatch('setPlayMusic', musicSend);
+        this.$store.dispatch('addToPlaylist', musicSend);
       }
-    }
-  }
+    },
+  },
 };
 </script>
