@@ -70,7 +70,7 @@
                     @click="onClickAlbumName(album.mId)"
                   >
                     <v-list-item-avatar tile size="80">
-                      <img :src="album.mImg" />
+                      <img :src="album.mImg" alt="album Img" />
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <div class="overline mb-4">
@@ -108,25 +108,25 @@ export default {
   props: {
     pageType: {
       type: String,
-      required: true
+      required: true,
     },
     bookmarkAlbums: {
       type: Array,
-      required: true
+      required: true,
     },
     settings: {
       type: Object,
-      required: true
+      required: true,
     },
     isMobile: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     latestBookmarkAlbums() {
       return this.bookmarkAlbums.slice(0, 5);
-    }
+    },
   },
   methods: {
     onClickShowBookmarks() {
@@ -140,8 +140,8 @@ export default {
     },
     onClickAlbumName(albumId) {
       this.$emit("clickAlbumName", albumId);
-    }
-  }
+    },
+  },
 };
 </script>
 

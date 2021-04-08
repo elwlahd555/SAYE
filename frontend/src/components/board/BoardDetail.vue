@@ -93,7 +93,7 @@
         v-for="(comment, index) in commentList"
         :key="index"
         :comment="comment"
-        style="margin-top: 20px; width: 90%; margin: 0 auto"
+        style="width: 90%; margin: 20px 0 auto"
       />
     </v-container>
   </v-container>
