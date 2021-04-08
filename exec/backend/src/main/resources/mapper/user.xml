@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace = "com.gokchu.saye.repository.mapper.UserMapper">
+
+	<!-- C :: 회원 가입 -->
+	<insert id="insertUser" parameterType="user">
+	insert into user
+		(u_no, u_id, u_password, u_nickname, u_joindate, u_salt)
+	values
+		(#{uNo}, #{uId}, #{uPassword}, #{uNickname}, now(), #{uSalt});
+	</insert>
+
+	<!-- C :: 카카오 회원 가입 -->
+	<insert id="insertKakaoUser" parameterType="user">
+		insert
+		  into user(u_no, u_id, u_password, u_nickname, u_provider, u_joindate)
+		values (#{uNo}, #{uId}, #{uPassword}, #{uNickname}, #{uProvider}, now())
+	</insert>
+
+	<!-- R :: 로그인 -->
+	<select id="selectUserLogin" resultType="user">
+		select *
+		  from user
+		 where u_id=#{uId} and u_password=#{uPassword}
+	</select>
+
+	<!-- R :: 회원 상세 조회 -->
+	<select id="selectUser" parameterType="user" resultType="user">
+		select *
+		  from user
+		 where u_id=#{uId}
+	</select>
+
+	<!-- U :: 회원 비밀번호 변경 --> 
+	<update id="updateUserPassword" parameterType="user">
+		update user
+		   set u_password=#{uPassword}, u_salt=#{uSalt}
+		 where u_id=#{uId}
+	</update>
+
+	<!-- U :: 회원 이름 변경 --> 
+	<update id="updateUserName" parameterType="user">
+		update user
+		   set u_nickname=#{uNickname}
+		 where u_id=#{uId}
+	</update>
+	
+	<!-- D :: 회원 탈퇴  and u_password=#{uPassword} 빼줌  -->
+	<delete id="deleteUser" parameterType="string">
+		delete 
+		  from user 
+		 where u_id=#{uId}
+	</delete>
+
+	<!-- 이메일 중복 체크 -->
+	<select id="existEmail" resultType="int">
+		select count(*)
+		  from user
+		 where u_id = #{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="selectPassword" parameterType="com.gokchu.saye.repository.dto.User" resultType="string">
+		select u_password 'uPassword'
+		  from user
+		 where u_id=#{uId} and u_nickname=#{uNickname}
+	</select>
+	
+	<!-- 로그인 시, 최초 salt를 얻기위함 -->
+	<select id="getUSaltByUId" resultType="string">
+		select u_salt
+		  from user
+		 where u_id = #{uId}
+	</select>
+
+	<!-- 비밀번호 찾기(정확히는 임시비번으로 변경) -->
+	<update id="selectPasswordByUId" parameterType="string">
+		update user
+		   set u_password = #{tempPassword}
+		 where u_id = #{uId}
+	</update>
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="checkUId" parameterType="string" resultType="int">
+		select count(u_id)
+		  from user
+		 where u_id = #{uId}
+	</select>
+
+</mapper>

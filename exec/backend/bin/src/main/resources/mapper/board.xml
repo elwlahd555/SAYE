@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.gokchu.saye.repository.mapper.BoardMapper">
+
+	<insert id="insertBoard">
+		INSERT into board
+			(b_no, b_class, b_title, b_content, b_writer, b_date, b_view_cnt, b_u_no)
+		VALUES
+			(#{bNo}, #{bClass}, #{bTitle}, #{bContent}, #{bWriter}, now(), #{bViewCnt}, #{bUNo})
+	</insert>
+	
+	<select id="selectBoard" parameterType="string" resultType="board">
+		SELECT *
+		  FROM board
+	</select>
+
+	<select id="selectHelpBoard" resultType="board">
+		SELECT *
+		  FROM board
+		 WHERE board.b_class = "도움글"
+	</select>
+
+	<select id="selectSayBoard" resultType="board">
+		SELECT *
+		  FROM board
+		 WHERE board.b_class = "하소연"
+	</select>
+	
+	<update id="updateBoard">
+		UPDATE board
+		   SET b_title=#{bTitle}, b_content=#{bContent}, b_writer=#{bWriter}, b_date=now()
+		 WHERE b_no=#{bNo}
+	</update>
+
+	<delete id="deleteBoard" parameterType="int">
+		DELETE
+		  FROM board
+		 WHERE b_u_no=#{bUNo} and b_no=#{bNo}
+	</delete>
+	
+</mapper>
+
